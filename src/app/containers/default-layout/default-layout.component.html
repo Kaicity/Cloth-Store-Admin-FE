@@ -1,4 +1,5 @@
 <!--sidebar-->
+<script src="default-layout.component.ts"></script>
 <c-sidebar
   #sidebar="cSidebar"
   class="d-print-none sidebar sidebar-fixed"
@@ -23,10 +24,31 @@
 
   <ng-scrollbar pointerEventsMethod="scrollbar">
     <c-sidebar-nav
-      [navItems]="navItems"
+      [navItems]="generalInformationNavItems"
+      dropdownMode="close"
+    />
+    <c-sidebar-nav
+      [navItems]="operationManagement"
+      dropdownMode="close"
+    />
+
+    <c-sidebar-nav
+      [navItems]="customerEmployeeNavItems"
+      dropdownMode="close"
+    />
+
+    <c-sidebar-nav
+      [navItems]="employeeManagement"
+      dropdownMode="close"
+    />
+    <c-sidebar-nav
+      [navItems]="reportNavItems"
       dropdownMode="close"
     />
   </ng-scrollbar>
+
+
+
   <c-sidebar-toggler
     *ngIf="!sidebar.narrow"
     toggle="unfoldable"

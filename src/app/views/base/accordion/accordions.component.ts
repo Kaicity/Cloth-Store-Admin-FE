@@ -1,29 +1,25 @@
-import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-accordions',
   templateUrl: './accordions.component.html',
   styleUrls: ['./accordions.component.scss']
 })
-export class AccordionsComponent {
+export class AccordionsComponent implements OnInit{
 
-  items = [1, 2, 3, 4];
+  slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
+  constructor() {}
 
-  constructor(
-    private sanitizer: DomSanitizer
-  ) { }
-
-  getAccordionBodyText(value: string) {
-    const textSample = `
-      <strong>This is the <mark>#${value}</mark> item accordion body.</strong> It is hidden by
-      default, until the collapse plugin adds the appropriate classes that we use to
-      style each element. These classes control the overall appearance, as well as
-      the showing and hiding via CSS transitions. You can modify any of this with
-      custom CSS or overriding our default variables. It&#39;s also worth noting
-      that just about any HTML can go within the <code>.accordion-body</code>,
-      though the transition does limit overflow.
-    `;
-    return this.sanitizer.bypassSecurityTrustHtml(textSample);
+  ngOnInit(): void {
+    this.slides[0] = {
+      src: './assets/images/angular.jpg',
+    };
+    this.slides[1] = {
+      src: './assets/images/react.jpg',
+    }
+    this.slides[2] = {
+      src: './assets/images/vue.jpg',
+    }
   }
+
 }
