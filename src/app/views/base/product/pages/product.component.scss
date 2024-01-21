@@ -1,0 +1,48 @@
+.content-header {
+  display: flex;
+  flex-wrap: wrap; /* Allow elements to wrap on smaller screens */
+  max-width: 100%;
+}
+
+.container-title {
+  flex: 1; /* Take up available space */
+  left: 0;
+}
+
+.container-table {
+  display: flex;
+  margin-left: 69vw;
+  margin-top: 2vh;
+  justify-content: space-evenly;
+}
+
+
+.container-table button {
+  width: auto;
+  height: 4vh;
+  margin-bottom: 1vh;
+}
+
+.container-table .icon-seach{
+  width: auto;
+  height: 2vh;
+}
+
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens */
+  .breadcrumb {
+    text-align: center;
+  }
+
+  .container-table {
+    margin-left: 0; /* Remove margin for smaller screens */
+  }
+}
+
+.paginator-container{
+  max-width: 100%;
+  width: 98%;
+  margin-left: 1vw;
+}
+
+

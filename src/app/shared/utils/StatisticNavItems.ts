@@ -1,23 +1,23 @@
 import {INavData} from "@coreui/angular";
 
-export const ReportNavItems: INavData[] = [
+export const StatisticNavItems: INavData[] = [
   {
-    name: 'HỆ THỐNG BÁO CÁO',
-    url: '/base',
+    name: 'HỆ THỐNG ThỐNG KÊ',
+    url: '',
     iconComponent: {name: 'cilSettings'},
 
     children: [
       {
         name: 'Báo cáo Bán hàng',
-        url: '/base/cards',
+        url: '/statistic',
       },
       {
         name: 'Báo thu - chi tiền mặt',
-        url: '/base/cards',
+        url: '/statistic-money',
       },
       {
         name: 'Báo cáo tồn kho',
-        url: '/base/cards',
+        url: '/cards',
       },
 
     ]
