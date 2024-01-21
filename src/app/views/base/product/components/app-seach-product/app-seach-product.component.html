@@ -1,0 +1,29 @@
+<app-modal-wrapper #searchWrapper
+                   [showModal]="isSeachChose"
+                   [modalTitle]="'Tìm sản phẩm'"
+                   [nameButton]="'Tìm kiếm'"
+                   (closeModalEvent)="closeModal()">
+  <!-- Your modal content goes here -->
+  <div class="modal-body">
+    <form class="row g-3">
+      <div class="mb-3 col-md-6">
+        <label for="productId" class="col-form-label">ID</label>
+        <input type="text" class="form-control" id="productId">
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="productCode" class="col-form-label">Code</label>
+        <input type="text" class="form-control" id="productCode">
+      </div>
+      <div class="mb-3">
+        <label for="productName" class="col-form-label">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="productName">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary"  >Load all</button>
+        <button type="button" class="btn btn-primary"  >Search</button>
+      </div>
+    </form>
+  </div>
+
+</app-modal-wrapper>

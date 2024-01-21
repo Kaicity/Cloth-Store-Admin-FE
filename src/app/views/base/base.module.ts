@@ -34,14 +34,11 @@ import { IconModule } from '@coreui/icons-angular';
 import { DocsComponentsModule } from '@docs-components/docs-components.module';
 
 // views
-import { AccordionsComponent } from './accordion/accordions.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { CardsComponent } from './cards/cards.component';
-import { CarouselsComponent } from './carousels/carousels.component';
 
 
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
+import {DataTableComponent} from "../../shared/components/data-table/data-table.component";
 
 @NgModule({
   imports: [
@@ -76,10 +73,6 @@ import { BaseRoutingModule } from './base-routing.module';
     CalloutComponent,
   ],
   declarations: [
-    AccordionsComponent,
-    BreadcrumbsComponent,
-    CardsComponent,
-    CarouselsComponent,
   ],
 })
 export class BaseModule {}

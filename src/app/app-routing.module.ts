@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { DefaultLayoutComponent } from './containers';
+import {DefaultLayoutComponent} from './containers';
+import {DataTableComponent} from "./shared/components/data-table/data-table.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,16 @@ const routes: Routes = [
         path: 'base',
         loadChildren: () =>
           import('./views/base/base.module').then((m) => m.BaseModule)
+      },
+      {
+        path: 'statistic',
+        loadChildren: () =>
+          import('./views/base/Statistic/statistics.module').then((m) => m.StatisticsModule)
+      },
+      {
+        path: 'product',
+        loadChildren: () =>
+          import('./views/base/product/product.module').then((m) => m.ProductModule)
       },
     ]
   },

@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {StatisticsComponent} from "./Statistic/pages/statistics.component";
+import {FormsModule} from "@angular/forms";
+import {ProductComponent} from "./product/pages/product.component";
+import {DataTableComponent} from "../../shared/components/data-table/data-table.component";
 
-import { AccordionsComponent } from './accordion/accordions.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { CardsComponent } from './cards/cards.component';
-import { CarouselsComponent } from './carousels/carousels.component';
+
 
 
 const routes: Routes = [
@@ -15,36 +16,17 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'cards',
-      },
-      {
-        path: 'accordion',
-        component: AccordionsComponent,
+        path: 'statistic',
+        component: StatisticsComponent,
         data: {
-          title: 'Accordion',
+          title: 'statistic',
         },
       },
       {
-        path: 'breadcrumbs',
-        component: BreadcrumbsComponent,
+        path: 'product',
+        component: ProductComponent,
         data: {
-          title: 'Breadcrumbs',
-        },
-      },
-      {
-        path: 'cards',
-        component: CardsComponent,
-        data: {
-          title: 'Cards',
-        },
-      },
-      {
-        path: 'carousel',
-        component: CarouselsComponent,
-        data: {
-          title: 'Carousel',
+          title: 'product',
         },
       },
     ],
@@ -52,7 +34,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes),FormsModule],
   exports: [RouterModule],
 })
 export class BaseRoutingModule {}

@@ -1,0 +1,106 @@
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div>
+    <div class="container-title">
+      <h1 i18n="@@employees-title" style="margin-left: 1vw;">Sản Phẩm</h1>
+    </div>
+    <div class="" style="margin-left: 72vw; margin-top: -5vh">
+      <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a i18n="@@home" routerLink="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active" i18n="@@employees-title">Sản phẩm</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="container-table">
+  <button type="button" class="btn btn-info" style="width: 3.5vw" (click)="showSeachForm()">
+    <img src="assets/images/seach.png" class="icon-seach">
+  </button>
+
+  <button
+    class="btn bg-warning"
+    i18n="@@employees-new" (click)="showInsertForm()">
+    Thêm Sản phẩm
+  </button>
+</div>
+
+<app-data-table [columnNumber]="7" [dataTable]="dataSource" [tableFormatClass]="tableFormat">
+  <table class="{{tableFormat}}">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên sản phẩm</th>
+      <th>Giá</th>
+      <th>Tình trạng</th>
+      <th>Hình ảnh</th>
+      <th>Mô tả</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cuz of dataSource">
+      <td>{{cuz.id}}</td>
+      <td>{{cuz.name}}</td>
+      <td>{{cuz.price}}</td>
+      <td>{{cuz.status}}</td>
+      <td>{{cuz.image}}</td>
+      <td>{{cuz.description}}</td>
+      <td>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Sửa</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>list</mat-icon>
+      <span>D.Sách HH - VT</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>print</mat-icon>
+      <span>In</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>Excel</mat-icon>
+      <span>Xuất File Excel</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>money</mat-icon>
+      <span>Lập P.Chi</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>money</mat-icon>
+      <span>Tạo Từ Phiếu Này</span>
+    </button>
+  </mat-menu>
+
+</app-data-table>
+
+<mat-paginator [length]="100" class="paginator-container"
+               [pageSize]="10"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               aria-label="Select page">
+</mat-paginator>
+
+
+
+<app-app-seach-product #searchWrapper></app-app-seach-product>
+
+<app-add-product #AddWrapper></app-add-product>
+
+
+
+
+
+
+
+

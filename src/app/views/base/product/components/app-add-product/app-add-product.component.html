@@ -1,0 +1,92 @@
+<app-modal-wrapper #AddWrapper
+                   [showModal]="isInsertChose"
+                   [modalTitle]="'Thêm Sản Phẩm'"
+                   [nameButton]="'Thêm'"
+                   [size]="'width: 65%; max-width: 100%;'"
+                   (closeModalEvent)="closeModal()" xmlns="http://www.w3.org/1999/html">
+
+  <!-- Your modal content goes here -->
+  <div class=".modal-lg">
+    <form class="row g-3" (ngSubmit)="onSubmit()">
+      <div class="mb-3 col-md-4">
+        <label for="name" class="col-form-label">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="name" name="name">
+      </div>
+      <div class="mb-3 col-md-3">
+        <label for="price" class="col-form-label">Giá</label>
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Dollar amount" id="price" name="price">
+          <span class="input-group-text">.000</span>
+          <span class="input-group-text">đ</span>
+        </div>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="image" class="col-form-label">Hình ảnh</label>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="image" name="image">
+          <label class="input-group-text" for="image">Upload</label>
+        </div>
+      </div>
+      <div class="input-group mb-3 col-md-3" style="width: 40%; max-width: 100%">
+        <div class="input-group-prepend">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mặt hàng</button>
+          <div class="dropdown-menu">
+            <ng-container *ngFor="let s of specificationProducts">
+              <a class="dropdown-item" (click)="optionSpecChose(s.display)">{{s.display}}</a>
+            </ng-container>
+          </div>
+        </div>
+        <input type="text" class="form-control" aria-label="Text input with dropdown button" value="{{specName}}" [disabled]="true">
+      </div>
+
+      <div class="input-group mb-3 col-md-3" style="width: 60%; max-width: 100%">
+        <div class="input-group-prepend">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Loại sản phẩm</button>
+          <div class="dropdown-menu">
+            <ng-container *ngFor="let t of categoryProducts">
+              <a class="dropdown-item" (click)="cateChose(t.display)">{{t.display}}</a>
+            </ng-container>
+          </div>
+        </div>
+        <input type="text" class="form-control" aria-label="Text input with dropdown button" value="{{cateName}}" [disabled]="true">
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <input type="search" class="form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Công ty điều hành">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item">CTY1</a>
+          <a class="dropdown-item">CTY2</a>
+          <a class="dropdown-item">CTY3</a>
+        </div>
+      </div>
+
+      <div class="md-3 col-md-4">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn  active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Hoạt động
+          </label>
+          <label class="btn">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Ngưng sản xuất
+          </label>
+          <label class="btn">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Hết hàng
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="desc" class="form-label">Mô tả</label>
+        <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary">Thêm</button>
+      </div>
+    </form>
+  </div>
+
+</app-modal-wrapper>
+
+
+
