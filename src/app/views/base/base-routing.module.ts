@@ -3,10 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {StatisticsComponent} from "./Statistic/pages/statistics.component";
 import {FormsModule} from "@angular/forms";
 import {ProductComponent} from "./product/pages/product.component";
-import {DataTableComponent} from "../../shared/components/data-table/data-table.component";
-
-
-
 
 const routes: Routes = [
   {
