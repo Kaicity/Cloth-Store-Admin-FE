@@ -33,6 +33,7 @@ import {
   TabsModule,
   UtilitiesModule,
 } from '@coreui/angular';
+import {HttpClientModule} from "@angular/common/http";
 
 
 const APP_CONTAINERS = [
@@ -72,6 +73,7 @@ const APP_CONTAINERS = [
     CardModule,
     NgScrollbarModule,
     ControlMaterial,
+    HttpClientModule
   ],
   providers: [
     {

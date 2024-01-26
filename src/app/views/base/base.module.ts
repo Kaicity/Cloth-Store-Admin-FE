@@ -38,7 +38,6 @@ import { DocsComponentsModule } from '@docs-components/docs-components.module';
 
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
-import {DataTableComponent} from "../../shared/components/data-table/data-table.component";
 
 @NgModule({
   imports: [

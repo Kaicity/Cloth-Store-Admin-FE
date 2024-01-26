@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {DefaultLayoutComponent} from './containers';
-import {DataTableComponent} from "./shared/components/data-table/data-table.component";
 
 const routes: Routes = [
   {

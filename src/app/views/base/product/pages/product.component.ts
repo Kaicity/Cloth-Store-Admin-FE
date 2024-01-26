@@ -3,6 +3,11 @@ import {ModalWrapperComponent} from "../../../../shared/components/modal-wrapper
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppAddProductComponent} from "../components/app-add-product/app-add-product.component";
 import {AppSeachProductComponent} from "../components/app-seach-product/app-seach-product.component";
+import {ProductService} from "../../../../core/Services/agency/Product-service";
+import {ProductDto} from "../../../../core/apis/Dtos/productDto";
+import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
+import {BaseSearchModel} from "../../../../core/apis/Dtos/base-search-model";
+import {ToastrService} from "ngx-toastr";
 
 
 
@@ -33,7 +38,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
-
 })
 
 export class ProductComponent implements OnInit, AfterViewInit{
@@ -43,7 +47,12 @@ export class ProductComponent implements OnInit, AfterViewInit{
   @ViewChild("searchWrapper") searchWrapper!:AppSeachProductComponent;
   @ViewChild("AddWrapper") addWrapper!:AppAddProductComponent;
 
-  constructor(private fb: FormBuilder) {}
+  //DTO Product
+  productDtos: ProductDto[] = []; // Tao danh sach chua cac mon an
+  public search: BaseSearchModel<ProductDto[]> = new BaseSearchModel<ProductDto[]>();
+  conchothong="C:\\Users\\ASUS\\Desktop\\FirebaseStoreImange\\conchothong.png"
+
+  constructor(private fb: FormBuilder, private productService: ProductService) {}
 
  showInsertForm(){
    console.log(this.addWrapper);
@@ -56,11 +65,45 @@ export class ProductComponent implements OnInit, AfterViewInit{
  }
 
   ngOnInit(): void {
-
+    this.getAllProduct();
+    //console.log(this.getAllProduct());
   }
 
   ngAfterViewInit(): void {
-    console.log(this.addWrapper);
-    console.log(this.searchWrapper);
+    // console.log(this.addWrapper);
+    // console.log(this.searchWrapper);
   }
+
+  private getAllProduct() {
+    this.productService.getAllProduct().subscribe(
+      res => {
+        this.getAllProductComplete(res)
+      });
+  }
+  private getAllProductComplete(res: ResponseModel<BaseSearchModel<ProductDto[]>>) {
+    if (res.status !== 200) {
+      if (res.message) {
+        res.message.forEach(
+          value => {
+            var t: any;
+            t.error.message(value);
+          }
+        );
+        return;
+      }
+    }
+    this.search = res.result;
+    // Lấy danh sách đối tượng từ API
+    this.search.recordOfPage = 25;
+    console.log("lien cc"+this.search.recordOfPage);
+    for (let i = 0; i < this.search.recordOfPage; i++) {
+      // Your code here
+      this.productDtos.push(this.search.result[i]);
+    }
+
+    console.log(this.search);
+    console.log(this.productDtos);
+
+  }
+
 }
