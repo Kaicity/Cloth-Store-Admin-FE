@@ -15,6 +15,10 @@ export const ProductCustomerManagement: INavData[] = [
             url: '/product'
           },
           {
+            name: "page test",
+            url: '/test'
+          },
+          {
             name: 'sản phẩm nhập',
             url: '/cards'
           },
