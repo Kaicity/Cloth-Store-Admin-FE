@@ -21,16 +21,21 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/base/base.module').then((m) => m.BaseModule)
       },
-      {
-        path: 'statistic',
-        loadChildren: () =>
-          import('./views/base/Statistic/statistics.module').then((m) => m.StatisticsModule)
-      },
+      // {
+      //   path: 'statistic',
+      //   loadChildren: () =>
+      //     import('./views/base/Statistic/statistics.module').then((m) => m.StatisticsModule)
+      // },
       {
         path: 'product',
         loadChildren: () =>
           import('./views/base/product/product.module').then((m) => m.ProductModule)
       },
+      {
+        path: 'test',
+        loadChildren: () =>
+          import('./views/base/test/test.module').then((m) => m.TestModule)
+      }
     ]
   },
 

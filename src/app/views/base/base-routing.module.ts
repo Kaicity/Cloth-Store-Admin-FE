@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {StatisticsComponent} from "./Statistic/pages/statistics.component";
 import {FormsModule} from "@angular/forms";
 import {ProductComponent} from "./product/pages/product.component";
 
@@ -11,13 +10,13 @@ const routes: Routes = [
       title: 'Base',
     },
     children: [
-      {
-        path: 'statistic',
-        component: StatisticsComponent,
-        data: {
-          title: 'statistic',
-        },
-      },
+      // {
+      //   path: 'statistic',
+      //   component: StatisticsComponent,
+      //   data: {
+      //     title: 'statistic',
+      //   },
+      // },
       {
         path: 'product',
         component: ProductComponent,

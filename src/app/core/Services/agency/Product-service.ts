@@ -10,7 +10,7 @@ import {Injectable, Injector} from "@angular/core";
 @Injectable()
 export class ProductService {
 
-  baseUrl: string = environment.agencyBaseUrl;
+  baseUrl: string = environment.warehouseBaseUrl;
 
   constructor(private http: HttpClient) {
   }
