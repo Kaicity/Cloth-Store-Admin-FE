@@ -1,0 +1,64 @@
+<div style=" margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;">
+  <div id="row1">
+    <div style="border: 2px solid darkgray; padding: 10px; display: inline-block; width: 15vw; text-align: center">Đơn
+      đặt
+      hàng mới
+    </div>
+    <div *ngFor="let bill of this.bookingBills">
+      <br>
+      <br>
+      <button style="width: 15vw;" (click)="sendMessage()">{{'Đơn hàng mã số: '+bill.code}} <br> {{'Tổng giá tiền:'+bill.total}}</button>
+    </div>
+  </div>
+
+  <div id="row2">
+    <div style="border: 2px solid darkgray; padding: 10px; display: inline-block; width: 15vw; text-align: center">Đơn
+      đã
+      duyệt
+    </div>
+    <div *ngFor="let bill of this.checkedBills">
+      <br>
+      <br>
+      <button style="width: 15vw;">{{'Đơn hàng mã số: '+bill.code}} <br> {{'Tổng giá tiền:'+bill.total}}</button>
+    </div>
+  </div>
+
+  <div id="row3">
+    <div style="border: 2px solid darkgray; padding: 10px; display: inline-block; width: 15vw; text-align: center">Đơn
+      đang giao hàng
+    </div>
+    <div *ngFor="let bill of this.shippingBills">
+      <br>
+      <br>
+      <button style="width: 15vw;">{{'Đơn hàng mã số: '+bill.code}} <br> {{'Tổng giá tiền:'+bill.total}}</button>
+    </div>
+  </div>
+
+  <div id="row4">
+    <div style="border: 2px solid darkgray; padding: 10px; display: inline-block; width: 15vw; text-align: center">Đơn
+      đã hoàn thành
+    </div>
+    <div *ngFor="let bill of this.completedBills">
+      <br>
+      <br>
+      <button style="width: 15vw;">{{'Đơn hàng mã số: '+bill.code}} <br> {{'Tổng giá tiền:'+bill.total}}</button>
+    </div>
+  </div>
+
+  <div id="row5">
+    <div style="border: 2px solid darkgray; padding: 10px; display: inline-block; width: 15vw; text-align: center">Đơn
+      đã hủy
+    </div>
+    <div *ngFor="let bill of this.cancelledBills">
+      <br>
+      <br>
+      <button style="width: 15vw;">{{'Đơn hàng mã số: '+bill.code}} <br> {{'Tổng giá tiền:'+bill.total}}</button>
+    </div>
+  </div>
+
+
+</div>

@@ -4,12 +4,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {ControlMaterial} from "../../../UI-COMPONENT/ControlMaterial";
 import {DataTableComponent} from "../../../shared/components/data-table/data-table.component";
-import {TestComponent} from "./pages/test.component";
+import {BillRealTimeComponent} from "./pages/bill-real-time.component";
 
 export const routes: Routes = [
   {
     path: '',
-    component: TestComponent,
+    component: BillRealTimeComponent,
 
   },
 ];
@@ -27,6 +27,6 @@ export const routes: Routes = [
   ]
 })
 
-export class TestModule {
+export class BillRealTimeModule {
 
 }

@@ -1,12 +1,20 @@
-import { Observable } from "rxjs";
-import { baseService } from "../Generic/baseService";
-import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import {HttpClient} from '@angular/common/http';
+import {Environment} from "@angular/cli/lib/config/workspace-schema";
+import {environment} from "../../Environment/Environment";
+import {Injectable, Injector} from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ExportingbillService extends baseService{
-    public addBill(exportingbillFull:any): Observable<any> {
-        return this.post('/api/v1/Exportingbill/create', exportingbillFull);
-    }
+@Injectable()
+export class ExportingbillService {
+  baseUrl: string = environment.agencyBaseUrl;
+
+  constructor(private http: HttpClient) {
+  }
+
+  public getAllBill(): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/v1/Exportingbill/getAllExportingBill`, {});
+  }
 }
