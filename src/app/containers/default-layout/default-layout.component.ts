@@ -5,6 +5,7 @@ import {ProductCustomerManagement} from "../../shared/utils/ProductCustomerManag
 import {OperationManagement} from "../../shared/utils/OperationManagement";
 import {EmployeeManagement} from "../../shared/utils/EmployeeManagement";
 import {StatisticNavItems} from "../../shared/utils/StatisticNavItems";
+import {BillInDayItems} from "../../shared/utils/BillInDayItems";
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,7 @@ export class DefaultLayoutComponent {
   public employeeManagement = EmployeeManagement;
   public reportNavItems = ReportNavItems;
   public StatisticNavItems = StatisticNavItems;
+  public billInDayItems = BillInDayItems;
   constructor() {}
 
   protected readonly top = top;

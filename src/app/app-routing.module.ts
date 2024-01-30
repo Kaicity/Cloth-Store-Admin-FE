@@ -32,9 +32,9 @@ const routes: Routes = [
           import('./views/base/product/product.module').then((m) => m.ProductModule)
       },
       {
-        path: 'test',
+        path: 'bill-real-time',
         loadChildren: () =>
-          import('./views/base/test/test.module').then((m) => m.TestModule)
+          import('./views/base/bill-real-time/bill-real-time.module').then((m) => m.BillRealTimeModule)
       }
     ]
   },

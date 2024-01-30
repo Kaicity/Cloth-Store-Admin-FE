@@ -4,10 +4,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppAddProductComponent} from "../components/app-add-product/app-add-product.component";
 import {AppSeachProductComponent} from "../components/app-seach-product/app-seach-product.component";
 import {ProductService} from "../../../../core/Services/agency/Product-service";
-import {ProductDto} from "../../../../core/apis/Dtos/productDto";
 import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
 import {BaseSearchModel} from "../../../../core/apis/Dtos/base-search-model";
 import {ToastrService} from "ngx-toastr";
+import {ProductDto} from "../../../../core/apis/Dtos/ProductDto";
 
 
 
