@@ -12,5 +12,4 @@ export class ExportingBillDto {
   status!: BillStatus | null;
   customerDto!: CustomerDto | null;
   agencyDto!: agencyDto | null;
-
 }
