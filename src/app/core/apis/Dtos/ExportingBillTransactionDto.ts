@@ -8,5 +8,4 @@ export class ExportingBillTransactionDto {
     product! : ProductDto | null;
     quantity : number = 1;
     amount! : number | null;
-
 }
