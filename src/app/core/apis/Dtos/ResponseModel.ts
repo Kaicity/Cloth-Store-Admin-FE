@@ -1,6 +1,6 @@
-export class ResponseModel<T>{
-    type!:number;
-    status!: number;
-    message?: string[]=[];
-    result!:T;
+export class ResponseModel<T> {
+  type!: number;
+  status!: number;
+  message?: string[] = [];
+  result!: T;
 }

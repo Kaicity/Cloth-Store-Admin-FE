@@ -1,8 +1,9 @@
 :host ::ng-deep table{
+   max-width: 100%;
    width: 80vw;
    height: auto;
    background-color: #fff;
-   margin-left: 1vw;
+   margin-left: 0.5vw;
  }
 :host ::ng-deep thead{
   background-color: darkgray;
@@ -15,6 +16,7 @@
   padding-left: 16px;
   font-size: 16px;
 }
+
 
 
 

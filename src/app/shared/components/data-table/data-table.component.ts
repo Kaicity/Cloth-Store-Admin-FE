@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PeriodicElement} from "../../../views/base/product/pages/product.component";
 import {ControlMaterial} from "../../../UI-COMPONENT/ControlMaterial";
 import {BaseSearchModel} from "../../../core/apis/Dtos/base-search-model";
 
@@ -14,7 +13,6 @@ import {BaseSearchModel} from "../../../core/apis/Dtos/base-search-model";
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() dataTable!: PeriodicElement[];
   @Input() columnNumber!: number;
   @Input() tableFormatClass!: string;
   @Input() search!: BaseSearchModel<any>;

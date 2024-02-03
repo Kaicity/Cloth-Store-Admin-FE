@@ -7,4 +7,5 @@ export class CompanyDto{
   phone!:String | null;
   address!:String | null;
   code!:String | null;
+
 }

@@ -37,7 +37,7 @@
                   <div class="card-body" id="sale-report-body">
                     <div class="col-sm-2">
                       <div class="col-12">
-                        <h5 i18n="@@sale-report-quickly-options">Report</h5>
+                        <h5 i18n="@@sale-report-quickly-optionSizes">Report</h5>
                       </div>
                       <select [(ngModel)]="reportType" (ngModelChange)="onReportTypeChange()" class="form-control">
                         <option *ngFor="let item of reportTypesNames" [value]="item.id">{{item.name}}</option>
@@ -46,23 +46,23 @@
                     <hr>
                     <div class="row mb-1">
                       <div class="col-12">
-                        <h5 i18n="@@sale-report-quickly-options">Quickly options</h5>
+                        <h5 i18n="@@sale-report-quickly-optionSizes">Quickly optionSizes</h5>
                       </div>
                       <div class="col-md-8">
                         <button (click)="onGetSaleReport('day')" class="btn btn-success mr-2"
-                                i18n="@@sale-report-quickly-options-1">Today
+                                i18n="@@sale-report-quickly-optionSizes-1">Today
                         </button>
                         <button (click)="onGetSaleReport('week')" class="btn btn-success mr-2"
-                                i18n="@@sale-report-quickly-options-2">Week
+                                i18n="@@sale-report-quickly-optionSizes-2">Week
                         </button>
                         <button (click)="onGetSaleReport('month')" class="btn btn-success mr-2"
-                                i18n="@@sale-report-quickly-options-3">Monthly
+                                i18n="@@sale-report-quickly-optionSizes-3">Monthly
                         </button>
                         <!--                        <button (click)="onGetSaleReport('quarter')" class="btn btn-success mr-2"-->
-                        <!--                                i18n="@@sale-report-quickly-options-4">Quarterly-->
+                        <!--                                i18n="@@sale-report-quickly-optionSizes-4">Quarterly-->
                         <!--                        </button>-->
                         <button (click)="onGetSaleReport('year')" class="btn btn-success mr-2"
-                                i18n="@@sale-report-quickly-options-5">Yearly
+                                i18n="@@sale-report-quickly-optionSizes-5">Yearly
                         </button>
                       </div>
                     </div>
