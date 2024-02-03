@@ -1,8 +1,9 @@
+import {ProductDto} from "./ProductDto";
+import {OptionDto} from "./OptionDto";
 
 export class SizesDto {
   id!: string | null;
-  name!: string | null;
+  optionProductDto!: OptionDto | null;
   addition!: number | null;
-  productDto!: string | null;
-
+  productDto!: ProductDto | null;
 }

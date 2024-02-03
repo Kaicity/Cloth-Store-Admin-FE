@@ -1,8 +1,11 @@
+import {OptionDto} from "./OptionDto";
+import {ProductDto} from "./ProductDto";
+
 export class ColorsDto {
   id!: string | null;
-  name!: string | null;
+  optionProductDto!: OptionDto | null;
   addition!: number | null;
-  productDto!: string | null;
+  productDto!: ProductDto | null;
   image!: string | null;
 
 }

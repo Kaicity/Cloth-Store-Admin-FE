@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgModule} from '@angular/core';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {BrowserModule, Title} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgScrollbarModule } from 'ngx-scrollbar';
+import {NgScrollbarModule} from 'ngx-scrollbar';
 // Import routing module
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 // Import app component
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 // Import containers
-import { DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent } from './containers';
-import { IconModule, IconSetService } from '@coreui/icons-angular';
+import {DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent} from './containers';
+import {IconModule, IconSetService} from '@coreui/icons-angular';
 import {ControlMaterial} from "./UI-COMPONENT/ControlMaterial";
 
 import {
@@ -73,7 +73,7 @@ const APP_CONTAINERS = [
     CardModule,
     NgScrollbarModule,
     ControlMaterial,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     {

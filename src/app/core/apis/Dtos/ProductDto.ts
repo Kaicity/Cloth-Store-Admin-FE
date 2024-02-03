@@ -9,7 +9,7 @@ export class ProductDto {
     code!: String | null;
     price!:number | null;
     name!:String | null;
-    discription!: string | null;
+    description!: string | null;
     status!: string | null;
     cateloryDto!:CateloryDto | null;
     companyDto!:CompanyDto | null;
@@ -17,5 +17,4 @@ export class ProductDto {
     specification!: String | null;
     colors! : ColorsDto[] | null;
     sizes! : SizesDto[] | null;
-
 }

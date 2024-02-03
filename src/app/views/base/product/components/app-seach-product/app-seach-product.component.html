@@ -8,20 +8,26 @@
     <form class="row g-3">
       <div class="mb-3 col-md-6">
         <label for="productId" class="col-form-label">ID</label>
-        <input type="text" class="form-control" id="productId">
+        <input type="text" class="form-control" id="productId" [(ngModel)]="productId"
+               [ngModelOptions]="{standalone: true}" #ci="ngModel" required
+               (input)="updateInputs('inputId')" [disabled]="this.productCode !== '' || this.productName !== ''">
       </div>
       <div class="mb-3 col-md-6">
         <label for="productCode" class="col-form-label">Code</label>
-        <input type="text" class="form-control" id="productCode">
+        <input type="text" class="form-control" id="productCode" [(ngModel)]="productCode"
+               [ngModelOptions]="{standalone: true}" #ci="ngModel" required [disabled]="this.productId !=='' || this.productName !== ''"
+               (input)="updateInputs('inputCode')">
       </div>
       <div class="mb-3">
         <label for="productName" class="col-form-label">Tên sản phẩm</label>
-        <input type="text" class="form-control" id="productName">
+        <input type="text" class="form-control" id="productName" [(ngModel)]="productName "
+               [ngModelOptions]="{standalone: true}" #ci="ngModel" required [disabled]="this.productId !=='' || this.productCode !== ''"
+               (input)="updateInputs('inputName')">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary"  >Load all</button>
-        <button type="button" class="btn btn-primary" (click)="wtf()" >Search</button>
+        <button type="button" class="btn btn-primary"  (click)="loadProductFirst()">Load all</button>
+        <button type="button" class="btn btn-primary" (click)="btnSeachId(productId, productCode, productName)">Search</button>
       </div>
     </form>
   </div>
