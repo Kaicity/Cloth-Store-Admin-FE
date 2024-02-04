@@ -1,6 +1,6 @@
 export class CateloryDto{
-  id!:String | null;
-  code!:String | null;
-  name!:String | null;
-  comment!:String | null;
+  id!:string | null;
+  code!:string | null;
+  name!:string | null;
+  comment!:string | null;
 }

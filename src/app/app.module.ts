@@ -35,54 +35,14 @@ import {
 } from '@coreui/angular';
 import {HttpClientModule} from "@angular/common/http";
 
-
-const APP_CONTAINERS = [
-  DefaultFooterComponent,
-  DefaultHeaderComponent,
-  DefaultLayoutComponent
-];
+const APP_CONTAINERS = [DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent];
 
 @NgModule({
   declarations: [AppComponent, ...APP_CONTAINERS],
-  imports: [
-    FormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    AvatarModule,
-    BreadcrumbModule,
-    FooterModule,
-    DropdownModule,
-    GridModule,
-    HeaderModule,
-    SidebarModule,
-    IconModule,
-    NavModule,
-    ButtonModule,
-    FormModule,
-    UtilitiesModule,
-    ButtonGroupModule,
-    ReactiveFormsModule,
-    SidebarModule,
-    SharedModule,
-    TabsModule,
-    ListGroupModule,
-    ProgressModule,
-    BadgeModule,
-    ListGroupModule,
-    CardModule,
-    NgScrollbarModule,
-    ControlMaterial,
-    HttpClientModule,
-  ],
-  providers: [
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    },
-    IconSetService,
-    Title
-  ],
+  imports: [FormsModule, BrowserModule, BrowserAnimationsModule, AppRoutingModule, AvatarModule, BreadcrumbModule, FooterModule, DropdownModule, GridModule, HeaderModule, SidebarModule, IconModule, NavModule, ButtonModule, FormModule, UtilitiesModule, ButtonGroupModule, ReactiveFormsModule, SidebarModule, SharedModule, TabsModule, ListGroupModule, ProgressModule, BadgeModule, ListGroupModule, CardModule, NgScrollbarModule, ControlMaterial, HttpClientModule,],
+  providers: [{
+    provide: LocationStrategy, useClass: HashLocationStrategy
+  }, IconSetService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule {

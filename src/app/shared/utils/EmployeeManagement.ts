@@ -4,15 +4,15 @@ export const EmployeeManagement: INavData[] = [
   {
     name: 'NHÂN VIÊN / CTV',
     url: '/base',
-    iconComponent: { name: 'cilTags' },
+    iconComponent: {name: 'cilTags'},
     children: [
       {
-        iconComponent: { name: 'cilPeople' },
+        iconComponent: {name: 'cilPeople'},
         name: 'Quản lý nhân viên',
         url: '/base/cards'
       },
       {
-        iconComponent: { name: 'cilBookmark' },
+        iconComponent: {name: 'cilBookmark'},
         name: 'Quản lý chức vụ',
         url: '/base/cards'
       },

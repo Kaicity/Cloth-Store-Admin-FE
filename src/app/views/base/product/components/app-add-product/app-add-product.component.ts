@@ -3,11 +3,8 @@ import {SizesDto} from "../../../../../core/apis/Dtos/SizesDto";
 import {ColorsDto} from "../../../../../core/apis/Dtos/ColorsDto";
 import {OptionDto} from "../../../../../core/apis/Dtos/OptionDto";
 import {ProductDto} from "../../../../../core/apis/Dtos/ProductDto";
-import {ProductService} from "../../../../../core/Services/agency/Product-service";
+import {ProductService} from "../../../../../core/Services/agency/ProductService";
 import {Router} from "@angular/router";
-import value from "*.json";
-import {ProductComponent} from "../../pages/product.component";
-import {elementAt} from "rxjs";
 
 interface SpecificationProduct {
   value: number;
@@ -161,7 +158,7 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
     this.productStatus = status;
   }
 
-  addProduct(message?: any) {
+  addProduct() {
     //2 option them sua dua vao value[0,1]
     if (this.btnName[0].value == 0) {
       this.product.status = this.productStatus;
@@ -179,6 +176,7 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
       this.productService.addProduct(this.product).subscribe(
         (res: any) => {
           console.log(res);
+          alert("Sản phẩm đã được thêm");
           this.resetPage();
         },
       )

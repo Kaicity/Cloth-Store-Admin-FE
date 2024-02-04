@@ -1,16 +1,17 @@
-:host ::ng-deep table{
-   max-width: 100%;
-   width: 80vw;
-   height: auto;
-   background-color: #fff;
-   margin-left: 0.5vw;
- }
-:host ::ng-deep thead{
+:host ::ng-deep table {
+  max-width: 100%;
+  width: 80vw;
+  height: auto;
+  background-color: #fff;
+  margin-left: 0.5vw;
+}
+
+:host ::ng-deep thead {
   background-color: darkgray;
   font-weight: normal;
 }
 
-:host ::ng-deep  td {
+:host ::ng-deep td {
   width: auto;
   border-right: 1px solid #d8dbe0;
   padding-left: 16px;

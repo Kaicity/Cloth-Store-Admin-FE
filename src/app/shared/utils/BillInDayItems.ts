@@ -4,9 +4,7 @@ export const BillInDayItems: INavData[] = [
   {
     name: 'Hóa Đơn Trong Ngày',
     url: '/bill-real-time',
-    children: [
-
-    ]
+    children: []
   },
 
 ];

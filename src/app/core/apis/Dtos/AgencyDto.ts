@@ -1,12 +1,12 @@
 import {DatePipe} from "@angular/common";
 
-export class CompanyDto {
+export class agencyDto {
   id!: string | null;
-  companyid!: string | null;
   name!: string | null;
-  createDate!: DatePipe | null;
-  updateDate!: DatePipe | null;
+  createdDate!: DatePipe | null;
+  updatedDate?: DatePipe | null;
   phone!: string | null;
   address!: string | null;
   code!: string | null;
+  companyId!: string | null;
 }

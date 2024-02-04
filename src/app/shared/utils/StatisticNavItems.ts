@@ -3,7 +3,7 @@ import {INavData} from "@coreui/angular";
 export const StatisticNavItems: INavData[] = [
   {
     name: 'HỆ THỐNG ThỐNG KÊ',
-    url: '',
+    url: '/base',
     iconComponent: {name: 'cilSettings'},
 
     children: [

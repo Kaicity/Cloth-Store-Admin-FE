@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-docs-link',
@@ -11,7 +11,8 @@ export class DocsLinkComponent implements OnInit {
   @Input() name?: string;
   @Input() text?: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   @HostBinding('class')
   get hostClasses(): any {

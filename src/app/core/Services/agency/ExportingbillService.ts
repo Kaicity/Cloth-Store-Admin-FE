@@ -1,13 +1,11 @@
 import {Observable} from "rxjs";
 import {HttpClient} from '@angular/common/http';
-import {Environment} from "@angular/cli/lib/config/workspace-schema";
 import {environment} from "../../Environment/Environment";
-import {Injectable, Injector} from "@angular/core";
+import {Injectable} from "@angular/core";
 
 @Injectable({
   providedIn: 'root'
-})
-@Injectable()
+}) @Injectable()
 export class ExportingbillService {
   baseUrl: string = environment.agencyBaseUrl;
 

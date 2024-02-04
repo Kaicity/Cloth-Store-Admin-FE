@@ -6,9 +6,7 @@ import {BaseSearchModel} from "../../../core/apis/Dtos/base-search-model";
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss',
-  imports: [
-    ControlMaterial
-  ],
+  imports: [ControlMaterial],
   standalone: true
 })
 export class DataTableComponent implements OnInit {
@@ -18,7 +16,6 @@ export class DataTableComponent implements OnInit {
   @Input() search!: BaseSearchModel<any>;
   @Input() data2Show: any;
   itemInPageList: number[] = [10, 25, 50, 100];
-
 
   public updateDataOfPageWhenChoseNext(event: any) {
 
@@ -39,5 +36,4 @@ export class DataTableComponent implements OnInit {
   ngOnInit(): void {
     this.search.currentPage = 0;
   }
-
 }

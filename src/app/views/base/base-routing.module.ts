@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {ProductComponent} from "./product/pages/product.component";
 import {StatisticsComponent} from "./statistic/pages/statistics.component";
@@ -13,7 +13,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'statistic',
+        path: '/statistic',
         component: StatisticsComponent
         ,
         data: {
@@ -21,14 +21,14 @@ const routes: Routes = [
         },
       },
       {
-        path: 'product',
+        path: '/product',
         component: ProductComponent,
         data: {
           title: 'product',
         },
       },
       {
-        path: 'bill-real-time',
+        path: '/bill-real-time',
         component: BillRealTimeComponent,
         data: {
           title: 'bill-real-time',
@@ -39,8 +39,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes),FormsModule],
+  imports: [RouterModule.forChild(routes), FormsModule],
   exports: [RouterModule],
 })
-export class BaseRoutingModule {}
+export class BaseRoutingModule {
+}
 

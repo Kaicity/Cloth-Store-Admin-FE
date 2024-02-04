@@ -1,3 +1,0 @@
-export enum TYPESOCKET{
-  BILL_REAL_TIME="BILL_REAL_TIME"
-}
