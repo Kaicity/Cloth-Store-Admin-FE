@@ -1,25 +1,16 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ProductService} from "../../../../../core/Services/agency/Product-service";
+import {ProductService} from "../../../../../core/Services/agency/ProductService";
 import {ProductDto} from "../../../../../core/apis/Dtos/ProductDto";
 import {Router} from "@angular/router";
 
-declare var toastr: any;
-
 @Component({
-  selector: 'app-app-seach-product',
-  templateUrl: './app-seach-product.component.html',
+  selector: 'app-app-seach-product', templateUrl: './app-seach-product.component.html',
 })
 
 export class AppSeachProductComponent implements OnInit, AfterViewInit {
   productId: string = '';
   productCode: string = '';
   productName: string = '';
-
-  seachCore: ({ display: string; value: number } | { display: string; value: number } | { display: string; value: number })[] =
-    [{display: this.productId, value: 0},
-      {display: this.productCode, value: 1},
-      {display: this.productName, value: 2}];
 
   isSeachChose: boolean = false;
   productItem!: ProductDto
@@ -49,21 +40,19 @@ export class AppSeachProductComponent implements OnInit, AfterViewInit {
   }
 
   btnSeachId(productId: string, productCode: string, productName: string) {
-    if(this.productId){
+    if (this.productId) {
       this.dataProduct.emit(this.productId);
-    }
-    else if(productCode){
+    } else if (productCode) {
       this.dataProduct.emit(this.productCode);
-    }
-    else if(productName){
+    } else if (productName) {
       this.dataProduct.emit(this.productName);
-    }
-    else return;
+    } else return;
   }
 
   loadProductFirst() {
     this.resetPage();
   }
+
   updateInputs(updatedInput: string) {
     if (this.productId === 'inputId') {
       this.productCode = '';
@@ -76,6 +65,4 @@ export class AppSeachProductComponent implements OnInit, AfterViewInit {
       this.productCode = '';
     }
   }
-
-  protected readonly Number = Number;
 }

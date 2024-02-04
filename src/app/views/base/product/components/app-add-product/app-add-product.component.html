@@ -20,7 +20,7 @@
           <input type="text" class="form-control" aria-label="Dollar amount" id="price" name="price"
                  [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}" (keypress)="validateInput($event)"
                  #price="ngModel" required
-          (input)="formatCurrency()">
+                 (input)="formatCurrency()">
           <span class="input-group-text">đ</span>
         </div>
       </div>
@@ -136,7 +136,6 @@
       </div>
 
 
-
       <div class="col-md-1 mb-3">
         <br>
         <button type="button" class="btn btn-primary"
@@ -249,6 +248,7 @@
           padding: 8px;
           text-align: left;
         }
+
         .table th:last-child, .table td:last-child {
           border-right: none;
         }
@@ -257,7 +257,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
         <button type="button" class="btn btn-primary" (click)="addProduct()"
-                [disabled]="checkAddProductEnter()">{{btnName[0].display}}</button>
+                [disabled]="checkAddProductEnter()">{{ btnName[0].display }}
+        </button>
       </div>
     </form>
   </div>

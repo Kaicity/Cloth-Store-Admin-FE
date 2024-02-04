@@ -40,7 +40,7 @@
                         <h5 i18n="@@sale-report-quickly-optionSizes">Report</h5>
                       </div>
                       <select [(ngModel)]="reportType" (ngModelChange)="onReportTypeChange()" class="form-control">
-                        <option *ngFor="let item of reportTypesNames" [value]="item.id">{{item.name}}</option>
+                        <option *ngFor="let item of reportTypesNames" [value]="item.id">{{ item.name }}</option>
                       </select>
                     </div>
                     <hr>

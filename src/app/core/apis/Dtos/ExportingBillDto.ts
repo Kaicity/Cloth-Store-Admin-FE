@@ -1,13 +1,13 @@
 import {CustomerDto} from "./CustomerDto";
-import {CustomerInfoDto} from "./CustomerInfoDto";
-import {agencyDto} from "./agencyDto";
-import {BillStatus} from "../../constanst/bill_Status";
+import {agencyDto} from "./AgencyDto";
+import {BillStatus} from "../../constanst/BillStatus";
+import {DatePipe} from "@angular/common";
 
 export class ExportingBillDto {
-  id!: String | null;
-  code!: String | null;
-  dateExport!: Date | null;
-  dateCreated!: Date | null;
+  id!: string | null;
+  code!: string | null;
+  dateExport!: DatePipe | null;
+  dateCreated!: DatePipe | null;
   total!: number | null;
   status!: BillStatus | null;
   customerDto!: CustomerDto | null;

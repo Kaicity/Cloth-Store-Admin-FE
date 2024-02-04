@@ -3,12 +3,12 @@ import {INavData} from "@coreui/angular";
 export const ProductCustomerManagement: INavData[] = [
   {
     name: 'SẢN PHẨM / KHÁCH',
-    url: '',
+    url: '/base',
     iconComponent: {name: 'cilNotes'},
     children: [
       {
         name: 'Quản lý sản phẩm',
-        iconComponent: { name: 'cilInbox' },
+        iconComponent: {name: 'cilInbox'},
         children: [
           {
             name: 'Hàng hóa - sản phẩm',
@@ -30,7 +30,7 @@ export const ProductCustomerManagement: INavData[] = [
       },
       {
         name: 'Quản lý Khách hàng',
-        iconComponent: { name: 'cilUser' },
+        iconComponent: {name: 'cilUser'},
         children: [
           {
             name: 'Khách Hàng',

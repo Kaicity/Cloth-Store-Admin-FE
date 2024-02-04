@@ -1,14 +1,13 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {AppAddProductComponent} from "../components/app-add-product/app-add-product.component";
 import {AppSeachProductComponent} from "../components/app-seach-product/app-seach-product.component";
-import {ProductService} from "../../../../core/Services/agency/Product-service";
+import {ProductService} from "../../../../core/Services/agency/ProductService";
 import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
 import {BaseSearchModel} from "../../../../core/apis/Dtos/base-search-model";
 import {OptionDto} from "../../../../core/apis/Dtos/OptionDto";
-import {OptionService} from "../../../../core/Services/agency/Option-service";
+import {OptionService} from "../../../../core/Services/agency/OptionService";
 import {ProductDto} from "../../../../core/apis/Dtos/ProductDto";
 import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
 
 interface btnFunction {
   value: number;
@@ -16,9 +15,7 @@ interface btnFunction {
 }
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.scss'
+  selector: 'app-product', templateUrl: './product.component.html', styleUrl: './product.component.scss'
 })
 
 export class ProductComponent implements OnInit, AfterViewInit {
@@ -41,17 +38,21 @@ export class ProductComponent implements OnInit, AfterViewInit {
   productId: String = '';
 
   isBtnName: ({ display: string; value: number } | { display: string; value: number })[] = [{
-    display: '',
-    value: 0
+    display: '', value: 0
   }, {display: '', value: 1}];
-
-  receiFuncValue!: number;
 
   constructor(private productService: ProductService, private optionService: OptionService, private router: Router) {
   }
 
+  //custom after
+  simulateLoading() {
+    this.isShowLoading = true;
+    setTimeout(() => {
+      this.isShowLoading = false;
+    },1500)
+  }
+
   showInsertForm() {
-    console.log(this.addWrapper);
     this.isBtnName[0].value = 0;
     this.isBtnName[0].display = "Thêm";
     this.addWrapper.isInsertChose = true;
@@ -70,64 +71,46 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // console.log(this.addWrapper);
-    // console.log(this.searchWrapper);
+
   }
 
   private getAllProduct() {
-    this.productService.getAllProduct().subscribe(
-      res => {
+    this.isShowLoading = true;
+    setTimeout(() => {
+      this.productService.getAllProduct().subscribe(res => {
         this.getAllProductComplete(res)
       });
+      this.isShowLoading = false;
+    }, 1500);
   }
 
   private getAllProductComplete(res: ResponseModel<BaseSearchModel<ProductDto[]>>) {
     if (res.status !== 200) {
       if (res.message) {
-        res.message.forEach(
-          value => {
-            var t: any;
-            t.error.message(value);
-          }
-        );
+        res.message.forEach(value => {
+          var t: any;
+          t.error.message(value);
+        });
         return;
       }
     }
     this.search = res.result;
-    // Lấy danh sách đối tượng từ API
     this.search.recordOfPage = 25;
-    console.log("lien cc" + this.search.recordOfPage);
     for (let i = 0; i < this.search.recordOfPage; i++) {
-      // Your code here
-      if (this.search.result[i] != undefined)
-        this.productDtos.push(this.search.result[i]);
+      if (this.search.result[i] != undefined) this.productDtos.push(this.search.result[i]);
     }
-    console.log(this.search);
-    console.log(this.productDtos);
   }
 
   getAllOptionSizes() {
     this.optionService.getAllOptionSizes().subscribe(res => {
-      console.log(res.result);
       this.optionSizes = res.result;
-
-      // this.optionSizes.forEach(value => {
-      //   this.sizesName.push(value);
-      // });
-
       this.sizesName = this.optionSizes;
     });
   }
 
   getAllOptionColors() {
     this.optionService.getAllOptionColors().subscribe(res => {
-      console.log(res.result);
       this.optionColors = res.result;
-
-      // this.optionColors.forEach(value => {
-      //   this.colorsName.push(value);
-      // })
-
       this.colorsName = this.optionColors;
     });
   }
@@ -136,11 +119,9 @@ export class ProductComponent implements OnInit, AfterViewInit {
     console.log("Product id: " + id);
     this.productId = id;
     //APIs get product by id
-    this.productService.getProductId(id).subscribe(
-      (res) => {
-        product = res;
-      }
-    )
+    this.productService.getProductId(id).subscribe((res) => {
+      product = res;
+    })
   }
 
   resetPage() {
@@ -153,15 +134,12 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   deleteProduct() {
     if (this.productId) {
-      this.productService.deleteProduct(this.productId).subscribe(
-        (res) => {
-          alert("Đã xóa sản phẩm");
-          this.resetPage();
-        },
-        error => {
-          alert("Lỗi khi xóa sản phẩm này");
-        }
-      )
+      this.productService.deleteProduct(this.productId).subscribe((res) => {
+        alert("Đã xóa sản phẩm");
+        this.resetPage();
+      }, error => {
+        alert("Lỗi khi xóa sản phẩm này");
+      })
     }
   }
 
@@ -173,43 +151,33 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   receiveDataFromChildForId(productId: string) {
     if (productId) {
-      this.productService.getProductId(productId).subscribe(
-        (res) => {
-          console.log(res);
-          this.productDtos = [];
-          this.productDtos.push(res.result);
-        }
-      )
+      this.productService.getProductId(productId).subscribe((res) => {
+        this.productDtos = [];
+        this.productDtos.push(res.result);
+      })
     } else {
       this.getAllProduct();
     }
   }
 
   receiveDataFromChildForCode(productCode: string) {
-   if(productCode){
-     this.productService.getProductCode(productCode).subscribe(
-       (res) => {
-         console.log(res);
-         this.productDtos = [];
-         this.productDtos.push(res.result);
-       }
-     )
-   }
-   else {
-     this.getAllProduct();
-   }
+    if (productCode) {
+      this.productService.getProductCode(productCode).subscribe((res) => {
+        this.productDtos = [];
+        this.productDtos.push(res.result);
+      })
+    } else {
+      this.getAllProduct();
+    }
   }
 
   receiveDataFromChildForName(productName: string) {
-    if(productName){
-      this.productService.getProductName(productName).subscribe(
-        (res) => {
-          this.productDtos = [];
-          this.productDtos = res.result.result;
-        }
-      )
-    }
-    else {
+    if (productName) {
+      this.productService.getProductName(productName).subscribe((res) => {
+        this.productDtos = [];
+        this.productDtos = res.result.result;
+      })
+    } else {
       this.getAllProduct();
     }
   }

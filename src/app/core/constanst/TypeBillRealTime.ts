@@ -1,9 +1,7 @@
 export enum TypeBillRealTime {
-  BOOKING = "BOOKING",
-  SHIPPING = "SHIPPING",
+  BOOKING = "BOOKING", SHIPPING = "SHIPPING",
 
-  CHECKED = "CHECKED",
-  CANCELLED = "CANCELLED",
+  CHECKED = "CHECKED", CANCELLED = "CANCELLED",
   COMPELETED = "COMPELETED",
 
   // cho cộng tác viên

@@ -7,5 +7,4 @@ export class ColorsDto {
   addition!: number | null;
   productDto!: ProductDto | null;
   image!: string | null;
-
 }

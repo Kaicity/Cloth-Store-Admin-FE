@@ -28,23 +28,23 @@ export const routes: Routes = [
     AppSeachProductComponent,
 
   ],
-    imports: [
-        RouterModule.forChild(routes),
-        FormsModule,
-        MatTableModule,
-        ControlMaterial,
-        DataTableComponent,
-        NgForOf,
-        ModalWrapperComponent,
-        ReactiveFormsModule,
-        AlertComponent,
-        CurrencyPipe,
-        NgIf,
-        BreadcrumbComponent,
-        BreadcrumbItemComponent,
-        SlicePipe,
-        SpinnerComponent,
-    ]
+  imports: [
+    RouterModule.forChild(routes),
+    FormsModule,
+    MatTableModule,
+    ControlMaterial,
+    DataTableComponent,
+    NgForOf,
+    ModalWrapperComponent,
+    ReactiveFormsModule,
+    AlertComponent,
+    CurrencyPipe,
+    NgIf,
+    BreadcrumbComponent,
+    BreadcrumbItemComponent,
+    SlicePipe,
+    SpinnerComponent,
+  ]
 })
 
 export class ProductModule {

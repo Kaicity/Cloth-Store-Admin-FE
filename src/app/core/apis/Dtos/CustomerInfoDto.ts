@@ -1,8 +1,8 @@
 export class CustomerInfoDto {
-    id!: String | null;
-    eid!: String | null;
-    fullname!: String |null;
-    phone!: String | null;
-    email!: String | null;
-    address!: String | null;
+    id!: string | null;
+    eid!: string | null;
+    fullName!: string |null;
+    phone!: string | null;
+    email!: string | null;
+    address!: string | null;
 }

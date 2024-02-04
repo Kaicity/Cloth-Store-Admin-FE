@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component} from '@angular/core';
 
 declare const moment: any;
 
@@ -18,8 +17,8 @@ export class StatisticsComponent {
 
   showDataList: boolean = true;
   showGraph: boolean = true;
-  public fromDate: string="";
-  public toDate: string="";
+  public fromDate: string = "";
+  public toDate: string = "";
 
   reportTypesNames = [
     {id: "1", name: 'Customer Data Report'},
@@ -34,13 +33,15 @@ export class StatisticsComponent {
   };
 
   private tzValue = '';
-  constructor(){}
 
-  getReport(){
+  constructor() {
+  }
+
+  getReport() {
 
   }
 
-  exportReport(){
+  exportReport() {
 
   }
 
@@ -52,8 +53,7 @@ export class StatisticsComponent {
     this.toDate = this.query.toDate;
   }
 
-  onReportTypeChange(){
+  onReportTypeChange() {
 
   }
-
 }

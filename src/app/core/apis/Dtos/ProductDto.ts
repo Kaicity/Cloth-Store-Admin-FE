@@ -5,16 +5,16 @@ import {SizesDto} from "./SizesDto";
 
 
 export class ProductDto {
-    id!:String | null;
-    code!: String | null;
-    price!:number | null;
-    name!:String | null;
-    description!: string | null;
-    status!: string | null;
-    cateloryDto!:CateloryDto | null;
-    companyDto!:CompanyDto | null;
-    image!: String | null;
-    specification!: String | null;
-    colors! : ColorsDto[] | null;
-    sizes! : SizesDto[] | null;
+  id!: string | null;
+  code!: string | null;
+  price!: number | null;
+  name!: string | null;
+  description!: string | null;
+  status!: string | null;
+  cateloryDto!: CateloryDto | null;
+  companyDto!: CompanyDto | null;
+  image!: string | null;
+  specification!: String | null;
+  colors!: ColorsDto[] | null;
+  sizes!: SizesDto[] | null;
 }
