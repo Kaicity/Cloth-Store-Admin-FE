@@ -51,8 +51,10 @@
       </thead>
       <tbody>
       <tr *ngFor="let p of productDtos;">
+        <ng-container *ngIf="p.image !== undefined ">
         <td><a class="product-image"> <img
           [src]=[p.image] alt="product images" style="width: auto; height: 5vh; cursor: pointer;"></a></td>
+        </ng-container>
         <td>{{ p.code }}</td>
         <td>{{ p.name }}</td>
         <td>{{ p.price| currency: 'VND' | slice:1 }}

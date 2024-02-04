@@ -11,11 +11,13 @@ export class AppShowDetailBill implements OnInit, AfterViewInit {
   @Input() bill: ExportingBillFullDto = new ExportingBillFullDto();
   currentDateTime: string = moment().format('YYYY-MM-DD HH:mm:ss');
   isInsertChose: boolean = false;
-  statusBill = [{id: BillStatus.BOOKING, name: 'Đang đặt hàng'}, {
-    id: BillStatus.CHECKED, name: 'Đánh dấu đã xem'
-  }, {id: BillStatus.SHIPPING, name: 'Đã Giao'}, {
-    id: BillStatus.COMPELETED, name: 'Đã hoàn thành'
-  }, {id: BillStatus.CANCELLED, name: 'Đã hủy'}];
+  statusBill = [
+    {id: BillStatus.BOOKING, name: 'Đang đặt hàng'},
+    {id: BillStatus.CHECKED, name: 'Đánh dấu đã xem'},
+    {id: BillStatus.SHIPPING, name: 'Đã Giao'},
+    {id: BillStatus.COMPELETED, name: 'Đã hoàn thành'},
+    {id: BillStatus.CANCELLED, name: 'Đã hủy'}
+  ];
 
   status: string = '';
 
