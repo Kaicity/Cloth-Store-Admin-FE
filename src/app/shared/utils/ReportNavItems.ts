@@ -4,6 +4,7 @@ export const ReportNavItems: INavData[] = [
   {
     name: 'HỆ THỐNG BÁO CÁO',
     url: '/base',
+    iconComponent: {name: 'cilSettings'},
 
     children: [
       {

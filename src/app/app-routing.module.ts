@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { DefaultLayoutComponent } from './containers';
+import {DefaultLayoutComponent} from './containers';
 
 const routes: Routes = [
   {
@@ -21,6 +21,21 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/base/base.module').then((m) => m.BaseModule)
       },
+      {
+        path: 'statistic',
+        loadChildren: () =>
+          import('./views/base/statistic/statistics.module').then((m) => m.StatisticsModule)
+      },
+      {
+        path: 'product',
+        loadChildren: () =>
+          import('./views/base/product/product.module').then((m) => m.ProductModule)
+      },
+      {
+        path: 'bill-real-time',
+        loadChildren: () =>
+          import('./views/base/bill-real-time/bill-real-time.module').then((m) => m.BillRealTimeModule)
+      }
     ]
   },
 
@@ -33,7 +48,6 @@ const routes: Routes = [
       scrollPositionRestoration: 'top',
       anchorScrolling: 'enabled',
       initialNavigation: 'enabledBlocking'
-      // relativeLinkResolution: 'legacy'
     })
   ],
   exports: [RouterModule]

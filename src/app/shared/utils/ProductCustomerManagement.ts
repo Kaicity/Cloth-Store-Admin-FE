@@ -2,34 +2,35 @@ import {INavData} from "@coreui/angular";
 
 export const ProductCustomerManagement: INavData[] = [
   {
-    name: 'SẢN PHẢM / KHÁCH',
+    name: 'SẢN PHẨM / KHÁCH',
     url: '/base',
+    iconComponent: {name: 'cilNotes'},
     children: [
       {
         name: 'Quản lý sản phẩm',
-        iconComponent: { name: 'cil-puzzle' },
+        iconComponent: {name: 'cilInbox'},
         children: [
           {
             name: 'Hàng hóa - sản phẩm',
-            url: '/base/cards'
+            url: '/product'
           },
           {
             name: 'sản phẩm nhập',
-            url: '/base/cards'
+            url: '/cards'
           },
           {
             name: 'sản phẩm bán',
-            url: '/base/cards'
+            url: '/cards'
           },
           {
             name: 'Quản lý đơn vị tính',
-            url: '/base/cards'
+            url: '/cards'
           },
         ],
       },
       {
         name: 'Quản lý Khách hàng',
-        iconComponent: { name: 'cil-puzzle' },
+        iconComponent: {name: 'cilUser'},
         children: [
           {
             name: 'Khách Hàng',

@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-import { AccordionsComponent } from './accordion/accordions.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { CardsComponent } from './cards/cards.component';
-import { CarouselsComponent } from './carousels/carousels.component';
-
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {FormsModule} from "@angular/forms";
+import {ProductComponent} from "./product/pages/product.component";
+import {StatisticsComponent} from "./statistic/pages/statistics.component";
+import {BillRealTimeComponent} from "./bill-real-time/pages/bill-real-time.component";
 
 const routes: Routes = [
   {
@@ -15,45 +13,35 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'cards',
-      },
-      {
-        path: 'accordion',
-        component: AccordionsComponent,
+        path: '/statistic',
+        component: StatisticsComponent
+        ,
         data: {
-          title: 'Accordion',
+          title: 'statistic',
         },
       },
       {
-        path: 'breadcrumbs',
-        component: BreadcrumbsComponent,
+        path: '/product',
+        component: ProductComponent,
         data: {
-          title: 'Breadcrumbs',
+          title: 'product',
         },
       },
       {
-        path: 'cards',
-        component: CardsComponent,
+        path: '/bill-real-time',
+        component: BillRealTimeComponent,
         data: {
-          title: 'Cards',
+          title: 'bill-real-time',
         },
-      },
-      {
-        path: 'carousel',
-        component: CarouselsComponent,
-        data: {
-          title: 'Carousel',
-        },
-      },
+      }
     ],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes), FormsModule],
   exports: [RouterModule],
 })
-export class BaseRoutingModule {}
+export class BaseRoutingModule {
+}
 

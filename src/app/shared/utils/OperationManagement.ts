@@ -4,10 +4,11 @@ export const OperationManagement: INavData[] = [
   {
     name: 'QUẢN LÝ HOẠT ĐỘNG',
     url: '/base',
+    iconComponent: {name: 'cilList'},
     children: [
       {
         name: 'Quản lý Mua Hàng',
-        iconComponent: { name: 'cil-puzzle' },
+        iconComponent: {name: 'cilDollar'},
         children: [
           {
             name: 'Nhập mua hàng hóa - sản phẩm',
@@ -25,7 +26,7 @@ export const OperationManagement: INavData[] = [
       },
       {
         name: 'Quản lý Bán Hàng',
-        iconComponent: { name: 'cil-puzzle' },
+        iconComponent: {name: 'cilDollar'},
         children: [
           {
             name: 'Phiếu đặt hàng',
@@ -51,7 +52,7 @@ export const OperationManagement: INavData[] = [
       },
       {
         name: 'Thu - chi tiền ',
-        iconComponent: { name: 'cil-puzzle' },
+        iconComponent: {name: 'cilCreditCard'},
         children: [
           {
             name: 'Chứng từ thu',
@@ -65,7 +66,7 @@ export const OperationManagement: INavData[] = [
       },
       {
         name: 'Tài sản cố định',
-        iconComponent: { name: 'cil-puzzle' },
+        iconComponent: {name: 'cilLockLocked'},
         url: '/base/breadcrumbs'
       },
 
