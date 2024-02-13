@@ -3,7 +3,6 @@ import {Injectable} from "@angular/core";
 import {environment} from "../../environment/Environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {OptionDto} from "../../apis/Dtos/OptionDto";
 @Injectable(
   {providedIn: "root"}
 )
@@ -18,5 +17,4 @@ export class OptionService {
   public getAllOptionColors(): Observable<any>{
     return this.http.post(`${this.baseUrl}/api/v1/option/getAllColors`, {});
   }
-
 }

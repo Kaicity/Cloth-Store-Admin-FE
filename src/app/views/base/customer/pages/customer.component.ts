@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
-import {CustomerDto} from "../../../../core/apis/Dtos/CustomerDto";
 import {BaseSearchModel} from "../../../../core/apis/Dtos/base-search-model";
 import {AppAddCustomerComponent} from "../components/app-add-customer/app-add-customer.component";
 import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
 import {Router} from "@angular/router";
 import {CustomerService} from "../../../../core/Services/agency/CustomerService";
+import {CustomerModel} from "../../../../core/apis/dtos/Customer.model";
 
 
 @Component({
@@ -16,10 +16,10 @@ import {CustomerService} from "../../../../core/Services/agency/CustomerService"
 export class CustomerComponent implements OnInit, AfterViewInit {
   @ViewChild("AddWrapper") addWrapper!: AppAddCustomerComponent;
   tableFormat: string = "table table-bordered table-striped";
-  public search: BaseSearchModel<CustomerDto[]> = new BaseSearchModel<CustomerDto[]>();
-  customers: CustomerDto[] = []; // Tao danh sach cac khach hang
+  public search: BaseSearchModel<CustomerModel[]> = new BaseSearchModel<CustomerModel[]>();
+  customers: CustomerModel[] = []; // Tao danh sach cac khach hang
   isShowLoading: boolean = false;
-  customerDto!: CustomerDto;
+  customerDto!: CustomerModel;
   specName!: string
   CustomerId: String = '';
   genderValue!: string;
@@ -37,7 +37,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   isBtnName: ({ display: string; value: number } | { display: string; value: number })[] = [{
     display: '', value: 0
   }, {display: '', value: 1}];
-  customerInformation: CustomerDto = new CustomerDto();
+  customerInformation: CustomerModel = new CustomerModel();
 
 
 
@@ -69,7 +69,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     )
   }
 
-  getCustomerData(id: String, customer: CustomerDto) {
+  getCustomerData(id: String, customer: CustomerModel) {
     console.log("Product id: " + id);
     this.CustomerId = id;
     //APIs get product by id
@@ -107,7 +107,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     this.isShowLoading = false;
   }
 
-  async getAllCustomerComplete(res: ResponseModel<BaseSearchModel<CustomerDto[]>>) {
+  async getAllCustomerComplete(res: ResponseModel<BaseSearchModel<CustomerModel[]>>) {
     if (res.status !== 200) {
       if (res.message) {
         res.message.forEach(value => {

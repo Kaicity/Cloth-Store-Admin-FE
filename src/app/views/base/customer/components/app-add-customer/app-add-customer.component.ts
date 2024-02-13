@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {CustomerDto} from "../../../../../core/apis/Dtos/CustomerDto";
 import {Router} from "@angular/router";
 import {CustomerService} from "../../../../../core/Services/agency/CustomerService";
 import {Sex} from "../../../../../core/constanst/Sex";
+import {CustomerModel} from "../../../../../core/apis/dtos/Customer.model";
 
 interface SpecificationCustomer {
   value: Sex;
@@ -18,7 +18,7 @@ interface SpecificationCustomer {
 
 export class AppAddCustomerComponent implements OnInit, AfterViewInit {
   @Input() genderDisplay: string = '';
-  @Input() customer!: CustomerDto;
+  @Input() customer!: CustomerModel;
   @ViewChild("AddDatePicker") addWrapper!: AppAddCustomerComponent;
   specificationCustomer: SpecificationCustomer[] = [
     {value: Sex.MALE, display: 'Nam'},
@@ -37,7 +37,7 @@ export class AppAddCustomerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.customer = new CustomerDto();
+    this.customer = new CustomerModel();
   }
 
   ngAfterViewInit(): void {
