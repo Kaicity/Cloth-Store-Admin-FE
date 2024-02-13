@@ -1,14 +1,15 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {BillStatus} from "../../../../../core/constanst/BillStatus";
-import {ExportingBillFullDto} from "../../../../../core/apis/Dtos/ExportingBillFullDto";
+import {ExportingBillFullModel} from "../../../../../core/apis/dtos/Exporting-bill-full.model";
 
 @Component({
   selector: 'app-show-detail-bill', templateUrl: './app-show-detail-bill.component.html',
 })
 
 export class AppShowDetailBill implements OnInit, AfterViewInit {
-  @Input() bill: ExportingBillFullDto = new ExportingBillFullDto();
+
+  @Input() bill: ExportingBillFullModel = new ExportingBillFullModel();
   currentDateTime: string = moment().format('YYYY-MM-DD HH:mm:ss');
   isInsertChose: boolean = false;
   statusBill = [

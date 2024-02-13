@@ -1,24 +1,46 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ProductService} from "../../../../../core/Services/agency/ProductService";
-import {ProductDto} from "../../../../../core/apis/Dtos/ProductDto";
+import {ProductModel} from "../../../../../core/apis/dtos/Product.model";
 import {Router} from "@angular/router";
+import {ProductSearchModel} from "../../../../../core/apis/dtos/Product-search.model";
+
+interface optionPriceValue {
+  display: string
+}
+
 
 @Component({
   selector: 'app-app-seach-product', templateUrl: './app-seach-product.component.html',
 })
 
 export class AppSeachProductComponent implements OnInit, AfterViewInit {
-  productId: string = '';
+  priceDisplayOption: string = '';
+
+  productPriceRange: string = '';
   productCode: string = '';
   productName: string = '';
 
+  seach: ProductSearchModel = new ProductSearchModel();
+
   isSeachChose: boolean = false;
-  productItem!: ProductDto
-  @Output() dataProduct = new EventEmitter<string>;
-  isForSeach: boolean = true;
+  productItem!: ProductModel
+
+  //Gửi một danh sách product khi seach được đến view cha
+  @Output() dataProductIsSeach = new EventEmitter<ProductModel[]>();
+  products: ProductModel[] = [];
+
+  optionPriceDefault: optionPriceValue[] = [
+    {display: "Thấp nhất"},
+    {display: "200,000 - 400,000"},
+    {display: "400,000 - 600,000"},
+    {display: "600,000 - 800,000"},
+    {display: "800,000 - 1,000,000"},
+    {display: "Cao nhất"}
+  ];
 
   constructor(private productService: ProductService, private router: Router) {
-    this.productItem = new ProductDto();
+    this.productItem = new ProductModel();
+
   }
 
   ngAfterViewInit(): void {
@@ -39,30 +61,30 @@ export class AppSeachProductComponent implements OnInit, AfterViewInit {
     });
   }
 
-  btnSeachId(productId: string, productCode: string, productName: string) {
-    if (this.productId) {
-      this.dataProduct.emit(this.productId);
-    } else if (productCode) {
-      this.dataProduct.emit(this.productCode);
-    } else if (productName) {
-      this.dataProduct.emit(this.productName);
-    } else return;
+
+  btnSeach(products: ProductModel[]) {
+    this.seach.idCompany = "";
+    this.seach.status = "True"
+    this.seach.rangePrice = this.productPriceRange;
+    this.seach.name = this.productName;
+    this.seach.code = this.productCode;
+
+    this.productService.advanceSearch(this.seach).subscribe(
+      (res) => {
+        products = res.result.result;
+        console.log(products);
+        //Vì tính liên tục của angular nên phải gán products liên tục chỗ này
+        this.dataProductIsSeach.emit(products);
+      }
+    )
   }
 
   loadProductFirst() {
     this.resetPage();
   }
 
-  updateInputs(updatedInput: string) {
-    if (this.productId === 'inputId') {
-      this.productCode = '';
-      this.productName = '';
-    } else if (updatedInput === 'inputCode') {
-      this.productId = '';
-      this.productName = '';
-    } else if (updatedInput === 'inputName') {
-      this.productId = '';
-      this.productCode = '';
-    }
+  getOptionValuePrice(optionPrice: optionPriceValue) {
+    this.priceDisplayOption = optionPrice.display;
+    this.productPriceRange = optionPrice.display;
   }
 }

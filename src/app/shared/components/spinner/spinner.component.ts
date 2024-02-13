@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ControlMaterial} from "../../../UI-COMPONENT/ControlMaterial";
+import {ControlMaterial} from "../../../ui-component/ControlMaterial";
 
 @Component({
   selector: 'app-spinner',

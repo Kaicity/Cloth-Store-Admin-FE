@@ -3,9 +3,10 @@ import {Injectable} from '@angular/core';
 import {Stomp} from "@stomp/stompjs";
 import * as SocketJS from 'sockjs-client';
 import {BehaviorSubject} from "rxjs";
-import {SocketMessage} from "../../apis/Dtos/socket-message";
-import {ExportingBillDto} from "../../apis/Dtos/ExportingBillDto";
+
+import {SocketMessage} from "../../apis/dtos/socket-message";
 import {TYPESOCKET} from "../../constanst/TypeSocket";
+import {ExportingBillFullModel} from "../../apis/dtos/Exporting-bill-full.model";
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,7 @@ export class WebsocketService {
     })
   }
 
-  sendMessage(idSocket: string, message: SocketMessage<ExportingBillDto>) {
+  sendMessage(idSocket: string, message: SocketMessage<ExportingBillFullModel>) {
     this.stompClient.send(`/app/${TYPESOCKET.BILL_REAL_TIME}/` + idSocket, {}, JSON.stringify(message))
   }
 

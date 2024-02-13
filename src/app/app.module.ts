@@ -11,7 +11,8 @@ import {AppComponent} from './app.component';
 // Import containers
 import {DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent} from './containers';
 import {IconModule, IconSetService} from '@coreui/icons-angular';
-import {ControlMaterial} from "./UI-COMPONENT/ControlMaterial";
+
+import {ControlMaterial} from "./ui-component/ControlMaterial";
 
 import {
   AvatarModule,
@@ -33,9 +34,10 @@ import {
   TabsModule,
   UtilitiesModule,
 } from '@coreui/angular';
+
 import {HttpClientModule} from "@angular/common/http";
 import {AngularFireModule} from "@angular/fire/compat";
-import {firebaseConfig} from "./core/Environment/environnemtFireBase";
+import {firebaseConfig} from "./core/environment/environnemtFireBase";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 
 const APP_CONTAINERS = [DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent];
@@ -75,7 +77,6 @@ const APP_CONTAINERS = [DefaultFooterComponent, DefaultHeaderComponent, DefaultL
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireModule,
     MatDatepickerModule,
-
 
   ],
   providers: [
