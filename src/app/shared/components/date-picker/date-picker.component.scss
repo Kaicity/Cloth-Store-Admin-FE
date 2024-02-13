@@ -1,0 +1,40 @@
+mat-form-field {
+  height: 6.7vh;
+  width: 20vh;
+  Position:relative;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  bottom: 0.3vh;
+}
+
+.mat-form-field {
+  position: relative; // Đảm bảo phần tử cha có một giá trị position khác "static"
+  z-index: 9999; // Chọn một giá trị z-index phù hợp
+  height: 4.5vh;
+}
+
+// Thiết lập z-index cho datepicker
+.mat-datepicker-content {
+  position: absolute;
+  z-index: 9999; // Chọn một giá trị z-index phù hợp
+
+}
+
+// Thiết lập z-index cho form field và các phần tử bên trong
+.mat-form-field {
+  position: relative; // Đảm bảo phần tử cha có một giá trị position khác "static"
+  z-index: 1; // Chọn một giá trị z-index phù hợp
+}
+
+// Thiết lập z-index cho các phần tử con của form field
+.mat-form-field-wrapper {
+  position: relative; // Đảm bảo phần tử cha có một giá trị position khác "static"
+  z-index: 1; // Chọn một giá trị z-index phù hợp
+}
+
+// Thiết lập z-index cho input và các phần tử bên trong
+.mat-input-element {
+  position: relative; // Đảm bảo phần tử cha có một giá trị position khác "static"
+  z-index: 1; // Chọn một giá trị z-index phù hợp
+}

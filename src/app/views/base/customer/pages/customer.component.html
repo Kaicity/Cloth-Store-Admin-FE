@@ -1,0 +1,130 @@
+<app-spinner [isLoading]="isShowLoading"></app-spinner>
+
+<ng-container *ngIf="customers.length !== 0">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-title">
+      <h1 i18n="@@employees-title">Khách Hàng</h1>
+    </div>
+  </section>
+
+
+  <div class="container-header" style="margin-left: 70vw">
+    <div class="row">
+      <div class="col-auto">
+        <c-breadcrumb>
+          <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
+          <c-breadcrumb-item [active]="true">Khách Hàng</c-breadcrumb-item>
+        </c-breadcrumb>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-header mb-2" style="margin-right: 0.6vw">
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button type="button" class="btn btn-info" style="margin-right: 0.5vw"
+                (click)="showSeachForm()">
+          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: auto;">
+        </button>
+        <button class="btn bg-warning" (click)="showInsertForm()">
+          Thêm Khách Hàng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-data-table [columnNumber]="12" [tableFormatClass]="tableFormat" [search]="search"
+                  [data2Show]="customers">
+    <table class="{{tableFormat}}">
+      <thead>
+      <tr>
+        <th>e-id</th>
+        <th>tên</th>
+        <th>Số Điện Thoại</th>
+        <th>Địa Chỉ</th>
+        <th>ngày Sinh</th>
+        <th>ngày tạo</th>
+        <th>ngày cập nhật</th>
+        <th>Email</th>
+        <th>Mật Khẩu</th>
+        <th>Giới Tính</th>
+        <th>hạng</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let c of customers;">
+        <td>{{ c.eid }}</td>
+        <td>{{ c.fullName }}</td>
+        <td>{{ c.phone }}</td>
+        <td>{{ c.address }}</td>
+        <td>{{ c.birthday }}</td>
+        <td>{{ c.dateCreate }}</td>
+        <td>{{ c.dateUpdate }}</td>
+        <td>{{ c.email }}</td>
+        <td>{{ c.password }}</td>
+        <td>{{ c.gender }}</td>
+        <td>{{ c.ranking }}</td>
+        <td style="width: 4.5vw">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown" (click)="getCustomerData(c.id!,c)">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="updateCustomer()">
+        <mat-icon>edit</mat-icon>
+        <span>Sửa</span>
+      </button>
+
+      <button mat-menu-item (click)="deteleCustomer()">
+        <mat-icon>delete</mat-icon>
+        <span>Xóa</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>list</mat-icon>
+        <span>D.Sách HH - VT</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>print</mat-icon>
+        <span>In</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>Excel</mat-icon>
+        <span>Xuất File Excel</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>money</mat-icon>
+        <span>Lập P.Chi</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>money</mat-icon>
+        <span>Tạo Từ Phiếu Này</span>
+      </button>
+
+    </mat-menu>
+
+  </app-data-table>
+
+</ng-container>
+
+<app-alert></app-alert>
+<app-add-customer #AddWrapper [btnName]="isBtnName" [customer]="customerInformation" [genderDisplay]="genderValue"
+></app-add-customer>
+
+
+
+
+
+
+
+

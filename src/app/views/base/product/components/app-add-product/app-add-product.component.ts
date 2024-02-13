@@ -203,5 +203,4 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
     }
     return isCheck;
   }
-
 }

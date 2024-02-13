@@ -32,6 +32,11 @@ const routes: Routes = [
           import('./views/base/product/product.module').then((m) => m.ProductModule)
       },
       {
+        path: 'customer',
+        loadChildren: () =>
+            import('./views/base/customer/customer.module').then((m) => m.CustomerModule)
+      },
+      {
         path: 'bill-real-time',
         loadChildren: () =>
           import('./views/base/bill-real-time/bill-real-time.module').then((m) => m.BillRealTimeModule)
