@@ -180,6 +180,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
     }
 
     deleteProduct() {
+      console.log('hello'+this.productId);
         if (this.productId) {
             this.productService.deleteProduct(this.productId).subscribe((res) => {
                 alert("Đã xóa sản phẩm");

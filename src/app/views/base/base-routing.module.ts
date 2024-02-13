@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {ProductComponent} from "./product/pages/product.component";
 import {StatisticsComponent} from "./statistic/pages/statistics.component";
 import {BillRealTimeComponent} from "./bill-real-time/pages/bill-real-time.component";
+import {CustomerComponent} from "./customer/pages/customer.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,13 @@ const routes: Routes = [
         component: ProductComponent,
         data: {
           title: 'product',
+        },
+      },
+      {
+        path: '/customer',
+        component: CustomerComponent,
+        data: {
+          title: 'customer',
         },
       },
       {

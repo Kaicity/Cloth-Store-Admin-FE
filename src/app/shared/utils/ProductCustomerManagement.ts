@@ -34,7 +34,7 @@ export const ProductCustomerManagement: INavData[] = [
         children: [
           {
             name: 'Khách Hàng',
-            url: '/base/cards'
+            url: 'customer'
           },
           {
             name: 'Nhóm Khách hàng',
