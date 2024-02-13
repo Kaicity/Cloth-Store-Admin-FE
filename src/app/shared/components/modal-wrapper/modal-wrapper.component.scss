@@ -1,7 +1,6 @@
 .modal {
   display: none;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 100; // Chọn một giá trị z-index phù hợp
 }
 
 .modal.show {
@@ -11,7 +10,6 @@
 .modal-dialog {
   max-width: 600px;
   margin: 30px auto;
-  top: 100px;
 }
 
 .modal-content {
@@ -27,6 +25,3 @@
   background-color: #f1f1f1;
 }
 
-.mat-datepicker-content {
-  z-index: 1000; // Chọn một giá trị z-index phù hợp, lớn hơn giá trị z-index của modal
-}

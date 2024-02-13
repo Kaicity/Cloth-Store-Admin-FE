@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {ControlMaterial} from "../../../ui-component/ControlMaterial";
-import {BaseSearchModel} from "../../../core/apis/Dtos/base-search-model";
 
 @Component({
   selector: 'app-alert',
