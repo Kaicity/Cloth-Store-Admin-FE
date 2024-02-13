@@ -2,7 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
-import {ControlMaterial} from "../../../UI-COMPONENT/ControlMaterial";
+
+import {ControlMaterial} from "../../../ui-component/ControlMaterial";
 import {BillRealTimeComponent} from "./pages/bill-real-time.component";
 import {AppShowDetailBill} from "./components/app-show-detail-bill/app-show-detail-bill.component";
 import {ModalWrapperComponent} from "../../../shared/components/modal-wrapper/modal-wrapper.component";

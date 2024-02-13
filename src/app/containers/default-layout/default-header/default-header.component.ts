@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {Component, Input} from '@angular/core';
 
-import { ClassToggleService, HeaderComponent } from '@coreui/angular';
+import {ClassToggleService, HeaderComponent} from '@coreui/angular';
 
 @Component({
   selector: 'app-default-header',

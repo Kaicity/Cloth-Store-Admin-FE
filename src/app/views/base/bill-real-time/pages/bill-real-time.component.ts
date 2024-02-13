@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {WebsocketService} from "../../../../core/Services/agency/WebsocketService";
-import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
-import {ExportingBillDto} from "../../../../core/apis/Dtos/ExportingBillDto";
+
 import {ExportingbillService} from "../../../../core/Services/agency/ExportingbillService";
 import {BillStatus} from "../../../../core/constanst/BillStatus";
-import {SocketMessage} from "../../../../core/apis/Dtos/socket-message";
+import {SocketMessage} from "../../../../core/apis/dtos/socket-message";
 import {TypeBillRealTime} from "../../../../core/constanst/TypeBillRealTime";
-import {ExportingBillFullDto} from "../../../../core/apis/Dtos/ExportingBillFullDto";
 import {AppShowDetailBill} from "../components/app-show-detail-bill/app-show-detail-bill.component";
+import {ExportingBillFullModel} from "../../../../core/apis/dtos/Exporting-bill-full.model";
+import {ResponseModel} from "../../../../core/apis/dtos/Response.model";
 
 @Component({
   selector: 'bill-read-time',
@@ -16,11 +16,13 @@ import {AppShowDetailBill} from "../components/app-show-detail-bill/app-show-det
 })
 export class BillRealTimeComponent implements OnInit {
   messageList: any[] = [];
-  bookingBills: ExportingBillFullDto[] = [];
-  checkedBills: ExportingBillFullDto[] = [];
-  shippingBills: ExportingBillFullDto[] = [];
-  cancelledBills: ExportingBillFullDto[] = [];
-  completedBills: ExportingBillFullDto[] = [];
+
+  bookingBills: ExportingBillFullModel[] = [];
+  checkedBills: ExportingBillFullModel[] = [];
+  shippingBills: ExportingBillFullModel[] = [];
+  cancelledBills: ExportingBillFullModel[] = [];
+  completedBills: ExportingBillFullModel[] = [];
+
   private idSocket = "billRealTimeSection";
 
   @ViewChild("AddWrapper") addWrapper!: AppShowDetailBill;
@@ -35,18 +37,18 @@ export class BillRealTimeComponent implements OnInit {
   }
 
   sendMessage() {
-    let a: ExportingBillDto = new ExportingBillDto();
+
+    let a: ExportingBillFullModel = new ExportingBillFullModel();
     const chatMessage = {
       idSocket: this.idSocket, message: '1', data: a
-    } as SocketMessage<ExportingBillDto>
+    } as SocketMessage<ExportingBillFullModel>
     this.webSocketService.sendMessage(this.idSocket, chatMessage);
   }
 
   listenerMessage() {
     this.webSocketService.getMessageSubject().subscribe((message: any) => {
       this.messageList = message;
-      let result = message.data as ExportingBillFullDto;
-
+      let result = message.data as ExportingBillFullModel;
       console.log("coi ne:");
       console.log(result.exportingBill)
       this.UpdateUI(result, message.message);
@@ -60,10 +62,10 @@ export class BillRealTimeComponent implements OnInit {
     });
   }
 
-  private getAllExportingBillComplete(res: ResponseModel<ExportingBillFullDto[]>) {
+  private getAllExportingBillComplete(res: ResponseModel<ExportingBillFullModel[]>) {
     if (res.status !== 200) {
       if (res.message) {
-        res.message.forEach(value => {
+        res.message.forEach((value: any) => {
           var t: any;
           t.error.message(value);
         });
@@ -85,7 +87,7 @@ export class BillRealTimeComponent implements OnInit {
     }
   }
 
-  UpdateUI(exportingBill: ExportingBillFullDto, message: string) {
+  UpdateUI(exportingBill: ExportingBillFullModel, message: string) {
     console.log(message === TypeBillRealTime.BOOKING.toString());
     if (message === TypeBillRealTime.BOOKING.toString()) {
       if (exportingBill.exportingBill) this.bookingBills.push(exportingBill);
@@ -96,7 +98,8 @@ export class BillRealTimeComponent implements OnInit {
     // this.addWrapper.isInsertChose = true;
   }
 
-  test2(bill: ExportingBillFullDto) {
+
+  test2(bill: ExportingBillFullModel) {
     this.addWrapper.isInsertChose = true;
     this.addWrapper.bill = bill;
     let status = bill!.exportingBill!.status;

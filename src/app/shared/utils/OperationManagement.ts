@@ -55,12 +55,12 @@ export const OperationManagement: INavData[] = [
         iconComponent: {name: 'cilCreditCard'},
         children: [
           {
-            name: 'Chứng từ thu',
-            url: '/base/cards'
+            name: 'Chứng từ chi',
+            url: '/payment'
           },
           {
-            name: 'Chứng từ chi',
-            url: '/base/breadcrumbs'
+            name: 'Chứng từ thu',
+            url: '/receipt'
           },
         ]
       },

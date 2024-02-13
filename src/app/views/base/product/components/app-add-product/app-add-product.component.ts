@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {SizesDto} from "../../../../../core/apis/Dtos/SizesDto";
-import {ColorsDto} from "../../../../../core/apis/Dtos/ColorsDto";
-import {OptionDto} from "../../../../../core/apis/Dtos/OptionDto";
-import {ProductDto} from "../../../../../core/apis/Dtos/ProductDto";
+import {ProductModel} from "../../../../../core/apis/dtos/Product.model";
 import {ProductService} from "../../../../../core/Services/agency/ProductService";
 import {Router} from "@angular/router";
+import {OptionModel} from "../../../../../core/apis/dtos/Option.model";
+import {SizesModel} from "../../../../../core/apis/dtos/Sizes.model";
+import {ColorsModel} from "../../../../../core/apis/dtos/Colors.model";
 
 interface SpecificationProduct {
   value: number;
@@ -21,16 +21,18 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
   //Table color is show
   showTableColor: boolean = false;
 
-  @Input() optionSizes: OptionDto[] = [];
-  @Input() optionColors: OptionDto[] = [];
+
+  @Input() optionSizes: OptionModel[] = [];
+  @Input() optionColors: OptionModel[] = [];
   @Input() btnName: ({ display: string; value: number } | { display: string; value: number })[] =
     [{display: '', value: 0}, {display: '', value: 1}];
 
-  sizes: SizesDto[] = [];
-  itemSize: SizesDto;
 
-  colors: ColorsDto[] = [];
-  itemColor: ColorsDto;
+  @Input() sizes: SizesModel[] = [];
+  itemSize: SizesModel;
+
+  @Input() colors: ColorsModel[] = [];
+  itemColor: ColorsModel;
 
   sizeName!: string;
   colorName!: string;
@@ -53,31 +55,34 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
     {value: 3, display: 'Áo Couple'},
     {value: 3, display: 'Quần short'}
   ];
-  specName!: string
+
+  @Input() specName!: string
   cateName!: string
 
   companyName: string = "CÔNG TY THREE T";
-  product!: ProductDto;
-  productStatus!: string;
+  @Input() product!: ProductModel
+
   displayProductStatus: string[] = ["Đang hoạt động", "Sắp hoạt động"];
+  productStatus: string = this.displayProductStatus[0]; // Mặc định là đang hoạt dộng
 
   //Trạng thái thêm
   isAddProductSuccess: boolean = false;
 
   constructor(private productService: ProductService, private router: Router) {
-    this.itemSize = new SizesDto();
-    this.itemColor = new ColorsDto();
+    this.itemSize = new SizesModel();
+    this.itemColor = new ColorsModel();
+    this.product = new ProductModel();
   }
 
   ngAfterViewInit(): void {
-
   }
 
   onSubmit() {
+
   }
 
   ngOnInit(): void {
-    this.product = new ProductDto();
+
   }
 
   closeModal() {
@@ -107,7 +112,7 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
     console.log(this.sizes);
     if (this.itemSize) this.showTableSize = true;
     this.optionSizes.splice(this.indexSizes!, 1);
-    this.itemSize = new SizesDto();
+    this.itemSize = new SizesModel();
     this.sizeName = "";
   }
 
@@ -120,33 +125,33 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
     this.optionColors.splice(this.indexColors!, 1);
 
     //Reset binding two way data
-    this.itemColor = new ColorsDto();
+    this.itemColor = new ColorsModel();
     this.colorName = "";
   }
 
   removeItemSize(index: number) {
     //Add item again to sizes and remove table size
-    this.optionSizes.push(this.sizes[index].optionProductDto!);
+    this.optionSizes.push(this.sizes[index].optionProduct!);
     this.sizes.splice(index, 1);
     if (this.sizes.length == 0) this.showTableSize = false;
   }
 
   removeItemColor(index: number) {
     //Add item again to color and remove table color
-    this.optionColors.push(this.colors[index].optionProductDto!)
+    this.optionColors.push(this.colors[index].optionProduct!)
     this.colors.splice(index, 1);
     if (this.colors.length == 0) this.showTableColor = false;
   }
 
   getOptionSizes(optionSize: string, index: number) {
     this.sizeName = optionSize;
-    this.itemSize.optionProductDto = this.optionSizes[index];
+    this.itemSize.optionProduct = this.optionSizes[index];
     this.indexSizes = index;
   }
 
   getOptionColors(optionColor: string, index: number) {
     this.colorName = optionColor;
-    this.itemColor.optionProductDto = this.optionColors[index];
+    this.itemColor.optionProduct = this.optionColors[index];
     this.indexColors = index;
   }
 
@@ -172,16 +177,21 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
       console.log(this.product);
       console.log("JSON")
       console.log(JSON.stringify(this.product));
-
       this.productService.addProduct(this.product).subscribe(
         (res: any) => {
           console.log(res);
           alert("Sản phẩm đã được thêm");
           this.resetPage();
         },
+        error => {
+          alert("Sản phẩm đã được thêm");
+        }
       )
     } else if (this.btnName[0].value == 1) {
-
+      this.productService.updateProduct(this.product).subscribe(res => {
+        alert("Sản phẩm đã được cập nhật");
+        this.resetPage();
+      })
     } else return;
   }
 

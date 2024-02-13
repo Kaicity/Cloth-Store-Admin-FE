@@ -2,7 +2,8 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewC
 import { CommonModule } from '@angular/common';
 
 import {ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent} from "@coreui/angular";
-import {ControlMaterial} from "../../../UI-COMPONENT/ControlMaterial";
+
+import {ControlMaterial} from "../../../ui-component/ControlMaterial";
 import {FormsModule} from "@angular/forms";
 import {size} from "lodash-es";
 

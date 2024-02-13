@@ -1,7 +1,10 @@
 import {Observable} from "rxjs";
 import {HttpClient} from '@angular/common/http';
-import {environment} from "../../Environment/Environment";
+
 import {Injectable} from "@angular/core";
+import {environment} from "../../environment/Environment";
+import {BaseSearchModel} from "../../apis/dtos/Base-search.model";
+import {ProductModel} from "../../apis/dtos/Product.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +20,16 @@ export class ProductService {
     return this.http.post(`${this.baseUrl}/api/v1/Food/findAll`, {});
   }
 
+  public advanceSearch(search: BaseSearchModel<ProductModel[]>): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/v1/Food/searchAdvance`, search, {});
+  }
+
   public addProduct(product: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/v1/Food/addProduct`, product)
+  }
+
+  public updateProduct(product: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/v1/Food/updateProduct`, product)
   }
 
   public deleteProduct(productId: String): Observable<any> {
@@ -26,8 +37,12 @@ export class ProductService {
   }
 
   public getProductId(id: String): Observable<any> {
-    const body = {id};
-    return this.http.post(`${this.baseUrl}/api/v1/Food/seachId`, body)
+    return this.http.get(`${this.baseUrl}/api/v1/Food/${id}`,)
+  }
+
+  public getProductPrice(priceMin: number, priceMax: number): Observable<any> {
+    const body = {priceMin, priceMax};
+    return this.http.post(`${this.baseUrl}/api/v1/Food/seachPrice`, body)
   }
 
   public getProductCode(code: String): Observable<any> {
