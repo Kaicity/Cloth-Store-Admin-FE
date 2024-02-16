@@ -1,16 +1,13 @@
-import {NgModule} from '@angular/core';
+import {NgModule, OnInit} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {DefaultLayoutComponent} from './containers';
-import {LoginComponent} from "./views/base/login-page/login.component";
+import {DashboardComponent} from "./views/base/dashboard/pages/dashboard.component";
+import {LoginComponent} from "./modules/login-page/login.component";
 
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },
+
   {
     path: 'login',
     component: LoginComponent
@@ -57,6 +54,11 @@ const routes: Routes = [
         loadChildren: () =>
             import('./views/base/customer/customer.module').then((m) => m.CustomerModule)
       },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./views/base/dashboard/dashboard.module').then((m) => m.DashboardModule)
+      },
     ]
   },
 
@@ -73,5 +75,8 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
+export class AppRoutingModule implements OnInit{
+  ngOnInit(): void {
+    alert("Hello");
+  }
 }

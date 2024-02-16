@@ -1,55 +1,56 @@
 <app-spinner [isLoading]="isShowLoading"></app-spinner>
+<!-- Content Header (Page header) -->
+<ng-container class="container-header">
+  <div class="container-title" style="margin-left: 0.5vw">
+    <h1 i18n="@@employees-title">Khách hàng</h1>
+  </div>
+</ng-container>
+
+<ng-container class="container-header">
+  <div class="row"  style="margin-left: 70vw;">
+    <div class="col-auto">
+      <c-breadcrumb>
+        <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
+        <c-breadcrumb-item [active]="true">Khách Hàng</c-breadcrumb-item>
+      </c-breadcrumb>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container class="container-header">
+  <div class="row" style="margin-left: 69vw">
+    <div class="col-auto d-flex justify-content-between">
+      <div class="col-auto">
+        <button type="button" class="btn btn-info" style="height: 4vh; width: 2.5vw"
+                (click)="showSeachForm()">
+          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
+        </button>
+        <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
+          Thêm khách hàng
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<br>
 
 <ng-container *ngIf="customers.length !== 0">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-title">
-      <h1 i18n="@@employees-title">Khách Hàng</h1>
-    </div>
-  </section>
-
-
-  <div class="container-header" style="margin-left: 70vw">
-    <div class="row">
-      <div class="col-auto">
-        <c-breadcrumb>
-          <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
-          <c-breadcrumb-item [active]="true">Khách Hàng</c-breadcrumb-item>
-        </c-breadcrumb>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-header mb-2" style="margin-right: 0.6vw">
-    <div class="row justify-content-end">
-      <div class="col-auto">
-        <button type="button" class="btn btn-info" style="margin-right: 0.5vw"
-                (click)="showSeachForm()">
-          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: auto;">
-        </button>
-        <button class="btn bg-warning" (click)="showInsertForm()">
-          Thêm Khách Hàng
-        </button>
-      </div>
-    </div>
-  </div>
-
   <app-data-table [columnNumber]="12" [tableFormatClass]="tableFormat" [search]="search"
                   [data2Show]="customers">
     <table class="{{tableFormat}}">
       <thead>
       <tr>
-        <th>e-id</th>
-        <th>tên</th>
-        <th>Số Điện Thoại</th>
+        <th>E-ID</th>
+        <th>Họ Tên</th>
+        <th>SĐT</th>
         <th>Địa Chỉ</th>
-        <th>ngày Sinh</th>
-        <th>ngày tạo</th>
-        <th>ngày cập nhật</th>
+        <th>Ngày sinh</th>
+        <th>Ngày tạo</th>
+        <th>Ngày cập nhật</th>
         <th>Email</th>
         <th>Mật Khẩu</th>
-        <th>Giới Tính</th>
-        <th>hạng</th>
+        <th>Giới tính</th>
+        <th>Hạng</th>
         <th></th>
       </tr>
       </thead>
@@ -61,7 +62,7 @@
         <td>{{ c.address }}</td>
         <td>{{ c.birthday }}</td>
         <td>{{ c.dateCreate }}</td>
-        <td>{{ c.dateUpdate }}</td>
+        <td>{{ c.dateCreate }}</td>
         <td>{{ c.email }}</td>
         <td>{{ c.password }}</td>
         <td>{{ c.gender }}</td>
@@ -114,7 +115,6 @@
     </mat-menu>
 
   </app-data-table>
-
 </ng-container>
 
 <app-alert></app-alert>

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ProductService} from "../../../../../core/Services/agency/ProductService";
+import {ProductService} from "../../../../../core/Services/warehouse/ProductService";
 import {ProductModel} from "../../../../../core/apis/dtos/Product.model";
 import {Router} from "@angular/router";
 import {ProductSearchModel} from "../../../../../core/apis/dtos/Product-search.model";

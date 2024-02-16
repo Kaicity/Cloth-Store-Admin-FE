@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {ProductModel} from "../../../../../core/apis/dtos/Product.model";
-import {ProductService} from "../../../../../core/Services/agency/ProductService";
+import {ProductService} from "../../../../../core/Services/warehouse/ProductService";
 import {Router} from "@angular/router";
 import {OptionModel} from "../../../../../core/apis/dtos/Option.model";
 import {SizesModel} from "../../../../../core/apis/dtos/Sizes.model";

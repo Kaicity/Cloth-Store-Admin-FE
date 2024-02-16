@@ -8,53 +8,46 @@ import {ModalWrapperComponent} from "../../../shared/components/modal-wrapper/mo
 import {AlertComponent} from "../../../shared/components/alert/alert.component";
 import {BreadcrumbComponent, BreadcrumbItemComponent} from "@coreui/angular";
 import {SpinnerComponent} from "../../../shared/components/spinner/spinner.component";
-import {CustomerComponent} from "./pages/customer.component";
-import {AppAddCustomerComponent} from "./components/app-add-customer/app-add-customer.component";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DatePickerComponent} from "../../../shared/components/date-picker/date-picker.component";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ControlMaterial} from "../../../ui-component/ControlMaterial";
+import {DashboardComponent} from "./pages/dashboard.component";
 
 export const routes: Routes = [
   {
     path: '',
-    component: CustomerComponent,
+    component: DashboardComponent,
 
   },
 ];
 
 @NgModule({
   declarations: [
-    CustomerComponent,
-    AppAddCustomerComponent
-
+    DashboardComponent
   ],
-    imports: [
-        RouterModule.forChild(routes),
-        FormsModule,
-        MatTableModule,
-        ControlMaterial,
-        DataTableComponent,
-        NgForOf,
-        ModalWrapperComponent,
-        ReactiveFormsModule,
-        AlertComponent,
-        CurrencyPipe,
-        NgIf,
-        BreadcrumbComponent,
-        BreadcrumbItemComponent,
-        SlicePipe,
-        SpinnerComponent,
-        BsDatepickerModule,
-        NgClass,
-        MatDatepickerModule,
-        DatePickerComponent,
-        MatFormFieldModule
-
-    ]
+  imports: [
+    RouterModule.forChild(routes),
+    FormsModule,
+    MatTableModule,
+    ControlMaterial,
+    DataTableComponent,
+    NgForOf,
+    ModalWrapperComponent,
+    ReactiveFormsModule,
+    AlertComponent,
+    CurrencyPipe,
+    NgIf,
+    BreadcrumbComponent,
+    BreadcrumbItemComponent,
+    SlicePipe,
+    SpinnerComponent,
+    NgClass,
+    MatDatepickerModule,
+    DatePickerComponent,
+    MatFormFieldModule
+  ]
 })
 
-export class CustomerModule {
-
+export class DashboardModule{
 }

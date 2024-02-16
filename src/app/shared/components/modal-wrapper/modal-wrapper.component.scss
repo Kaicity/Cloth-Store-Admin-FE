@@ -1,6 +1,7 @@
 .modal {
   display: none;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
 }
 
 .modal.show {
@@ -10,6 +11,7 @@
 .modal-dialog {
   max-width: 600px;
   margin: 30px auto;
+  top: 60px;
 }
 
 .modal-content {

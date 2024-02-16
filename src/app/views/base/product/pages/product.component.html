@@ -1,40 +1,39 @@
 <app-spinner [isLoading]="isShowLoading"></app-spinner>
+<!-- Content Header (Page header) -->
+<ng-container class="container-header">
+  <div class="container-title" style="margin-left: 0.5vw">
+    <h1 i18n="@@employees-title">Sản Phẩm</h1>
+  </div>
+</ng-container>
 
-<ng-container *ngIf="productList.length !== 0">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-title">
-      <h1 i18n="@@employees-title">Sản Phẩm</h1>
-    </div>
-  </section>
-
-
-  <div class="container-header" style="margin-left: 70vw">
-    <div class="row">
-      <div class="col-auto">
-        <c-breadcrumb>
-          <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
-          <c-breadcrumb-item [active]="true">Sản phẩm</c-breadcrumb-item>
-        </c-breadcrumb>
-      </div>
+<ng-container class="container-header">
+  <div class="row"  style="margin-left: 71vw;">
+    <div class="col-auto">
+      <c-breadcrumb>
+        <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
+        <c-breadcrumb-item [active]="true">Sản phẩm</c-breadcrumb-item>
+      </c-breadcrumb>
     </div>
   </div>
+</ng-container>
 
-  <div class="container-header mb-2" style="margin-right: 0.6vw">
-    <div class="row justify-content-end">
+<ng-container class="container-header">
+  <div class="row" style="margin-left: 69.5vw">
+    <div class="col-auto d-flex justify-content-between">
       <div class="col-auto">
-        <button type="button" class="btn btn-info" style="margin-right: 0.5vw"
+        <button type="button" class="btn btn-info" style="height: 4vh; width: 2.5vw"
                 (click)="showSeachForm()">
-          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: auto;">
+          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
         </button>
-        <button class="btn bg-warning" (click)="showInsertForm()">
-          Thêm Sản phẩm
-        </button>
+          <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
+            Thêm Sản phẩm
+          </button>
       </div>
     </div>
   </div>
 </ng-container>
 <br>
+
 <ng-container *ngIf="productList.length !== 0">
   <app-data-table [columnNumber]="7" [tableFormatClass]="tableFormat" [search]="search"
                   [data2Show]="productList">
