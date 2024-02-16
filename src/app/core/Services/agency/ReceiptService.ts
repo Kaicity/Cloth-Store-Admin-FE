@@ -2,26 +2,23 @@ import {Observable} from "rxjs";
 import {HttpClient} from '@angular/common/http';
 import {environment} from "../../environment/Environment";
 import {Injectable} from "@angular/core";
+import {AgencyBaseService} from "../generic/agency-base-service";
 
 @Injectable({
   providedIn: 'root'
 }) @Injectable()
-export class ReceiptService {
-  baseUrl: string = environment.agencyBaseUrl;
-
-  constructor(private http: HttpClient) {
-  }
+export class ReceiptService extends AgencyBaseService{
 
   public getAllReceipt(): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/v1/Receipt/getAllReceipt`, {});
+    return this.post("/api/v1/Receipt/getAllReceipt", {});
   }
   public deleteReceipt(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/api/v1/Receipt/${id}`,);
+    return this.delete("/api/v1/Receipt", id);
   }
   public addReceipt(receiptFull: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/v1/Receipt/createReceipt`, receiptFull);
+    return this.post("/api/v1/Receipt/createReceipt", receiptFull);
   }
   public updatePayment(receiptFull: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/v1/Receipt/updateReceipt`, receiptFull);
+    return this.post("/api/v1/Receipt/updateReceipt", receiptFull);
   }
 }

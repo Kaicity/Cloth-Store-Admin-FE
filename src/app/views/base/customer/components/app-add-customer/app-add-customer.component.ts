@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
-import {CustomerService} from "../../../../../core/Services/agency/CustomerService";
 import {Sex} from "../../../../../core/constanst/Sex";
 import {CustomerModel} from "../../../../../core/apis/dtos/Customer.model";
+import {CustomerService} from "../../../../../core/Services/warehouse/CustomerService";
 
 interface SpecificationCustomer {
   value: Sex;
@@ -17,27 +17,29 @@ interface SpecificationCustomer {
 })
 
 export class AppAddCustomerComponent implements OnInit, AfterViewInit {
-  @Input() genderDisplay: string = '';
   @Input() customer!: CustomerModel;
+  CustomerBirthDay = new Date();
   @ViewChild("AddDatePicker") addWrapper!: AppAddCustomerComponent;
   specificationCustomer: SpecificationCustomer[] = [
     {value: Sex.MALE, display: 'Nam'},
     {value: Sex.FEMALE, display: 'Nữ'},
     {value: Sex.ORTHER, display: 'Khác'}
   ];
-  @Input() btnName: ({ display: string; value: number } | { display: string; value: number })[] =
-    [{display: '', value: 0}, {display: '', value: 1}];
 
+  @Input() genderDisplay!: string;
+  gender!: string;
+  @Input() btnName: ({ display: string; value: number })[] =
+    [{display: '', value: 0}, {display: '', value: 1}];
 
   constructor(private customerService: CustomerService, private router: Router) {
   }
 
   optionSpecChose(display: string) {
-    this.genderDisplay = display;
+    this.gender = display;
   }
 
   ngOnInit(): void {
-    this.customer = new CustomerModel();
+
   }
 
   ngAfterViewInit(): void {
@@ -58,6 +60,11 @@ export class AppAddCustomerComponent implements OnInit, AfterViewInit {
 
   }
 
+  getGenderValue(display: string): Sex {
+    const gender = this.specificationCustomer.find(spec => spec.display === display);
+    return gender ? gender.value : Sex.MALE;
+  }
+
   formatCurrency() {
 
   }
@@ -70,31 +77,39 @@ export class AppAddCustomerComponent implements OnInit, AfterViewInit {
     });
   }
 
+  showPassword: boolean = false;
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  resetData() {
+    this.customer = new CustomerModel();
+    this.gender = '';
+  }
+
   addOrUpdateFunc() {
     //Them
     if (this.btnName[0].value == 0) {
-      const genderSpec = this.specificationCustomer.find(spec => spec.value === Sex.MALE);
-      if (genderSpec) {
-        this.customer.gender = genderSpec.value;
-
-        this.customerService.addCustomer(this.customer).subscribe(
-          (res: any) => {
-            console.log(res);
-            alert("Khách Hàng đã được thêm");
-            this.resetPage();
-          },
-        )
-      }
+      this.customer.birthday = this.CustomerBirthDay;
+      this.customer.gender = this.getGenderValue(this.gender);
+      this.customerService.addCustomer(this.customer).subscribe(
+        (res: any) => {
+          console.log(res);
+          alert("Khách Hàng đã được thêm");
+          this.resetPage();
+        },
+      )
     }
     //Update
-    else if(this.btnName[0].value == 1){
+    else if (this.btnName[0].value == 1) {
+      this.customer.gender = this.getGenderValue(this.gender);
       this.customerService.updateCustomer(this.customer).subscribe(
-        (res:any)=>{
+        (res: any) => {
           alert("Khách Hàng đã được Cập Nhật");
           this.resetPage();
         }
       )
     }
-    else return;
   }
 }

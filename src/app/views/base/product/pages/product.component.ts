@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {AppAddProductComponent} from "../components/app-add-product/app-add-product.component";
 import {AppSeachProductComponent} from "../components/app-seach-product/app-seach-product.component";
-import {ProductService} from "../../../../core/Services/agency/ProductService";
+import {ProductService} from "../../../../core/Services/warehouse/ProductService";
 import {ResponseModel} from "../../../../core/apis/dtos/Response.model";
 import {BaseSearchModel} from "../../../../core/apis/dtos/Base-search.model";
-import {OptionService} from "../../../../core/Services/agency/OptionService";
+import {OptionService} from "../../../../core/Services/warehouse/OptionService";
 import {ProductModel} from "../../../../core/apis/dtos/Product.model";
 import {Router} from "@angular/router";
 import {firebaseConfig} from "../../../../core/environment/environnemtFireBase";
@@ -43,7 +43,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   colorsName: any[] = []; //Lưu danh sách Color có tên
 
   isShowLoading: boolean = false;
-  productId: String = '';
+  productId: string = '';
 
   isBtnName: ({ display: string; value: number } | { display: string; value: number })[] = [{
     display: '', value: 0
@@ -57,14 +57,6 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   constructor(private productService: ProductService, private optionService: OptionService,
               private router: Router, private firebaseStorage: AngularFireStorage) {
-  }
-
-  //custom after
-  simulateLoading() {
-    this.isShowLoading = true;
-    setTimeout(() => {
-      this.isShowLoading = false;
-    }, 1500)
   }
 
   showInsertForm() {
@@ -94,6 +86,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
     this.isShowLoading = true;
     this.productService.getAllProduct().subscribe(res => {
       this.getAllProductComplete(res)
+      console.log(res.result)
     });
   }
 

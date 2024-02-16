@@ -8,7 +8,7 @@ export class CustomerModel {
   phone!: string | null;
   address!: string | null;
   password!: string | null;
-  birthday!: DatePipe | null;
+  birthday!: Date;
   gender!: string | null;
   dateCreate!: DatePipe | null;
   dateUpdate!: DatePipe | null;
