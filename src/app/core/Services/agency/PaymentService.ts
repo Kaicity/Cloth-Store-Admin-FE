@@ -12,6 +12,9 @@ export class PaymentService extends AgencyBaseService{
   public getAllPayment(): Observable<any> {
     return this.post("/api/v1/Payment/getAllPayment", {});
   }
+  public getPaymentById(id : string): Observable<any> {
+    return this.get("/api/v1/Payment", id);
+  }
   public deletePayment(id: string): Observable<any> {
     return this.delete("/api/v1/Payment",id);
   }

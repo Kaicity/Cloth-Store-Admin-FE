@@ -7,7 +7,8 @@ export class PaymentModel {
   dateUpdated! : DatePipe | null;
   dateCreated! : DatePipe | null;
   total! : number | null;
+  beneficiary! : string | null;
   status!: string | null;
-  typePaymentReceiptDto! : TypePaymentReceiptModel | null;
+  typePaymentReceipt! : TypePaymentReceiptModel | null;
   note! : string | null;
 }

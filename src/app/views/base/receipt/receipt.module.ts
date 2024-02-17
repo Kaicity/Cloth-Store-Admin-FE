@@ -17,6 +17,10 @@ import {
 import {SpinnerComponent} from "../../../shared/components/spinner/spinner.component";
 import {CdkOption} from "@angular/cdk/listbox";
 import {ReceiptComponent} from "./pages/receipt.component";
+import {AppAddPaymentComponent} from "../payment/components/app-add-payment/app-add-payment.component";
+import {AppSearchPaymentComponent} from "../payment/components/app-search-payment/app-search-payment.component";
+import {AppAddReceiptComponent} from "./components/app-add-receipt/app-add-receipt.component";
+import {AppSearchReceiptComponent} from "./components/app-search-receipt/app-search-receipt.component";
 
 export const routes: Routes = [
   {
@@ -28,9 +32,8 @@ export const routes: Routes = [
 @NgModule({
   declarations: [
     ReceiptComponent,
-    ReceiptComponent,
-    ReceiptComponent,
-
+    AppAddReceiptComponent,
+    AppSearchReceiptComponent
   ],
   imports: [
     RouterModule.forChild(routes),
