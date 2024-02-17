@@ -2,6 +2,7 @@
 import {Injectable} from '@angular/core';
 import {Stomp} from "@stomp/stompjs";
 import * as SocketJS from 'sockjs-client';
+import * as SockJS from 'sockjs-client';
 import {BehaviorSubject} from "rxjs";
 
 import {SocketMessage} from "../../apis/dtos/socket-message";
@@ -23,6 +24,7 @@ export class WebsocketService {
     const url = '//localhost:5555/ws';
     const socket = new SocketJS(url);
     this.stompClient = Stomp.over(socket);
+    console.log(this.stompClient);
   }
 
   joinSocket(idSocket: string) {

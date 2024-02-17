@@ -32,8 +32,8 @@ export class BillRealTimeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllExportingBill();
-    this.webSocketService.joinSocket(this.idSocket);
-    this.listenerMessage();
+   // this.webSocketService.joinSocket(this.idSocket);
+  //  this.listenerMessage();
   }
 
   sendMessage() {
@@ -49,8 +49,6 @@ export class BillRealTimeComponent implements OnInit {
     this.webSocketService.getMessageSubject().subscribe((message: any) => {
       this.messageList = message;
       let result = message.data as ExportingBillFullModel;
-      console.log("coi ne:");
-      console.log(result.exportingBill)
       this.UpdateUI(result, message.message);
     });
   }
@@ -77,7 +75,6 @@ export class BillRealTimeComponent implements OnInit {
     for (let i = 0; i < res.result.length; i++) {
       if (res.result[i] != undefined && res.result[i].exportingBill != undefined) {
         let bill = res.result[i];
-        console.log(bill);
         if (bill!.exportingBill!.status === BillStatus.BOOKING) this.bookingBills.push(bill!);
         if (bill!.exportingBill!.status === BillStatus.CHECKED) this.checkedBills.push(bill!);
         if (bill!.exportingBill!.status === BillStatus.SHIPPING) this.shippingBills.push(bill!);

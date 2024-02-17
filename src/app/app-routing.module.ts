@@ -59,6 +59,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/base/dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
+      {
+        path: 'supplier',
+        loadChildren: () =>
+          import('./views/base/supplier/supplier.module').then((m) => m.SupplierModule)
+      },
     ]
   },
 
