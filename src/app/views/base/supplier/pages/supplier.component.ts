@@ -160,4 +160,10 @@ export class SupplierComponent implements OnInit, AfterViewInit {
       this.getAllSupplier();
     }
   }
+  getStatusOfSupplier(status: string){
+    if (status===this.specificationStatuses[0].value)
+      return this.specificationStatuses[0].display;
+    else
+      return this.specificationStatuses[1].display;
+  }
 }
