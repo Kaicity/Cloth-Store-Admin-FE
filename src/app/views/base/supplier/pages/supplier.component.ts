@@ -7,7 +7,7 @@ import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
 import {SupplierService} from "../../../../core/Services/warehouse/SupplierService";
 import {AppSearchSupplierComponent} from "../components/app-search-supplier/app-search-supplier.component";
 import {SupplierStatus} from "../../../../core/constanst/SupplierStatus";
-import {Sex} from "../../../../core/constanst/Sex";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 interface SpecificationStatus {
   value: SupplierStatus;
@@ -18,6 +18,7 @@ interface SpecificationStatus {
   templateUrl: './supplier.component.html',
   styleUrl: './supplier.component.scss'
 })
+
 export class SupplierComponent implements OnInit, AfterViewInit {
   //Format table
   tableFormat: string = "table table-bordered table-striped";
@@ -42,7 +43,14 @@ export class SupplierComponent implements OnInit, AfterViewInit {
     display: '', value: 0
   }, {display: '', value: 1}];
 
-  constructor(private supplierService: SupplierService, private router: Router) {
+  constructor(private supplierService: SupplierService, private router: Router,private snackBar: MatSnackBar) {
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      horizontalPosition: "center"
+    });
   }
 
   showInsertForm() {
@@ -52,10 +60,10 @@ export class SupplierComponent implements OnInit, AfterViewInit {
     this.supplierInformation = new SupplierModel();
   }
 
-  // showSeachForm() {
-  //   console.log(this.searchWrapper);
-  //   this.searchWrapper.isSeachChose = true;
-  // }
+  showSeachForm() {
+    console.log(this.searchWrapper);
+    this.searchWrapper.isSeachChose = true;
+  }
 
   ngOnInit(): void {
     this.getAllSupplier();
@@ -69,7 +77,6 @@ export class SupplierComponent implements OnInit, AfterViewInit {
     this.isShowLoading = true;
     this.supplierService.getAllSupplier().subscribe(res => {
       this.getAllSupplierComplete(res)
-      console.log(res.result)
     });
   }
 
@@ -119,10 +126,10 @@ export class SupplierComponent implements OnInit, AfterViewInit {
   deleteProduct() {
     if (this.supplierId) {
       this.supplierService.deleteSupplierById(this.supplierId).subscribe((res) => {
-        alert("Đã xóa supplier");
+        this.openSnackBar("Nhà cung cấp đã được xóa", "close")
         this.resetPage();
       }, error => {
-        alert("Lỗi khi xóa supplier này");
+        this.openSnackBar("Lỗi khi xóa Nhà cung cấp ", "close")
       })
     }
   }
@@ -132,11 +139,15 @@ export class SupplierComponent implements OnInit, AfterViewInit {
     this.isBtnName[0].value = 1;
     this.isBtnName[0].display = "Cập nhật";
     //Lấy sản phẩm theo id được chọn
-    this.supplierService.getSupplierId(this.supplierId).subscribe(res => {
-      console.log(res);
-      this.supplierInformation = res.result;
-      console.log(this.supplierInformation + "dshfuwfhu");
-    })
+    this.supplierService.getSupplierId(this.supplierId).subscribe(
+      res => {
+        this.supplierInformation = res.result;
+        if(this.supplierInformation.status){
+          const statusItem = this.specificationStatuses.find(item => item.value === res.result.status);
+          this.statusValue = statusItem?.display ?? 'Giá trị mặc định nếu maleItem không tồn tại hoặc không có thuộc tính display';
+        }
+      }
+    )
   }
 
   receiveDataFromChildSeach(suppliers: SupplierModel[]) {
@@ -149,5 +160,4 @@ export class SupplierComponent implements OnInit, AfterViewInit {
       this.getAllSupplier();
     }
   }
-
 }

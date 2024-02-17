@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {SupplierStatus} from "../../../../../core/constanst/SupplierStatus";
 import {SupplierModel} from "../../../../../core/apis/Dtos/Supplier.model";
 import {SupplierService} from "../../../../../core/Services/warehouse/SupplierService";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 interface SpecificationSupplier {
   value: SupplierStatus;
@@ -28,7 +29,14 @@ export class AppAddSupplierComponent implements OnInit, AfterViewInit {
   @Input() btnName: ({ display: string; value: number })[] =
     [{display: '', value: 0}, {display: '', value: 1}];
 
-  constructor(private supplierService: SupplierService, private router: Router) {
+  constructor(private supplierService: SupplierService, private router: Router, private snackBar: MatSnackBar) {
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      horizontalPosition: "center"
+    });
   }
 
   optionSpecChose(display: string) {
@@ -57,7 +65,7 @@ export class AppAddSupplierComponent implements OnInit, AfterViewInit {
 
   }
 
-  getStatusValue(display: string):SupplierStatus {
+  getStatusValue(display: string): SupplierStatus {
     const status = this.specificationStatus.find(spec => spec.display === display);
     return status ? status.value : SupplierStatus.IsWorking;
   }
@@ -91,8 +99,7 @@ export class AppAddSupplierComponent implements OnInit, AfterViewInit {
       this.supplierModel.status = this.getStatusValue(this.status);
       this.supplierService.createSupplier(this.supplierModel).subscribe(
         (res: any) => {
-          console.log(res);
-          alert("Khách Hàng đã được thêm");
+          this.openSnackBar("Nhà cung cấp đã được thêm", "close")
           this.resetPage();
         },
       )
@@ -102,7 +109,7 @@ export class AppAddSupplierComponent implements OnInit, AfterViewInit {
       this.supplierModel.status = this.getStatusValue(this.status);
       this.supplierService.updateSupplier(this.supplierModel).subscribe(
         (res: any) => {
-          alert("Khách Hàng đã được Cập Nhật");
+          this.openSnackBar("Nhà cung cấp đã được cập nhật ", "close")
           this.resetPage();
         }
       )

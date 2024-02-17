@@ -22,7 +22,7 @@
     <div class="col-auto d-flex justify-content-between">
       <div class="col-auto">
         <button type="button" class="btn btn-info" style="height: 4vh; width: 2.5vw">
-          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
+          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh" (click)="showSeachForm()">
         </button>
         <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
           Thêm nhà cung cấp
@@ -59,7 +59,7 @@
         <td>{{ p.dateCreate }}</td>
         <td>{{ p.dateUpdate }}</td>
         <td style="width: 4.5vw">
-          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown" >
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"(click)="getSupplierData(p.id!,p)" >
             <mat-icon>more_vert</mat-icon>
           </button>
         </td>
@@ -107,8 +107,8 @@
   </app-data-table>
 </ng-container>
 
-<!--<app-search-supplier #searchWrapper (dataProductIsSeach)="receiveDataFromChildSeach($event)"></app-search-supplier>-->
-<!--<app-add-supplier #AddWrapper [btnName]="isBtnName" [supplierModel]="supplierInformation" ] [statusDisplay]="statusValue"></app-add-supplier>-->
+<app-search-supplier #searchWrapper (dataSupplierIsSeach)="receiveDataFromChildSeach($event)" ></app-search-supplier>
+<app-add-supplier #AddWrapper [btnName]="isBtnName" [supplierModel]="supplierInformation"  [statusDisplay]="statusValue"></app-add-supplier>
 
 
 
