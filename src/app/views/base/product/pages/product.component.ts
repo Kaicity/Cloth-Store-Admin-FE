@@ -188,11 +188,9 @@ export class ProductComponent implements OnInit, AfterViewInit {
     this.isBtnName[0].display = "Cập nhật";
     //Lấy sản phẩm theo id được chọn
     this.productService.getProductId(this.productId).subscribe(res => {
-      console.log(res);
       this.productInformation.colors = [];
       this.productInformation.sizes = [];
       this.productInformation = res.result;
-      console.log(this.productInformation + "dshfuwfhu");
     })
   }
 

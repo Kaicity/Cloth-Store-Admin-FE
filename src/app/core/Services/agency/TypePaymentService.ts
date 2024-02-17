@@ -9,11 +9,11 @@ import {AgencyBaseService} from "../generic/agency-base-service";
 )
 export class TypePaymentService extends AgencyBaseService{
 
-  public getAllOptionSizes(): Observable<any>{
+  public getAllOptionPayments(): Observable<any>{
     return this.post("/api/v1/typePaymentReceipt/getAllPayments", {});
   }
 
-  public getAllOptionColors(): Observable<any>{
+  public getAllOptionReceipt(): Observable<any>{
     return this.post("/api/v1/typePaymentReceipt/getAllReceipts", {});
   }
 }

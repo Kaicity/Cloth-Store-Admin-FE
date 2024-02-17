@@ -12,13 +12,16 @@ export class ReceiptService extends AgencyBaseService{
   public getAllReceipt(): Observable<any> {
     return this.post("/api/v1/Receipt/getAllReceipt", {});
   }
+  public getReceiptById(id : string): Observable<any> {
+    return this.get("/api/v1/Receipt", id);
+  }
   public deleteReceipt(id: string): Observable<any> {
     return this.delete("/api/v1/Receipt", id);
   }
   public addReceipt(receiptFull: any): Observable<any> {
     return this.post("/api/v1/Receipt/createReceipt", receiptFull);
   }
-  public updatePayment(receiptFull: any): Observable<any> {
+  public updateReceipt(receiptFull: any): Observable<any> {
     return this.post("/api/v1/Receipt/updateReceipt", receiptFull);
   }
 }

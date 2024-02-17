@@ -1,6 +1,6 @@
 <app-modal-wrapper #AddWrapper
                    [showModal]="isInsertChose"
-                   [modalTitle]="'Thêm phiếu chi'"
+                   [modalTitle]="'Thêm phiếu thu'"
                    [nameButton]="'Thêm'"
                    [size]="'width: 60%; max-width: 100%;'"
                    (closeModalEvent)="closeModal()" xmlns="http://www.w3.org/1999/html">
@@ -12,7 +12,7 @@
         <label for="price" class="col-form-label">Tổng cộng</label>
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="price" name="price"
-                 [(ngModel)]="payment.total" [ngModelOptions]="{standalone: true}"
+                 [(ngModel)]="receipt.total" [ngModelOptions]="{standalone: true}"
                  (keypress)="validateInput($event)"
                  #price="ngModel" required
                  (input)="formatCurrency()">
@@ -22,19 +22,21 @@
       </div>
 
       <div class="mb-3 col-md-3">
-        <label for="personpayment" class="col-form-label">Người thụ hưởng</label>
+        <label for="personReceipt" class="col-form-label">Người nộp tiền</label>
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="Dollar amount" id="personpayment" name="per" [(ngModel)]="payment.beneficiary">
+          <input type="text" class="form-control" aria-label="Dollar amount" id="personReceipt" name="per"
+                 [(ngModel)]="receipt.payer">
         </div>
       </div>
 
       <div class="md-3 col-md-2">
         <br><br>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="exampleRadios" id="status1" value="option1" [checked]="paymentStatus === displayPayment[0]"
-                 (click)="getStatusOnline(displayPayment[0])">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="status1" value="option1"
+                 [checked]="receiptStatus === displayReceipt[0]"
+                 (click)="getStatusOnline(displayReceipt[0])">
           <label class="form-check-label" for="status1">
-            {{ displayPayment[0] }}
+            {{ displayReceipt[0] }}
           </label>
         </div>
       </div>
@@ -42,10 +44,11 @@
       <div class="md-3 col-md-2">
         <br><br>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="exampleRadios" id="status2" value="option2" [checked]="paymentStatus === displayPayment[1]"
-                 (click)="getStatusDemo(displayPayment[1])">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="status2" value="option2"
+                 [checked]="receiptStatus === displayReceipt[1]"
+                 (click)="getStatusDemo(displayReceipt[1])">
           <label class="form-check-label" for="status2">
-            {{ displayPayment[1] }}
+            {{ displayReceipt[1] }}
           </label>
         </div>
       </div>
@@ -53,11 +56,11 @@
       <div class="mb-3">
         <label for="desc" class="form-label">Ghi chú</label>
         <textarea class="form-control" id="desc" name="desc" rows="3"
-                  [(ngModel)]="payment.note" [ngModelOptions]="{standalone: true}"></textarea>
+                  [(ngModel)]="receipt.note" [ngModelOptions]="{standalone: true}"></textarea>
       </div>
 
       <div class="col-md-5 mb-3">
-        <label>Loại phiếu chi</label>
+        <label>Loại phiếu thu</label>
         <div class="dropdown">
           <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="SizeProduct"
                   data-toggle="dropdown"
@@ -66,7 +69,7 @@
             <span class="caret">{{ this.typePaymentReceiptName }}</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right w-100 overflow-scroll" style="cursor: pointer">
-            <ng-container *ngFor="let o of optionTypePayment; let i = index">
+            <ng-container *ngFor="let o of optionTypeReceipt; let i = index">
               <a class="dropdown-item" (click)="getOptionType(o.name!, i, o)">
                 {{ o.name }}
               </a>
@@ -77,13 +80,14 @@
 
       <div class="col-md-3 mb-3">
         <label for="quantity">Số lượng</label>
-        <input type="number" class="form-control" id="quantity"required [(ngModel)]="paymentTransaction.quantity"
-               [ngModelOptions]="{standalone: true}" #qty="ngModel"(keypress)="validateInput($event)">
+        <input type="number" class="form-control" id="quantity" required [(ngModel)]="receiptTransaction.quantity"
+               [ngModelOptions]="{standalone: true}" #qty="ngModel" (keypress)="validateInput($event)">
       </div>
 
       <div class="col-md-3 mb-3">
         <label for="thisprice">Giá</label>
-        <input type="text" class="form-control" id="thisprice" placeholder=".000 đ" required [(ngModel)]="paymentTransaction.price"
+        <input type="text" class="form-control" id="thisprice" placeholder=".000 đ" required
+               [(ngModel)]="receiptTransaction.price"
                [ngModelOptions]="{standalone: true}" #price="ngModel"
                (keypress)="validateInput($event)">
       </div>
@@ -91,7 +95,9 @@
       <div class="col-md-1 mb-3">
         <br>
         <button type="button" class="btn btn-primary"
-                (click)="addTypeToTable()"  [disabled]="!paymentTransaction.quantity || !paymentTransaction.price || !this.typePaymentReceiptName">Thêm
+                (click)="addTypeToTable()"
+                [disabled]="!receiptTransaction.quantity || !receiptTransaction.price || !this.typePaymentReceiptName">
+          Thêm
         </button>
       </div>
 
@@ -108,9 +114,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let s of paymentTransactions; let i = index">
+            <tr *ngFor="let s of receiptTransactions; let i = index">
               <td>
-                <button class="btn btn-close" (click)="removeItemPaymentTransaction(i)"></button>
+                <button class="btn btn-close" (click)="removeItemReceiptTransaction(i)"></button>
               </td>
               <td>{{ i }}</td>
               <td>{{ s.quantity }}</td>
@@ -125,10 +131,11 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addPayment()">{{ btnName[0].display }}
+        <button type="button" class="btn btn-primary" (click)="addReceipt()">{{ btnName[0].display }}
         </button>
       </div>
     </form>
   </div>
 
 </app-modal-wrapper>
+

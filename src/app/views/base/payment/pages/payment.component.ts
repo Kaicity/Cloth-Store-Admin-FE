@@ -7,6 +7,11 @@ import {PaymentSearchModel} from "../../../../core/apis/dtos/Payment-search.mode
 import {AppSearchPaymentComponent} from "../components/app-search-payment/app-search-payment.component";
 import {AppAddPaymentComponent} from "../components/app-add-payment/app-add-payment.component";
 import {Router} from "@angular/router";
+import {TypePaymentService} from "../../../../core/Services/agency/TypePaymentService";
+import {TypePaymentReceiptModel} from "../../../../core/apis/dtos/TypePaymentReceipt.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {PaymentModel} from "../../../../core/apis/dtos/Payment.model";
+import {PaymentTransactionModel} from "../../../../core/apis/dtos/Payment-transaction.model";
 
 @Component({
   selector: 'app-payment',
@@ -25,25 +30,33 @@ export class PaymentComponent implements OnInit {
   payments: PaymentFullModel[] = [];
   //Gan tra tri payment o day
 
+  optionPayments: TypePaymentReceiptModel[] = [];
+
+  typeName: any[] = []; //Lưu danh sách type có tên
 
   isBtnName: ({ display: string; value: number } | { display: string; value: number })[] = [{
     display: '', value: 0
   }, {display: '', value: 1}];
   private paymentId!: string;
 
-  constructor(private paymentService: PaymentService, private router: Router) {
+  paymentFullInformation: PaymentFullModel = new PaymentFullModel();
+  paymentInformation: PaymentModel = new PaymentModel();
+  paymentTransactionInformation: PaymentTransactionModel[] = [];
+  payStatus: string = "";
+
+  constructor(private paymentService: PaymentService, private router: Router, private typePaymentService: TypePaymentService,
+              private snackBar: MatSnackBar) {
   }
 
-  //custom after
-  simulateLoading() {
-    this.isShowLoading = true;
-    setTimeout(() => {
-      this.isShowLoading = false;
-    }, 1500)
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
   ngOnInit(): void {
     this.getAllProduct();
+    this.getAllOptionTypes();
   }
 
   showSeachForm() {
@@ -54,6 +67,9 @@ export class PaymentComponent implements OnInit {
     this.isBtnName[0].value = 0;
     this.isBtnName[0].display = "Thêm";
     this.addWrapper.isInsertChose = true;
+    this.paymentInformation = new PaymentModel();
+    this.paymentTransactionInformation = [];
+    this.payStatus = "COMPLETE";
   }
 
   getPaymentData(id: string, payment: PaymentFullModel) {
@@ -62,16 +78,25 @@ export class PaymentComponent implements OnInit {
   }
 
   updatePayment() {
-
+    this.showInsertForm();
+    this.isBtnName[0].value = 1;
+    this.isBtnName[0].display = "Cập nhật";
+    //Lấy Payment theo id được chọn
+    this.paymentService.getPaymentById(this.paymentId).subscribe(res => {
+      this.paymentFullInformation = res.result;
+      this.paymentInformation = this.paymentFullInformation.payment!;
+      this.paymentTransactionInformation = this.paymentFullInformation.paymentTransactions!;
+      this.payStatus = this.paymentInformation.status!;
+    })
   }
 
   deletePayment() {
     this.paymentService.deletePayment(this.paymentId).subscribe((res) => {
-        alert("Đã xóa phiếu chi");
+       this.openSnackBar("Đã xóa thành công phiếu chi", "Close")
         this.resetPage();
       },
       error => {
-        alert("Lỗi khi xóa phiếu chi");
+        this.openSnackBar("Lỗi khi xóa phiếu chi", "Đóng")
       }
     )
   }
@@ -84,11 +109,11 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-
   private getAllProduct() {
     this.isShowLoading = true;
     this.paymentService.getAllPayment().subscribe(res => {
       this.getAllProductComplete(res)
+      console.log(res)
     });
   }
 
@@ -111,5 +136,12 @@ export class PaymentComponent implements OnInit {
     setTimeout(() => {
       this.isShowLoading = false;
     }, 1000)
+  }
+
+  getAllOptionTypes() {
+    this.typePaymentService.getAllOptionPayments().subscribe(res => {
+      this.optionPayments = res.result;
+      this.typeName = this.optionPayments;
+    });
   }
 }

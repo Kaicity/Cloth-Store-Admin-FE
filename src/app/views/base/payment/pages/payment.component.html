@@ -40,6 +40,7 @@
         <th>Code</th>
         <th>Loại Phiếu Chi</th>
         <th>Tổng Cộng</th>
+        <th>Người thụ hưởng</th>
         <th>Ngày Tạo</th>
         <th>Ngày Cập Nhật</th>
         <th>Tình Trạng</th>
@@ -50,17 +51,19 @@
       <tbody>
       <tr *ngFor="let p of payments;">
         <td>{{ p.payment!.code }}</td>
-        <td>{{ p.payment!.typePaymentReceiptDto?.name }}</td>
+        <td>{{ p.payment!.typePaymentReceipt?.name }}</td>
         <td>{{ p.payment!.total| currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
         </td>
+        <td>{{ p.payment!.beneficiary }}</td>
         <td>{{ p.payment!.dateCreated }}</td>
         <td>{{ p.payment!.dateUpdated }}</td>
         <td>{{ p.payment!.status }}</td>
         <td>{{ p.payment!.note }}</td>
         <td style="width: 4.5vw">
-          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown" (click)="getPaymentData(p.payment?.id!, p)">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"
+                  (click)="getPaymentData(p.payment?.id!, p)">
             <mat-icon>more_vert</mat-icon>
           </button>
         </td>
@@ -108,8 +111,14 @@
   </app-data-table>
 </ng-container>
 
-<app-add-payment #AddWrapper [btnName]="isBtnName"></app-add-payment>
-
+<app-add-payment #AddWrapper
+                 [optionTypePayment]="typeName"
+                 [btnName]="isBtnName"
+                 [payment]="paymentInformation"
+                 [paymentTransactions]="paymentTransactionInformation"
+                 [paymentStatus]="payStatus"
+                 [showTableSize]="paymentTransactionInformation.length != 0"
+                 [typePaymentReceiptName]="paymentInformation.typePaymentReceipt?.name!"></app-add-payment>
 <app-search-payment #searchWrapper></app-search-payment>
 
 
