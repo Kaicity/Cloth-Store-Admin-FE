@@ -33,8 +33,6 @@ export class WarehouseBaseService {
   public delete(url: string, id: string): Observable<any> {
     let authentication = new JwtAuthenticationResponseModel();
     const authResponseString = localStorage.getItem("authentication");
-    console.log("Cb vo neeee");
-    console.log(authResponseString)
     if (authResponseString) {
       const authResponseData = JSON.parse(authResponseString);
       // Map the data from localStorage to JwtAuthenticationResponseModel
@@ -42,8 +40,6 @@ export class WarehouseBaseService {
       authentication.timeStart = authResponseData.timeStart;
       authentication.timeEnd = authResponseData.timeEnd;
     }
-    console.log(authentication);
-    console.log("Ket qua o tren");
     let token = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + authentication.token // Include the token here
