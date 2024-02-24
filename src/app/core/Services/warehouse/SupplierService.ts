@@ -2,7 +2,7 @@ import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {WarehouseBaseService} from "../generic/warehouse-base.service";
 import {BaseSearchModel} from "../../apis/dtos/Base-search.model";
-import {SupplierModel} from "../../apis/Dtos/Supplier.model";
+import {SupplierModel} from "../../apis/dtos/Supplier.model";
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +25,9 @@ export class SupplierService extends WarehouseBaseService {
     return this.post("/api/v1/Supplier/updateSupplier", supplierModel);
   }
 
-  public getSupplierId(id: string): Observable<any> {
-    return this.get("/api/v1/Supplier", id)
+  public getSupplierId(id: any): Observable<any> {
+    const body = {id}
+    return this.post("/api/v1/Supplier", body)
   }
 
   public advanceSearch(search: BaseSearchModel<SupplierModel[]>): Observable<any> {

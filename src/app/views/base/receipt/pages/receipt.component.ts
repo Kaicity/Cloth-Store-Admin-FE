@@ -7,11 +7,11 @@ import {ReceiptSearchModel} from "../../../../core/apis/dtos/Receipt-search.mode
 import {Router} from "@angular/router";
 import {TypePaymentService} from "../../../../core/Services/agency/TypePaymentService";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {AppSearchPaymentComponent} from "../../payment/components/app-search-payment/app-search-payment.component";
-import {AppAddPaymentComponent} from "../../payment/components/app-add-payment/app-add-payment.component";
 import {TypePaymentReceiptModel} from "../../../../core/apis/dtos/TypePaymentReceipt.model";
 import {ReceiptModel} from "../../../../core/apis/dtos/Receipt.model";
 import {ReceiptTransactionModel} from "../../../../core/apis/dtos/Receipt-transaction.model";
+import {AppSearchReceiptComponent} from "../components/app-search-receipt/app-search-receipt.component";
+import {AppAddReceiptComponent} from "../components/app-add-receipt/app-add-receipt.component";
 
 @Component({
   selector: 'app-receipt',
@@ -22,8 +22,8 @@ export class ReceiptComponent implements OnInit {
   isShowLoading: boolean = false;
   //Format table
   tableFormat: string = "table table-bordered table-striped";
-  @ViewChild("searchWrapper") searchWrapper!: AppSearchPaymentComponent;
-  @ViewChild("AddWrapper") addWrapper!: AppAddPaymentComponent;
+  @ViewChild("searchWrapper") searchWrapper!: AppSearchReceiptComponent;
+  @ViewChild("AddWrapper") addWrapper!: AppAddReceiptComponent;
 
 
   //DTO Product
@@ -45,7 +45,6 @@ export class ReceiptComponent implements OnInit {
   receiptTransactionInformation: ReceiptTransactionModel[] = [];
   reiStatus: string = "";
 
-
   constructor(private receiptService: ReceiptService, private router: Router, private typeReceiptService: TypePaymentService,
               private snackBar: MatSnackBar) {
   }
@@ -62,7 +61,7 @@ export class ReceiptComponent implements OnInit {
   }
 
   showSeachForm() {
-    this.searchWrapper.isSeachChose = true;
+    //this.searchWrapper.isSeachChose = true;
   }
 
   showInsertForm() {

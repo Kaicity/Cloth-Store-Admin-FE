@@ -18,6 +18,7 @@ export class DatePickerComponent implements OnInit, AfterViewInit {
   @Input() birthDay!: Date;
   currentDate!: string;
   formattedDate: string;
+
   constructor() {
     this.currentDate = new Date().toISOString();
     this.formattedDate = this.formatDate(this.currentDate);
@@ -40,8 +41,9 @@ export class DatePickerComponent implements OnInit, AfterViewInit {
 
     return `${day}/${month}/${year}`;
   }
-getDateCustomer(){
-}
+
+  getDateCustomer() {
+  }
 
   protected readonly DatePipe = DatePipe;
 }

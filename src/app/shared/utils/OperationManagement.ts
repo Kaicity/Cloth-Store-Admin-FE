@@ -12,7 +12,7 @@ export const OperationManagement: INavData[] = [
         children: [
           {
             name: 'Nhập mua hàng hóa - sản phẩm',
-            url: '/base/cards'
+            url: '/importing'
           },
           {
             name: 'Xuất trả hàng hóa',
@@ -69,9 +69,11 @@ export const OperationManagement: INavData[] = [
         iconComponent: {name: 'cilLockLocked'},
         url: '/base/breadcrumbs'
       },
-
-
+      {
+        name: 'Quản lý nhà cung cấp',
+        iconComponent: {name: 'cilLockLocked'},
+        url: '/supplier'
+      },
     ]
   },
-
 ];

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {SupplierStatus} from "../../../../../core/constanst/SupplierStatus";
-import {SupplierModel} from "../../../../../core/apis/Dtos/Supplier.model";
+import {SupplierModel} from "../../../../../core/apis/dtos/Supplier.model";
 import {SupplierService} from "../../../../../core/Services/warehouse/SupplierService";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -19,9 +19,10 @@ interface SpecificationSupplier {
 export class AppAddSupplierComponent implements OnInit, AfterViewInit {
   @Input() supplierModel!: SupplierModel;
   @ViewChild("AddDatePicker") addWrapper!: AppAddSupplierComponent;
+
   specificationStatus: SpecificationSupplier[] = [
-    {value: SupplierStatus.IsWorking, display: 'đang cung cấp'},
-    {value: SupplierStatus.Stop, display: 'ngừng cung cấp'},
+    {value: SupplierStatus.ISWORKING, display: 'Đang cung cấp'},
+    {value: SupplierStatus.STOP, display: 'Ngừng cung cấp'},
   ];
 
   @Input() statusDisplay!: string;
@@ -67,7 +68,7 @@ export class AppAddSupplierComponent implements OnInit, AfterViewInit {
 
   getStatusValue(display: string): SupplierStatus {
     const status = this.specificationStatus.find(spec => spec.display === display);
-    return status ? status.value : SupplierStatus.IsWorking;
+    return status ? status.value : SupplierStatus.ISWORKING;
   }
 
   formatCurrency() {

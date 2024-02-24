@@ -64,6 +64,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/base/supplier/supplier.module').then((m) => m.SupplierModule)
       },
+      {
+        path: 'importing',
+        loadChildren: () =>
+          import('./views/base/importing/importing.module').then((m) => m.ImportingModule)
+      }
     ]
   },
 
