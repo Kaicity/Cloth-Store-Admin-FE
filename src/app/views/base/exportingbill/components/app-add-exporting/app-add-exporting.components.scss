@@ -1,0 +1,43 @@
+:host ::ng-deep app-auto-complete {
+  mat-form-field {
+    margin-right: 10px;
+  }
+
+  hello {
+    margin-left: 30px;
+  }
+}
+
+.productType {
+  position: relative;
+  left: 12vh;
+top: 2vh;
+
+}
+
+.col-form-label1 {
+  position: relative;
+  left: 14vh;
+  top: 2vh;
+
+}
+.col-form-label2{
+  position: relative;
+  left: 10vh;
+  top: 2vh;
+}
+.ColorType{
+  position: relative;
+  left: 8vh;
+  top: 2vh;
+}
+.col-form-label3{
+  position: relative;
+  left: 8vh;
+
+}
+.sizeType{
+  position: relative;
+  left: 4vh;
+  top: 2vh;
+}

@@ -1,0 +1,159 @@
+<app-modal-wrapper #AddWrapper
+                   [showModal]="isInsertChose"
+                   [modalTitle]="'Thêm Khách Hàng'"
+                   [nameButton]="'Thêm'"
+                   [size]="'width: 65%; max-width: 100%;'"
+                   (closeModalEvent)="closeModal()">
+
+    <!-- Your modal content goes here -->
+    <div class="modal-lg">
+        <form #myForm="ngForm" class="row g-3" (ngSubmit)="onSubmit()">
+            <div class="mb-3 col-md-4">
+                <label for="fullname" class="col-form-label">Tên Khách hàng</label>
+                <input type="text" class="form-control" id="FullName" name="fullName"
+                       [(ngModel)]="customerInfor.fullName!" [ngModelOptions]="{standalone: true}" [readonly]="true"
+                       required>
+            </div>
+
+            <div class="mb-3 col-md-4">
+                <label for="Phone" class="col-form-label">Số Điện thoại</label>
+                <input type="text" class="form-control" id="Phone" name="phone" [readonly]="true"
+                       [(ngModel)]="customerInfor.phone!" [ngModelOptions]="{standalone: true}" required>
+
+            </div>
+            <!-- Và các trường khác của khách hàng -->
+
+            <div class="mb-3 col-md-4">
+                <label for="address" class="col-form-label">Địa Chỉ</label>
+                <input type="text" class="form-control" aria-label="Dollar amount" id="address" name="address"
+                       [readonly]="true"
+                       [(ngModel)]="customerInfor.address!" [ngModelOptions]="{standalone: true}" required>
+            </div>
+
+            <!-- Các trường nhập liệu khác -->
+            <div class="mb-3 col-md-2">
+                <label class="col-form-label">Trạng Thái</label>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="spec"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"
+                            style="width: 100%; height: 4vh; display: flex; justify-content: space-between; align-items: center;">
+                        {{ statust }}
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" style="cursor: pointer">
+                        <ng-container *ngFor="let s of SpecificationExporting">
+                            <a class="dropdown-item" (click)="optionSpecChose(s.display)">{{ s.display }}</a>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 col-md-2">
+                <label class="col-form-label">Mã Khách Hàng</label>
+                <div class="input-group">
+                    <app-auto-complete #autoCompleteComponent [options]="customerNames"
+                                       (selected)="receiveSelectedOption( $event)"></app-auto-complete>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-2">
+                <label for="address" class="col-form-label3">Sản phẩm</label>
+                <div class="input-group">
+                    <app-auto-complete #autoCompleteSizes [options]="productNames"
+                                       (selected)="receiveSelectedOption( $event)"
+                                       class="sizeType"></app-auto-complete>
+                </div>
+            </div>
+
+            <div class="mb-3 col-md-2">
+                <label for="address" class="col-form-label2">Color</label>
+                <div class="input-group">
+                    <app-auto-complete #autoCompleteColos [options]="colorS"
+                                       (selected)="receiveSelectedOption($event)"
+                                       class="ColorType"></app-auto-complete>
+                </div>
+            </div>
+            <div class="mb-3 col-md-2">
+                <label for="address" class="col-form-label1">size</label>
+                <div class="input-group">
+                    <app-auto-complete #autoCompleteProduct [options]="sizeS"
+                                       (selected)="receiveSelectedOption( $event)"
+                                       class="productType"></app-auto-complete>
+                </div>
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+                <label for="validationCustom01">Size (Kích thước)</label>
+                <input type="text" class="form-control" id="validationCustom01" placeholder="" required
+                       [value]="this.itemSize.optionProduct?.name" [hidden]="true">
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="SizeProduct"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"
+                            style="width: 100%; height: 4vh; display: flex; justify-content: space-between; align-items: center;">
+                        <span class="caret">{{ this.sizeName }}</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right w-100 overflow-scroll" style="cursor: pointer">
+                        <ng-container *ngFor="let o of optionSizes; let i = index">
+                            <a class="dropdown-item" (click)="getOptionSizes(o.name!,i)">
+                                {{ o.name }}
+                            </a>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-1 mb-3">
+                <br>
+                <button type="button" class="btn btn-primary"
+                        [disabled]="(!itemSize.optionProduct?.name || !itemSize.addition)"
+                        (click)="addSizeToTable()">Thêm
+                </button>
+            </div>
+            <div class="mb-3" *ngIf="showTableSize">
+                <div class="tb-size" style="height: 16vh; overflow: scroll">
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th style="width: 4vw"></th>
+                            <th scope="col">STT</th>
+                            <th scope="col">Tên Size</th>
+                            <th scope="col">Giá phụ thu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let s of sizes; let i = index">
+                            <td>
+                                <button class="btn btn-close" (click)="removeItemSize(i)"></button>
+                            </td>
+                            <td>{{ i }}</td>
+                            <td>{{ s.optionProduct!.name }}</td>
+                            <td>{{ s.addition |  currency: 'VND':'symbol':'1.0-0' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <style>
+                .table th, .table td {
+                    border-right: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                }
+
+                .table th:last-child, .table td:last-child {
+                    border-right: none;
+                }
+            </style>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary"
+                        (click)="addOrUpdateFunc()">{{ btnName[0].display }}</button>
+            </div>
+        </form>
+    </div>
+
+</app-modal-wrapper>
