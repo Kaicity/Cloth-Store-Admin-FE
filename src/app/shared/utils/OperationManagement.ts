@@ -16,7 +16,7 @@ export const OperationManagement: INavData[] = [
           },
           {
             name: 'Xuất trả hàng hóa',
-            url: '/base/breadcrumbs'
+            url: 'exporting-return'
           },
           {
             name: 'Quản lý bảng giá nhập',

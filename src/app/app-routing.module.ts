@@ -2,7 +2,6 @@ import {NgModule, OnInit} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {DefaultLayoutComponent} from './containers';
-import {DashboardComponent} from "./views/base/dashboard/pages/dashboard.component";
 import {LoginComponent} from "./modules/login-page/login.component";
 
 
@@ -52,7 +51,7 @@ const routes: Routes = [
       {
         path: 'customer',
         loadChildren: () =>
-            import('./views/base/customer/customer.module').then((m) => m.CustomerModule)
+          import('./views/base/customer/customer.module').then((m) => m.CustomerModule)
       },
       {
         path: 'dashboard',
@@ -70,9 +69,15 @@ const routes: Routes = [
           import('./views/base/importing/importing.module').then((m) => m.ImportingModule)
       },
       {
+
         path: 'exporting',
         loadChildren: () =>
           import('./views/base/exportingbill/Exporting.module').then((m) => m.ExportingModule)
+      },
+      {
+        path: 'exporting-return',
+        loadChildren: () =>
+          import('./views/base/exporting-return/exporting-return.module').then((m) => m.ExportingReturnModule)
       }
     ]
   },
@@ -90,7 +95,7 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule implements OnInit{
+export class AppRoutingModule implements OnInit {
   ngOnInit(): void {
     alert("Hello");
   }

@@ -7,6 +7,7 @@ import {EmployeeManagement} from "../../shared/utils/EmployeeManagement";
 import {StatisticNavItems} from "../../shared/utils/StatisticNavItems";
 import {BillInDayItems} from "../../shared/utils/BillInDayItems";
 import {Router} from "@angular/router";
+import {color} from "chart.js/helpers";
 
 @Component({
   selector: 'app-dashboard',
@@ -33,4 +34,5 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   protected readonly top = top;
+  protected readonly color = color;
 }

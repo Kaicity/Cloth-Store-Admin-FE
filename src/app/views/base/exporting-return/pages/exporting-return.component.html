@@ -5,7 +5,7 @@
     <div class="col-auto d-flex">
       <c-breadcrumb>
         <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
-        <c-breadcrumb-item [active]="true">Phiếu Nhập hàng</c-breadcrumb-item>
+        <c-breadcrumb-item [active]="true">Phiếu xuất trả</c-breadcrumb-item>
       </c-breadcrumb>
     </div>
   </div>
@@ -15,14 +15,14 @@
   <div class="row" style="margin-left: 0.1vw">
     <div class="col-auto d-flex justify-content-between align-items-center">
       <div class="container-title">
-        <h1>Danh sách phiếu nhập hàng</h1>
+        <h1>Danh sách phiếu xuất trả</h1>
       </div>
       <div class="col-auto" style="margin-left: 53vw;">
         <button type="button" class="btn btn-primary  mr-2" style="height: 4vh; width: 4vw" (click)="showSeachForm()">
           <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
         </button>
         <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
-          Tạo phiếu nhập
+          Tạo phiếu xuất trả
         </button>
       </div>
     </div>
@@ -146,7 +146,7 @@
   </app-data-table>
 </ng-container>
 
-<app-add-importing #AddWrapper
+<app-add-exporting-return #AddWrapper
                    [suppliers]="supplierName"
                    [btnName]="isBtnName"
                    [importing]="importingInformation"
@@ -155,6 +155,6 @@
                    [showTableSize]="importingTransactionInformation.length != 0"
                    [supplierNameDisplay]="importingInformation.supplier?.name!"
                    [products]="productsName"
-                   [productFill]="products"></app-add-importing>
+                   [productFill]="products"></app-add-exporting-return>
 
-<app-search-importing #searchWrapper></app-search-importing>
+<app-search-exporting-return #searchWrapper></app-search-exporting-return>

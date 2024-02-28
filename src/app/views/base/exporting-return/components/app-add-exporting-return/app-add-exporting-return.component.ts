@@ -17,12 +17,12 @@ interface ImportingStatusDisplay {
 }
 
 @Component({
-  selector: 'app-add-importing',
-  templateUrl: './app-add-importing.component.html',
-  styleUrl: './app-add-importing.component.scss',
+  selector: 'app-add-exporting-return',
+  templateUrl: './app-add-exporting-return.component.html',
+  styleUrl: './app-add-exporting-return.component.scss',
 })
 
-export class AppAddImportingComponent implements OnInit, AfterViewInit {
+export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
   //Table color is show
   @Input() suppliers: SupplierModel[] = [];
   @Input() products: ProductModel[] = [];

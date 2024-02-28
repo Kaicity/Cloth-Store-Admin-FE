@@ -17,51 +17,53 @@ import {
 import {SpinnerComponent} from "../../../shared/components/spinner/spinner.component";
 import {CdkOption} from "@angular/cdk/listbox";
 import {DatePickerComponent} from "../../../shared/components/date-picker/date-picker.component";
-import {ImportingComponent} from "./pages/importing.component";
-import {AppAddImportingComponent} from "./components/app-add-importing/app-add-importing.component";
-import {AppSearchImportingComponent} from "./components/app-search-importing/app-search-importing.component";
 import {ThousandSeparatorDirective} from "../../../core/bussiness-logic/thousandSeparatorDirective";
+import {ExportingReturnComponent} from "./pages/exporting-return.component";
+import {AppAddExportingReturnComponent} from "./components/app-add-exporting-return/app-add-exporting-return.component";
+import {
+  AppSearchExportingReturnComponent
+} from "./components/app-search-exporting-return/app-search-exporting-return.component";
 
 export const routes: Routes = [
   {
     path: '',
-    component: ImportingComponent,
+    component: ExportingReturnComponent,
   },
 ];
 
 @NgModule({
   declarations: [
-    ImportingComponent,
-    AppAddImportingComponent,
-    AppSearchImportingComponent
+    ExportingReturnComponent,
+    AppAddExportingReturnComponent,
+    AppSearchExportingReturnComponent
   ],
-    imports: [
-        RouterModule.forChild(routes),
-        FormsModule,
-        MatTableModule,
-        ControlMaterial,
-        DataTableComponent,
-        NgForOf,
-        ModalWrapperComponent,
-        ReactiveFormsModule,
-        AlertComponent,
-        CurrencyPipe,
-        NgIf,
-        BreadcrumbComponent,
-        BreadcrumbItemComponent,
-        SlicePipe,
-        SpinnerComponent,
-        DropdownComponent,
-        CdkOption,
-        DropdownItemDirective,
-        DropdownMenuDirective,
-        DatePickerComponent,
-        DatePipe,
-        NgClass,
-        ThousandSeparatorDirective,
-    ]
+  imports: [
+    RouterModule.forChild(routes),
+    FormsModule,
+    MatTableModule,
+    ControlMaterial,
+    DataTableComponent,
+    NgForOf,
+    ModalWrapperComponent,
+    ReactiveFormsModule,
+    AlertComponent,
+    CurrencyPipe,
+    NgIf,
+    BreadcrumbComponent,
+    BreadcrumbItemComponent,
+    SlicePipe,
+    SpinnerComponent,
+    DropdownComponent,
+    CdkOption,
+    DropdownItemDirective,
+    DropdownMenuDirective,
+    DatePickerComponent,
+    DatePipe,
+    NgClass,
+    ThousandSeparatorDirective,
+  ]
 })
 
-export class ImportingModule {
+export class ExportingReturnModule {
 
 }

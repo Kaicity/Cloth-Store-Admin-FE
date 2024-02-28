@@ -1,20 +1,22 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {
+  AppSearchImportingComponent
+} from "../../importing/components/app-search-importing/app-search-importing.component";
+import {AppAddImportingComponent} from "../../importing/components/app-add-importing/app-add-importing.component";
+import {ImportingSearchModel} from "../../../../core/apis/dtos/Importing-search.model";
+import {ImportingFullModel} from "../../../../core/apis/dtos/Importing-full.model";
+import {SupplierModel} from "../../../../core/apis/dtos/Supplier.model";
+import {ProductModel} from "../../../../core/apis/dtos/Product.model";
+import {ImportingModel} from "../../../../core/apis/dtos/Importing.model";
+import {ImportingTransactionModel} from "../../../../core/apis/dtos/Importing-transaction.model";
+import {ImportingStatus} from "../../../../core/constanst/ImportingStatus";
+import {ImportingService} from "../../../../core/Services/agency/ImportingService";
 import {Router} from "@angular/router";
+import {SupplierService} from "../../../../core/Services/warehouse/SupplierService";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ProductService} from "../../../../core/Services/warehouse/ProductService";
 import {ResponseModel} from "../../../../core/apis/dtos/Response.model";
 import {BaseSearchModel} from "../../../../core/apis/dtos/Base-search.model";
-import {AppSearchImportingComponent} from "../components/app-search-importing/app-search-importing.component";
-import {AppAddImportingComponent} from "../components/app-add-importing/app-add-importing.component";
-import {ImportingSearchModel} from "../../../../core/apis/dtos/Importing-search.model";
-import {ImportingTransactionModel} from "../../../../core/apis/dtos/Importing-transaction.model";
-import {ImportingFullModel} from "../../../../core/apis/dtos/Importing-full.model";
-import {ImportingModel} from "../../../../core/apis/dtos/Importing.model";
-import {ImportingService} from "../../../../core/Services/agency/ImportingService";
-import {SupplierService} from "../../../../core/Services/warehouse/SupplierService";
-import {SupplierModel} from "../../../../core/apis/dtos/Supplier.model";
-import {ProductService} from "../../../../core/Services/warehouse/ProductService";
-import {ProductModel} from "../../../../core/apis/dtos/Product.model";
-import {ImportingStatus} from "../../../../core/constanst/ImportingStatus";
 
 interface ImportingStatusDisplay {
   value: ImportingStatus,
@@ -27,11 +29,11 @@ interface ImportingStatusFilter {
 }
 
 @Component({
-  selector: 'app-importing',
-  templateUrl: './importing.component.html',
-  styleUrl: './importing.component.scss'
+  selector: 'app-exporting-return',
+  templateUrl: './exporting-return.component.html',
+  styleUrl: './exporting-return.component.scss'
 })
-export class ImportingComponent implements OnInit {
+export class ExportingReturnComponent implements OnInit {
   isShowLoading: boolean = false;
   //Format table
   tableFormat: string = "table table-bordered table-striped";
