@@ -34,7 +34,7 @@
   <div class="row">
     <div class="col-md-4" style="margin-left: 0.5vw">
       <div class="input-group">
-        <input type="search" class="form-control search-icon" aria-label="Search content" (input)="filterImporting()"
+        <input type="search" class="form-control search-icon" aria-label="Search content" (input)="filterExportingReturn()"
                [(ngModel)]="searchTermTable"
                [ngModelOptions]="{standalone: true}"
                placeholder="Tìm kiếm phiếu theo mã phiếu, tên nhà cung cấp, giá" id="search" name="per">
@@ -52,7 +52,7 @@
           <span class="caret">{{ isFillStatus }}</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right w-100 overflow-scroll" style="cursor: pointer">
-          <ng-container *ngFor="let f of displayImportingFilter; let i = index">
+          <ng-container *ngFor="let f of displayExportingReturnFilter; let i = index">
             <a class="dropdown-item" (click)="getFilterStatus(f.value, f.display)">
               {{ f.display }}
             </a>
@@ -65,9 +65,9 @@
 </ng-container>
 
 
-<ng-container *ngIf="importings.length !== 0">
-  <app-data-table [columnNumber]="7" [tableFormatClass]="tableFormat" [search]="importingSeach"
-                  [data2Show]="importings">
+<ng-container *ngIf="exportingReturns.length !== 0">
+  <app-data-table [columnNumber]="7" [tableFormatClass]="tableFormat" [search]="exportingReturnSearch"
+                  [data2Show]="exportingReturns">
     <table class="{{tableFormat}}">
       <thead>
       <tr>
@@ -81,25 +81,25 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let i of importingFill;">
-        <td>{{ i.importing!.dateCreated }}</td>
-        <td>{{ i.importing!.code }}</td>
-        <td>{{ i.importing!.supplier?.name }}</td>
+      <tr *ngFor="let i of exportingReturnFill;">
+        <td>{{ i.exportingReturn!.dateCreated }}</td>
+        <td>{{ i.exportingReturn!.code }}</td>
+        <td>{{ i.exportingReturn!.supplier?.name }}</td>
         <td>
-          <span *ngIf="i.importing?.status === 'COMPLETE'" class="dot-green"></span>
-          <span *ngIf="i.importing?.status === 'UNCOMPLETE'" class="dot-red"></span>
-          {{ getStatusOfImporting(i.importing!.status!) }}
+          <span *ngIf="i.exportingReturn?.status === 'COMPLETE'" class="dot-green"></span>
+          <span *ngIf="i.exportingReturn?.status === 'UNCOMPLETE'" class="dot-red"></span>
+          {{ getStatusOfExportingReturn(i.exportingReturn!.status!) }}
         </td>
 
 
-        <td>{{ i.importing!.dateUpdated }}</td>
-        <td>{{ i.importing!.total | currency: 'VND' | slice:1 }}
+        <td>{{ i.exportingReturn!.dateUpdated }}</td>
+        <td>{{ i.exportingReturn!.total | currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
         </td>
         <td style="width: 4.5vw">
           <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"
-                  (click)="getImportingData(i.importing?.id!, i)">
+                  (click)="getExportingReturnData(i.exportingReturn?.id!, i)">
             <mat-icon>more_vert</mat-icon>
           </button>
         </td>
@@ -108,12 +108,12 @@
     </table>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="updateImporting()">
+      <button mat-menu-item (click)="updateExportingReturn()">
         <mat-icon>edit</mat-icon>
         <span>Sửa</span>
       </button>
 
-      <button mat-menu-item (click)="deleteImporting()">
+      <button mat-menu-item (click)="deleteExportingReturn()">
         <mat-icon>delete</mat-icon>
         <span>Xóa</span>
       </button>
@@ -138,7 +138,7 @@
         <span>Lập P.Chi</span>
       </button>
 
-      <button mat-menu-item>
+      <button mat-menu-item >
         <mat-icon>money</mat-icon>
         <span>Tạo Từ Phiếu Này</span>
       </button>
@@ -149,11 +149,11 @@
 <app-add-exporting-return #AddWrapper
                    [suppliers]="supplierName"
                    [btnName]="isBtnName"
-                   [importing]="importingInformation"
-                   [importingTransactions]="importingTransactionInformation"
-                   [importingStatus]="statusValue"
-                   [showTableSize]="importingTransactionInformation.length != 0"
-                   [supplierNameDisplay]="importingInformation.supplier?.name!"
+                   [exportingReturn]="exportingReturnInformation"
+                   [ExportingReturnTransactions]="exportingReturnTransactionInformation"
+                   [exportingReturnStatus]="statusValue"
+                   [showTableSize]="exportingReturnTransactionInformation.length != 0"
+                   [supplierNameDisplay]="exportingReturnInformation.supplier?.name!"
                    [products]="productsName"
                    [productFill]="products"></app-add-exporting-return>
 
