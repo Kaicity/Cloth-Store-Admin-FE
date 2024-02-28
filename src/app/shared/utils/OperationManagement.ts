@@ -34,7 +34,7 @@ export const OperationManagement: INavData[] = [
           },
           {
             name: 'Xuất bán hàng hóa - sản phẩm',
-            url: '/base/breadcrumbs'
+            url: 'exporting'
           },
           {
             name: 'Xuất khác',

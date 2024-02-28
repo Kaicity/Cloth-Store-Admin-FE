@@ -68,6 +68,11 @@ const routes: Routes = [
         path: 'importing',
         loadChildren: () =>
           import('./views/base/importing/importing.module').then((m) => m.ImportingModule)
+      },
+      {
+        path: 'exporting',
+        loadChildren: () =>
+          import('./views/base/exportingbill/Exporting.module').then((m) => m.ExportingModule)
       }
     ]
   },

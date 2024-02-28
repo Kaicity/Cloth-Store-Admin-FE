@@ -7,6 +7,9 @@ import {AgencyBaseService} from "../generic/agency-base-service";
 })
 export class ExportingbillService extends AgencyBaseService{
 
+  public getAllExportingBill(): Observable<any> {
+    return this.post("/api/v1/Exportingbill/findExportingAll",{});
+  }
   public getAllBill(): Observable<any> {
     return this.post("/api/v1/Exportingbill/getAllExportingBill", {});
   }
