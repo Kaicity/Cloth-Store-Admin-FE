@@ -17,13 +17,22 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ProductService} from "../../../../core/Services/warehouse/ProductService";
 import {ResponseModel} from "../../../../core/apis/dtos/Response.model";
 import {BaseSearchModel} from "../../../../core/apis/dtos/Base-search.model";
+import {ExportingReturnStatus} from "../../../../core/constanst/ExportingReturnStatus";
+import {
+  AppAddExportingReturnComponent
+} from "../components/app-add-exporting-return/app-add-exporting-return.component";
+import {ExportingReturnSearchModel} from "../../../../core/apis/dtos/Exporting-return-search-model";
+import {ExportingReturnFullModel} from "../../../../core/apis/dtos/Exporting-return-full-model";
+import {ExportingReturnModel} from "../../../../core/apis/dtos/Exporting-return-model";
+import {ExportingReturnTransactionBillModel} from "../../../../core/apis/dtos/Exporting-return-transaction-model";
+import {ExportingReturnService} from "../../../../core/Services/agency/ExportingReturnService";
 
-interface ImportingStatusDisplay {
-  value: ImportingStatus,
+interface ExportingReturnStatusDisplay {
+  value: ExportingReturnStatus,
   display: string
 }
 
-interface ImportingStatusFilter {
+interface ExportingReturnStatusFilter {
   value: string,
   display: string
 }
@@ -37,12 +46,12 @@ export class ExportingReturnComponent implements OnInit {
   isShowLoading: boolean = false;
   //Format table
   tableFormat: string = "table table-bordered table-striped";
-  @ViewChild("searchWrapper") searchWrapper!: AppSearchImportingComponent;
-  @ViewChild("AddWrapper") addWrapper!: AppAddImportingComponent;
+  @ViewChild("searchWrapper") searchWrapper!: AppAddExportingReturnComponent;
+  @ViewChild("AddWrapper") addWrapper!: AppAddExportingReturnComponent;
 
   //DTO Importing
-  importingSeach: ImportingSearchModel = new ImportingSearchModel();
-  importings: ImportingFullModel[] = [];
+  exportingReturnSearch: ExportingReturnSearchModel = new ExportingReturnSearchModel();
+  exportingReturns: ExportingReturnFullModel[] = [];
   //Gan tra tri importing o day
 
   suppliers: SupplierModel[] = [];
@@ -55,31 +64,31 @@ export class ExportingReturnComponent implements OnInit {
     display: '', value: 0
   }, {display: '', value: 1}];
 
-  private importingId!: string;
+  private exportingReturnId!: string;
 
-  importingFullInformation: ImportingFullModel = new ImportingFullModel();
-  importingInformation: ImportingModel = new ImportingModel();
-  importingTransactionInformation: ImportingTransactionModel[] = [];
+  exportingReturnFullInformation: ExportingReturnFullModel = new ExportingReturnFullModel();
+  exportingReturnInformation: ExportingReturnModel = new ExportingReturnModel();
+  exportingReturnTransactionInformation: ExportingReturnTransactionBillModel[] = [];
 
-  displayImporting: ImportingStatusDisplay[] = [{value: ImportingStatus.COMPLETE, display: "Đã hoàn thành"},
-    {value: ImportingStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
+  displayExportingReturn: ExportingReturnStatusDisplay[] = [{value: ExportingReturnStatus.COMPLETE, display: "Đã hoàn thành"},
+    {value: ExportingReturnStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
 
-  displayImportingFilter: ImportingStatusFilter[] = [{value: '', display: "Tất cả"},
-    {value: ImportingStatus.COMPLETE, display: "Đã hoàn thành"},
-    {value: ImportingStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
+  displayExportingReturnFilter: ExportingReturnStatusFilter[] = [{value: '', display: "Tất cả"},
+    {value: ExportingReturnStatus.COMPLETE, display: "Đã hoàn thành"},
+    {value: ExportingReturnStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
 
   statusValue!: string;
 
   datePick: Date = new Date();
   searchTermTable: string = '';
-  importingFill: ImportingFullModel[] = this.importings;
+  exportingReturnFill: ExportingReturnFullModel[] = this.exportingReturns;
 
-  constructor(private importingService: ImportingService, private router: Router, private supplierService: SupplierService,
+  constructor(private exportingReturnService: ExportingReturnService, private router: Router, private supplierService: SupplierService,
               private snackBar: MatSnackBar, private productService: ProductService) {
   }
 
   ngOnInit(): void {
-    this.getAllImporting();
+    this.getAllExportingReturn();
     this.getAllSuppliers();
     this.getAllProducts();
   }
@@ -98,32 +107,32 @@ export class ExportingReturnComponent implements OnInit {
     this.isBtnName[0].value = 0;
     this.isBtnName[0].display = "Lưu";
     this.addWrapper.isInsertChose = true;
-    this.importingInformation = new ImportingModel();
-    this.importingTransactionInformation = [];
-    this.statusValue = this.displayImporting[0].value;
+    this.exportingReturnInformation = new ExportingReturnModel();
+    this.exportingReturnTransactionInformation = [];
+    this.statusValue = this.displayExportingReturn[0].value;
   }
 
-  getImportingData(id: string, importing: ImportingFullModel) {
-    this.importingId = id;
+  getExportingReturnData(id: string, importing: ExportingReturnFullModel) {
+    this.exportingReturnId = id;
     //APIs get product by id
   }
 
-  updateImporting() {
+  updateExportingReturn() {
     this.showInsertForm();
     this.isBtnName[0].value = 1;
     this.isBtnName[0].display = "Cập nhật";
     //Lấy importing theo id được chọn
-    this.importingService.getImportingById(this.importingId).subscribe(res => {
-      this.importingFullInformation = res.result;
-      this.importingInformation = this.importingFullInformation.importing!;
-      this.importingTransactionInformation = this.importingFullInformation.importingTransactions!;
+    this.exportingReturnService.getExportingReturnById(this.exportingReturnId).subscribe(res => {
+      this.exportingReturnFullInformation = res.result;
+      this.exportingReturnInformation = this.exportingReturnFullInformation.exportingReturn!;
+      this.exportingReturnTransactionInformation = this.exportingReturnFullInformation.exportingReturnTransactions!;
       this.statusValue = res.result.status;
-      this.importingInformation.dateCreated = this.datePick!;
+      this.exportingReturnInformation.dateCreated = this.datePick!;
     })
   }
 
-  deleteImporting() {
-    this.importingService.deleteImporting(this.importingId).subscribe((res) => {
+  deleteExportingReturn() {
+    this.exportingReturnService.deleteExportingReturn(this.exportingReturnId).subscribe((res) => {
         this.openSnackBar("Đã xóa thành công phiếu nhập hàng", "Close")
         this.resetPage();
       },
@@ -141,15 +150,15 @@ export class ExportingReturnComponent implements OnInit {
     });
   }
 
-  private getAllImporting() {
+  private getAllExportingReturn() {
     this.isShowLoading = true;
-    this.importingService.getAllImporting().subscribe(res => {
-      this.getAllImportingComplete(res)
+    this.exportingReturnService.getAllExportingReturn().subscribe(res => {
+      this.getAllExportingReturnComplete(res)
       console.log(res);
     });
   }
 
-  getAllImportingComplete(res: ResponseModel<BaseSearchModel<ImportingFullModel[]>>) {
+  getAllExportingReturnComplete(res: ResponseModel<BaseSearchModel<ExportingReturnFullModel[]>>) {
     if (res.status !== 200) {
       if (res.message) {
         res.message.forEach(value => {
@@ -159,11 +168,11 @@ export class ExportingReturnComponent implements OnInit {
         return;
       }
     }
-    this.importingSeach.result = res.result.result;
-    this.importingSeach.recordOfPage = 25;
-    for (let i = 0; i < this.importingSeach.recordOfPage; i++) {
-      if (this.importingSeach.result[i] != undefined)
-        this.importings.push(this.importingSeach.result[i]);
+    this.exportingReturnSearch.result = res.result.result;
+    this.exportingReturnSearch.recordOfPage = 25;
+    for (let i = 0; i < this.exportingReturnSearch.recordOfPage; i++) {
+      if (this.exportingReturnSearch.result[i] != undefined)
+        this.exportingReturns.push(this.exportingReturnSearch.result[i]);
     }
     setTimeout(() => {
       this.isShowLoading = false;
@@ -184,41 +193,42 @@ export class ExportingReturnComponent implements OnInit {
     });
   }
 
-  getStatusOfImporting(status: string) {
-    if (status === this.displayImporting[0].value)
-      return this.displayImporting[0].display;
+  getStatusOfExportingReturn(status: string) {
+    if (status === this.displayExportingReturn[0].value)
+      return this.displayExportingReturn[0].display;
     else
-      return this.displayImporting[1].display;
+      return this.displayExportingReturn[1].display;
   }
 
-  removeItemFromImportingTransactions(index: number) {
-    this.importingTransactionInformation.splice(index, 1);
+  removeItemFromExportingReturnTransactions(index: number) {
+    this.exportingReturnTransactionInformation.splice(index, 1);
   }
 
-  isFillStatus: string = this.displayImportingFilter[0].display;
+  isFillStatus: string = this.displayExportingReturnFilter[0].display;
 
   getFilterStatus(value: string, display: string) {
     this.isFillStatus = display;
     const searchTermLC = value.toLowerCase().trim();
     if (searchTermLC === '') {
-      this.importingFill = this.importings;
+      this.exportingReturnFill = this.exportingReturns;
       return;
     }
-    this.importingFill = this.importings.filter(importing =>
-      importing.importing?.status!.toLowerCase() === searchTermLC
+    this.exportingReturnFill = this.exportingReturns.filter(exportingReturn =>
+      exportingReturn.exportingReturn?.status!.toLowerCase() === searchTermLC
     );
   }
 
   //Lọc sản phẩm theo tên và code
-  filterImporting(): void {
+  filterExportingReturn(): void {
     const searchTermLC = this.searchTermTable.toLowerCase().trim();
     if (searchTermLC === '') {
-      this.importingFill = this.importings;
+      this.exportingReturnFill = this.exportingReturns;
       return;
     }
-    this.importingFill = this.importings.filter(importing =>
-      importing.importing?.code!.toLowerCase().includes(searchTermLC) || importing.importing?.supplier?.name!.toLowerCase().includes(searchTermLC)
-      || importing.importing?.total?.toString()!.toLowerCase().includes(searchTermLC)
+    this.exportingReturnFill = this.exportingReturns.filter(exportingReturn =>
+      exportingReturn.exportingReturn?.code!.toLowerCase().includes(searchTermLC)
+      || exportingReturn.exportingReturn?.supplier?.name!.toLowerCase().includes(searchTermLC)
+      || exportingReturn.exportingReturn?.total?.toString()!.toLowerCase().includes(searchTermLC)
     );
   }
 }

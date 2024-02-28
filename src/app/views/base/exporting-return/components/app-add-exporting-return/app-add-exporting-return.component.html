@@ -12,7 +12,7 @@
       <div class="mb-3" style="width: 100%">
         <mat-form-field class="example-full-width">
           <mat-label>Chọn ngày đặt hàng</mat-label>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="importing.dateCreated"
+          <input matInput [matDatepicker]="picker" [(ngModel)]="exportingReturn.dateCreated"
                  [ngModelOptions]="{standalone: true}">
           <mat-hint>Ngày/Tháng/Năm</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker">
@@ -40,8 +40,8 @@
         <label for="agencyID" class="col-form-label">Mã đại lý</label>
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="agencyID" name="per"
-                 [ngModel]="importing.agency?.code" [ngModelOptions]="{standalone: true}" [disabled]="true"
-                 [value]="importing.agency?.code" [placeholder]="agencyCode">
+                 [ngModel]="exportingReturn.agency?.code" [ngModelOptions]="{standalone: true}" [disabled]="true"
+                 [value]="exportingReturn.agency?.code" [placeholder]="agencyCode">
         </div>
       </div>
 
@@ -49,8 +49,8 @@
         <label for="agencyName" class="col-form-label">Tên đại lý</label>
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="agencyName" name="per"
-                 [ngModel]="importing.agency?.name" [disabled]="true" [ngModelOptions]="{standalone: true}"
-                 [value]="importing.agency?.name" [placeholder]="agencyName">
+                 [ngModel]="exportingReturn.agency?.name" [disabled]="true" [ngModelOptions]="{standalone: true}"
+                 [value]="exportingReturn.agency?.name" [placeholder]="agencyName">
         </div>
       </div>
 
@@ -78,7 +78,7 @@
         <label for="price" class="col-form-label">Tổng cộng</label>
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="price" name="price"
-                 [(ngModel)]="importing.total" [ngModelOptions]="{standalone: true}" appThousandSeparator
+                 [(ngModel)]="exportingReturn.total" [ngModelOptions]="{standalone: true}" appThousandSeparator
                  (keypress)="validateInput($event)"
                  #price="ngModel" required
                  (input)="formatCurrency()">
@@ -91,11 +91,11 @@
         <br><br>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="exampleRadios" id="status1"
-                 value="{{ displayImporting[0].value }}"
-                 [checked]="importingStatus == ImportingStatus.COMPLETE"
-                 (click)="getStatusOnline(displayImporting[0].value)">
+                 value="{{ displayExportingReturn[0].value }}"
+                 [checked]="exportingReturnStatus == ExportingReturnStatus.COMPLETE"
+                 (click)="getStatusOnline(displayExportingReturn[0].value)">
           <label class="form-check-label" for="status1">
-            {{ displayImporting[0].display }}
+            {{ displayExportingReturn[0].display }}
           </label>
         </div>
       </div>
@@ -104,11 +104,11 @@
         <br><br>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="exampleRadios" id="status2"
-                 value="{{ displayImporting[1].value }}"
-                 [checked]="importingStatus == ImportingStatus.UNCOMPLETE"
-                 (click)="getStatusDemo(displayImporting[1].value)">
+                 value="{{ displayExportingReturn[1].value }}"
+                 [checked]="exportingReturnStatus == ExportingReturnStatus.UNCOMPLETE"
+                 (click)="getStatusDemo(displayExportingReturn[1].value)">
           <label class="form-check-label" for="status2">
-            {{ displayImporting[1].display }}
+            {{ displayExportingReturn[1].display }}
           </label>
         </div>
       </div>
@@ -137,14 +137,14 @@
 
       <div class="col-md-4 mb-3">
         <label for="quantity">Số lượng</label>
-        <input type="text" class="form-control" id="quantity" required [(ngModel)]="importingTransaction.quantity"
+        <input type="text" class="form-control" id="quantity" required [(ngModel)]="exportingReturnTransaction.quantity"
                [ngModelOptions]="{standalone: true}" #qty="ngModel" (keypress)="validateInput($event)">
       </div>
 
       <div class="col-md-4 mb-3">
         <label for="thisprice">Giá</label>
         <input type="text" class="form-control" id="thisprice" placeholder=".000 đ" required
-               [(ngModel)]="importingTransaction.price" appThousandSeparator
+               [(ngModel)]="exportingReturnTransaction.price" appThousandSeparator
                [ngModelOptions]="{standalone: true}" #price="ngModel"
                (keypress)="validateInput($event)"
         >
@@ -154,7 +154,7 @@
         <br>
         <button type="button" class="btn btn-primary"
                 (click)="addProductToTable()"
-                [disabled]="!importingTransaction.quantity || !importingTransaction.price || !productNameDisplay">
+                [disabled]="!exportingReturnTransaction.quantity || !exportingReturnTransaction.price || !productNameDisplay">
           Thêm
         </button>
       </div>
@@ -173,9 +173,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let s of importingTransactions; let i = index">
+            <tr *ngFor="let s of ExportingReturnTransactions; let i = index">
               <td>
-                <button class="btn btn-close" (click)="removeItemImportingTransaction(i)"></button>
+                <button class="btn btn-close" (click)="removeItemExportingReturnTransaction(i)"></button>
               </td>
               <td>{{ no + i }}</td>
               <td>{{ s.product?.name }}</td>
@@ -203,7 +203,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addImporting()">{{ btnName[0].display }}
+        <button type="button" class="btn btn-primary" (click)="addExportingReturn()">{{ btnName[0].display }}
         </button>
       </div>
     </form>
