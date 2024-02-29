@@ -16,6 +16,7 @@ import {ControlMaterial} from "../../../ui-component/ControlMaterial";
 import {exportingComponent} from "./pages/exporting.component";
 import {AppAddExportingComponent} from "./components/app-add-exporting/app-add-exporting.component";
 import {AutoCompleteComponent} from "../../../shared/components/auto-complete/auto-complete.component";
+import {ThousandSeparatorDirective} from "../../../core/bussiness-logic/thousandSeparatorDirective";
 
 export const routes: Routes = [
     {
@@ -52,7 +53,8 @@ export const routes: Routes = [
         MatDatepickerModule,
         DatePickerComponent,
         MatFormFieldModule,
-      AutoCompleteComponent
+        AutoCompleteComponent,
+        ThousandSeparatorDirective
     ]
 })
 

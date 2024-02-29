@@ -13,10 +13,22 @@ import {ResponseModel} from "../../../../../core/apis/dtos/Response.model";
 import {SizesModel} from "../../../../../core/apis/dtos/Sizes.model";
 import {ColorsModel} from "../../../../../core/apis/dtos/Colors.model";
 import {ExportingBillFullModel} from "../../../../../core/apis/dtos/Exporting-bill-full.model";
+import {ExportingBillTransactionModel} from "../../../../../core/apis/dtos/Exporting-bill-transaction.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ExportingBillModel} from "../../../../../core/apis/dtos/Exporting-bill.model";
+import {ImportingStatus} from "../../../../../core/constanst/ImportingStatus";
+import {ExportingbillService} from "../../../../../core/Services/agency/ExportingbillService";
+import {Router} from "@angular/router";
+
 
 interface SpecificationExporting {
     value: BillStatus;
     display: string;
+}
+
+interface ImportingStatusDisplay {
+    value: ImportingStatus,
+    display: string
 }
 
 @Component({
@@ -26,7 +38,12 @@ interface SpecificationExporting {
 })
 export class AppAddExportingComponent implements OnInit, AfterViewInit {
     sizeS: string[] = [];
+    agencyCode: string = "AH-2041";
+    agencyName: string = "TMA";
+    showDropdown = false;
+    searchTerm: string = '';
     colorS: string[] = [];
+    productQuantitiesMap: Map<string, number> = new Map(); // Map to store product quantities
     productNames: string[] = [];
     public search: BaseSearchModel<ProductModel[]> = new BaseSearchModel<ProductModel[]>();
     isInsertChose: boolean = false;
@@ -39,11 +56,21 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
     colors: ColorsModel[] = [];
     optionColors: OptionModel[] = [];
     @Input() customerNames: string[] = [];
+    productNameDisplay: string = "";
+    productFill: ProductModel[] = [];
+    @Input() exporting: ExportingBillModel;
+    @Input() products: ProductModel[] = [];
+    @Input() exportingBillTransactions: ExportingBillTransactionModel [] = [];
+    exportingTransaction!: ExportingBillTransactionModel;
+    no: number = 0;
     @ViewChild("autoCompleteComponent") addWrapper!: AutoCompleteComponent;
     @ViewChild("autoCompleteSizes") addSizes!: AutoCompleteComponent;
     @ViewChild("autoCompleteColos") addColors!: AutoCompleteComponent;
     @ViewChild("autoCompleteProduct") addProduct!: AutoCompleteComponent;
     @Input() eportingFull!: ExportingBillFullModel[];
+    ExportingFull: ExportingBillFullModel;
+    @Input() importingStatus!: string
+    myImportingStatus!: string
     @Input() btnName: ({ display: string; value: number })[] =
         [{display: '', value: 0}, {display: '', value: 1}];
     statust: string = '';
@@ -54,12 +81,21 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
         {value: BillStatus.COMPELETED, display: 'Đã Hoàn Thành'},
         {value: BillStatus.SHIPPING, display: 'Đang Vận Chuyển'}
     ];
+    genderDisplay = '';
     itemSize: SizesModel = new SizesModel();
+    displayImporting: ImportingStatusDisplay[] = [{value: ImportingStatus.COMPLETE, display: "Đã hoàn thành"},
+        {value: ImportingStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
+
 
     constructor(private customerService: CustomerService, private optionService: OptionService,
-                private productService: ProductService) {
+                private productService: ProductService, private snackBar: MatSnackBar,
+                private exportingService: ExportingbillService, private router: Router) {
+        this.exportingTransaction = new ExportingBillTransactionModel();
+        this.exporting = new ExportingBillModel();
+        this.ExportingFull = new ExportingBillFullModel();
 
     }
+
 
     getDataSizes() {
         for (let c of this.optionSizes) {
@@ -76,16 +112,16 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
                 this.colorS.push(c.name);
             }
         }
-
     }
-
 
     ngAfterViewInit(): void {
     }
 
     getAllProduct() {
         this.productService.getAllProduct().subscribe(res => {
+            this.productFill = res.result.result;
             this.getAllProductComplete(res)
+            console.log(this.productFill + "hello");
         });
     }
 
@@ -110,7 +146,6 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
                 this.productNames.push(c.code);
             }
         }
-        this.selected = '';
     }
 
     getAllOptionSizes() {
@@ -123,6 +158,7 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
     getAllOptionColor() {
         this.optionService.getAllOptionColors().subscribe(res => {
             this.optionColors = res.result;
+
             this.getDataColors();
         });
     }
@@ -139,6 +175,18 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.getAllOptionColor();
         this.getAllOptionSizes();
+        this.getAllProduct();
+        this.getAmount();
+    }
+
+    getAmount() {
+        let totalAmount = 0;
+        for (const transaction of this.exportingBillTransactions) {
+            if (transaction.product && transaction.product.price && transaction.quantity) {
+                totalAmount += transaction.product.price * transaction.quantity;
+            }
+        }
+        return totalAmount;
     }
 
     closeModal() {
@@ -146,8 +194,39 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
 
     }
 
-    addOrUpdateFunc() {
+    getGenderValue(display: string): BillStatus {
+        const gender = this.SpecificationExporting.find(spec => spec.display === display);
+        return gender ? gender.value : BillStatus.COMPELETED;
+    }
 
+    addOrUpdateFunc() {
+        if (this.btnName[0].value == 0) {
+            //s this.exporting.status=this.importingStatus;
+            this.exporting.status = this.getGenderValue(this.statust);
+            this.exporting.total = this.getAmount();
+            this.exporting.customer=this.customerInfor;
+            this.ExportingFull.exportingBill = this.exporting;
+            this.ExportingFull.exportingBillTransactions = this.exportingBillTransactions;
+            console.log(this.ExportingFull + "ma no ngu ");
+            this.exportingService.createBill(this.ExportingFull).subscribe(res => {
+                    this.openSnackBar("Thêm thành công phiếu nhâp hàng", "Đóng");
+                    this.resetPage();
+                },
+                error => {
+                    this.openSnackBar("Lỗi thêm phiếu nhâp hàng", "Đóng");
+                })
+
+
+        }
+
+    }
+
+    resetPage() {
+        // Get url
+        const currentUrl = this.router.url;
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate([currentUrl]);
+        });
     }
 
     onSubmit() {
@@ -156,18 +235,15 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
 
     optionSpecChose(display: string) {
         this.statust = display;
+        console.log(this.statust)
 
     }
 
     async receiveSelectedOption(selectedOption: string): Promise<void> {
         if (selectedOption) {
             this.selected = selectedOption;
-            await Promise.all([
-                this.getAllProduct(),
-                this.getAllOptionColor(),
-            ]);
             this.getCustomerData(this.selected);
-            this.getAllOptionSizes();
+
         }
     }
 
@@ -176,7 +252,9 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
         this.itemSize.optionProduct = this.optionSizes[index];
         this.indexSizes = index;
     }
+
     showTableSize: boolean = false;
+
     addSizeToTable() {
         this.sizes.push(this.itemSize);
         console.log(this.optionSizes);
@@ -187,7 +265,119 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
 
     }
 
+    selectOption(product: ProductModel) {
+        //this.myForm.patchValue(product.name);
+        this.showDropdown = false;
+        this.productNameDisplay = product.name!;
+
+        if (this.exportingBillTransactions.filter(productItem => {
+            productItem.id === product.id
+        })) {
+            for (let i = 0; i < this.exportingBillTransactions.length; i++) {
+                if (this.exportingBillTransactions [i].product?.id === product.id) {
+                    this.exportingBillTransactions[i].quantity!++;
+                    let calcuAmount = this.exportingBillTransactions[i].quantity!
+                        * this.exportingBillTransactions[i].product?.price!
+                    this.exportingBillTransactions[i].amount! = calcuAmount;
+                    this.productNameDisplay = ""; // Tồn tại rồi thì reset khi click chọn
+                    this.searchTerm = "";
+                    this.openSnackBar("Sản phẩm này đã được thêm tiếp tục", "Đóng")
+                    return;
+                }
+            }
+            this.exportingTransaction.product = product;
+        }
+    }
+
+    getStatusOnline(display: string) {
+        this.importingStatus = display;
+    }
+
+    getStatusDemo(display: string) {
+        this.importingStatus = display;
+    }
+
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+            duration: 2000,
+            horizontalPosition: "center"
+        });
+    }
+
     removeItemSize(i: number) {
 
     }
+
+    toggleDropdown() {
+        this.showDropdown = true;
+    }
+
+    decrementQuantity(index: number) {
+        if (this.exportingBillTransactions[index].quantity! > 1) {
+            this.exportingBillTransactions[index].quantity!--;
+            this.exportingBillTransactions[index].amount = this.exportingBillTransactions[index].quantity! * this.exportingBillTransactions[index].product?.price!
+        }
+    }
+
+    incrementQuantity(index: number) {
+        this.exportingBillTransactions[index].quantity!++;
+        this.exportingBillTransactions[index].amount = this.exportingBillTransactions[index].quantity! * this.exportingBillTransactions[index].product?.price!
+    }
+
+
+    validateInput(event: any): void {
+        const pattern = /[0-9]/;
+        const inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) event.preventDefault();
+    }
+
+    addProductToTable() {
+        console.log(this.exportingBillTransactions + "ngu");
+        if (this.exportingBillTransactions) {
+            this.showTableSize = true;
+        }
+        this.exportingTransaction.amount = this.exportingTransaction.quantity! * this.exportingTransaction.product?.price!;
+        this.exportingBillTransactions.push(this.exportingTransaction);
+
+        this.exportingTransaction = new ExportingBillTransactionModel();
+        this.searchTerm = "";
+        this.productNameDisplay = "";
+    }
+
+    removeItemImportingTransaction(index: number) {
+        this.exportingBillTransactions.splice(index, 1);
+        if (this.exportingBillTransactions.length == 0) this.showTableSize = false;
+    }
+
+    calculateProductQuantities() {
+        for (const transaction of this.exportingBillTransactions) {
+            const productName = transaction.product?.name;
+            const quantity = transaction.quantity || 0; // Default to 0 if quantity is null
+            if (productName) {
+                this.productQuantitiesMap.set(productName, (this.productQuantitiesMap.get(productName) || 0) + quantity);
+            }
+        }
+    }
+
+    filterProducts(): void {
+        const searchTermLC = this.searchTerm.toLowerCase().trim();
+        if (searchTermLC === '') {
+            this.productFill = this.products;
+            this.showDropdown = false;
+            //Reset giá tiền và số lượng
+            this.exportingTransaction.amount = null;
+            this.exportingTransaction.quantity = 0;
+            return;
+        }
+        this.showDropdown = true;
+        this.productFill = this.products.filter(product =>
+            product.name!.toLowerCase().includes(searchTermLC) || product.code!.toLowerCase().includes(searchTermLC)
+        );
+    }
+
+    productPrice(t: ExportingBillTransactionModel) {
+        return t.product ? t.product.price : null;
+    }
+
+    protected readonly ImportingStatus = ImportingStatus;
 }

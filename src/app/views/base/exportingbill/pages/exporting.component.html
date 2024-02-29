@@ -55,7 +55,7 @@
             <tr *ngFor="let t of e.exportingBillTransactions;">
                 <td>{{ e.exportingBill?.code }}</td>
                 <td>{{ e.exportingBill?.customer?.fullName}}</td>
-                <td>{{ t.product?.name }}</td>
+                <td>{{ t.product?.price }}</td>
                 <td>{{e.exportingBill?.status}}</td>
                 <td>{{ e.exportingBill?.total }}</td>
                 <td>{{e.exportingBill?.dateCreated}}</td>
@@ -114,7 +114,13 @@
 </ng-container>
 
 <app-alert></app-alert>
-<app-add-export #AddWrapper  [eportingFull]="exportingfulls" [btnName]="isBtnName" [customerNames]="ListNameCustomer"  ></app-add-export>
+<app-add-export #AddWrapper  [eportingFull]="exportingfulls"
+                [btnName]="isBtnName"
+                [customerNames]="ListNameCustomer"
+                 [exportingBillTransactions]="exportingTransactionInfo"
+                [exporting]="exportingInfo"
+                [importingStatus]="statusValue"
+></app-add-export>
 
 
 
