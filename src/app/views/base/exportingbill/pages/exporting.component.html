@@ -42,7 +42,7 @@
             <tr>
                 <th>B-ID</th>
                 <th>Họ Tên khác hàng</th>
-                <th>Tên Hãng</th>
+                <th>Tên Sản Phẩm</th>
                 <th>Trạng Thái</th>
                 <th>Tổng Giá</th>
                 <th>Ngày tạo</th>
@@ -52,33 +52,37 @@
             </thead>
             <tbody>
             <ng-container *ngFor="let e of exportingfulls;">
-            <tr *ngFor="let t of e.exportingBillTransactions;">
-                <td>{{ e.exportingBill?.code }}</td>
-                <td>{{ e.exportingBill?.customer?.fullName}}</td>
-                <td>{{ t.product?.price }}</td>
-                <td>{{e.exportingBill?.status}}</td>
-                <td>{{ e.exportingBill?.total }}</td>
-                <td>{{e.exportingBill?.dateCreated}}</td>
-                <td>{{ e.exportingBill?.dateExport }}</td>
+                <tr *ngFor="let t of e.exportingBillTransactions;">
+                    <td>{{ e.exportingBill?.code }}</td>
+                    <td>{{ e.exportingBill?.customer?.fullName}}</td>
+                    <td>{{ t.product?.name }}</td>
+                    <td>{{e.exportingBill?.status}}</td>
+                    <td>{{ e.exportingBill?.total | currency: 'VND' | slice:1 }}
+                        <span class="symbol"
+                              style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
+                    </td>
+                    <td>{{e.exportingBill?.dateCreated}}</td>
+                    <td>{{ e.exportingBill?.dateExport }}</td>
 
-                <td style="width: 4.5vw">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                </td>
+                    <td style="width: 4.5vw">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"
+                                (click)="getExportingData(e.exportingBill?.id!, e)">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </td>
 
-            </tr>
+                </tr>
             </ng-container>
             </tbody>
         </table>
 
         <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="updateCustomer()">
+            <button mat-menu-item (click)="updateExporting()">
                 <mat-icon>edit</mat-icon>
                 <span>Sửa</span>
             </button>
 
-            <button mat-menu-item (click)="deteleCustomer()">
+            <button mat-menu-item (click)="deleteExporting()">
                 <mat-icon>delete</mat-icon>
                 <span>Xóa</span>
             </button>
@@ -114,12 +118,15 @@
 </ng-container>
 
 <app-alert></app-alert>
-<app-add-export #AddWrapper  [eportingFull]="exportingfulls"
+<app-add-export #AddWrapper
                 [btnName]="isBtnName"
                 [customerNames]="ListNameCustomer"
-                 [exportingBillTransactions]="exportingTransactionInfo"
+                [exportingBillTransactions]="exportingTransactionInfo"
                 [exporting]="exportingInfo"
                 [importingStatus]="statusValue"
+                [products]="productsName"
+                [customerInfor]="customerInfor"
+                [productFill]="products"
 ></app-add-export>
 
 

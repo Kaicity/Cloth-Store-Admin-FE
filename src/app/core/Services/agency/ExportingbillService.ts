@@ -18,4 +18,14 @@ export class ExportingbillService extends AgencyBaseService {
     public createBill(exportingFull: any): Observable<any> {
         return this.post("/api/v1/Exportingbill/create", exportingFull);
     }
+    public deteleExporting(id: string): Observable<any> {
+        return this.delete(`/api/v1/Exportingbill`,id);
+    }
+    public getExportingById(id: string): Observable<any> {
+        return this.get("/api/v1/Exportingbill", id);
+    }
+
+    public updateExporting(exportingReturnBillFull: any): Observable<any> {
+        return this.post("/api/v1/Exportingbill/updateExporting", exportingReturnBillFull);
+    }
 }

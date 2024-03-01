@@ -8,6 +8,11 @@ import {ExportingBillFullModel} from "../../../../core/apis/dtos/Exporting-bill-
 import {ExportingBillModel} from "../../../../core/apis/dtos/Exporting-bill.model";
 import {ExportingBillTransactionModel} from "../../../../core/apis/dtos/Exporting-bill-transaction.model";
 import {ImportingStatus} from "../../../../core/constanst/ImportingStatus";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
+import {ProductService} from "../../../../core/Services/warehouse/ProductService";
+import {ProductModel} from "../../../../core/apis/dtos/Product.model";
+import {CustomerModel} from "../../../../core/apis/dtos/Customer.model";
 
 interface ImportingStatusDisplay {
     value: ImportingStatus,
@@ -25,16 +30,23 @@ interface SpecificationExporting {
     styleUrl: './exporting.component.scss'
 })
 export class exportingComponent implements OnInit, AfterViewInit {
-
+    private ExportingId!: string;
     isShowLoading: boolean = false;
+    cusName!: string | null;
     @ViewChild("AddWrapper") addWrapper!: AppAddExportingComponent;
     customerNames: string[] = [];
     ListNameCustomer: string[] = [];
     exportingfulls: ExportingBillFullModel[] = [];
+    exportingFullInformation: ExportingBillFullModel = new ExportingBillFullModel();
     exportingInfo: ExportingBillModel = new ExportingBillModel();
     exportingTransactionInfo: ExportingBillTransactionModel[] = [];
     exportSearch: BaseSearchModel<ExportingBillFullModel[]> = new BaseSearchModel<ExportingBillFullModel[]>();
     tableFormat: string = "table table-bordered table-striped";
+
+    productsName: any[] = [];
+    products: ProductModel[] = [];
+
+    customerInfor: CustomerModel = new CustomerModel();
 
     statusValue!: string;
     isBtnName: ({ display: string; value: number } | { display: string; value: number })[] = [{
@@ -42,7 +54,7 @@ export class exportingComponent implements OnInit, AfterViewInit {
     }, {display: '', value: 1}];
     importingStatus!: string
 
-    constructor(private exportingService: ExportingbillService) {
+    constructor(private productService: ProductService, private exportingService: ExportingbillService, private snackBar: MatSnackBar, private router: Router) {
 
     }
 
@@ -72,22 +84,64 @@ export class exportingComponent implements OnInit, AfterViewInit {
         this.statusValue = this.displayImporting[0].value;
     }
 
-    updateCustomer() {
+    updateExporting() {
         this.isBtnName[0].value = 1;
         this.isBtnName[0].display = "Cập Nhật";
         this.addWrapper.isInsertChose = true;
+        //Lấy importing theo id được chọn
+        this.exportingService.getExportingById(this.ExportingId).subscribe(res => {
+            this.exportingFullInformation = res.result;
+            this.exportingInfo = this.exportingFullInformation.exportingBill!;
+            this.exportingTransactionInfo = this.exportingFullInformation.exportingBillTransactions!;
+            this.customerInfor = this.exportingInfo.customer != undefined ? this.exportingInfo.customer : new CustomerModel();
+            this.statusValue = res.result.status;
+        })
     }
 
-    deteleCustomer() {
+    getAllProducts() {
+        this.productService.getAllProduct().subscribe(res => {
+            this.products = res.result.result;
+            this.productsName = this.products;
+        });
+    }
+
+
+    getExportingData(id: string, e: ExportingBillFullModel) {
+        this.ExportingId = id;
 
     }
 
+    resetPage() {
+        // Get url
+        const currentUrl = this.router.url;
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate([currentUrl]);
+        });
+    }
 
     private getAllExporting() {
         this.isShowLoading = true;
         this.exportingService.getAllExportingBill().subscribe(res => {
             this.getAllExportingComplete(res)
         });
+    }
+
+    openSnackBar(message: string, action: string) {
+        this.snackBar.open(message, action, {
+            duration: 2000,
+        });
+    }
+
+    deleteExporting() {
+        console.log(this.ExportingId + "?? dúng k")
+        this.exportingService.deteleExporting(this.ExportingId).subscribe((res) => {
+                this.openSnackBar("Đã xóa thành công phiếu nhập hàng", "Close")
+                this.resetPage();
+            },
+            error => {
+                this.openSnackBar("Lỗi khi xóa phiếu nhập hàng", "Đóng")
+            }
+        )
     }
 
     getlistCustomer() {
@@ -132,8 +186,9 @@ export class exportingComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.getAllExporting();
-        console.log(this.customerNames + " k");
-        console.log(this.getlistCustomer() + "ham nè");
+        this.getAllProducts();
     }
+
+
 }
 

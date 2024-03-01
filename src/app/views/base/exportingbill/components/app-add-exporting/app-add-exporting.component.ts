@@ -6,10 +6,8 @@ import {CustomerModel} from "../../../../../core/apis/dtos/Customer.model";
 import {CustomerService} from "../../../../../core/Services/warehouse/CustomerService";
 import {OptionModel} from "../../../../../core/apis/dtos/Option.model";
 import {OptionService} from "../../../../../core/Services/warehouse/OptionService";
-import {ProductService} from "../../../../../core/Services/warehouse/ProductService";
 import {ProductModel} from "../../../../../core/apis/dtos/Product.model";
 import {BaseSearchModel} from "../../../../../core/apis/dtos/Base-search.model";
-import {ResponseModel} from "../../../../../core/apis/dtos/Response.model";
 import {SizesModel} from "../../../../../core/apis/dtos/Sizes.model";
 import {ColorsModel} from "../../../../../core/apis/dtos/Colors.model";
 import {ExportingBillFullModel} from "../../../../../core/apis/dtos/Exporting-bill-full.model";
@@ -19,7 +17,6 @@ import {ExportingBillModel} from "../../../../../core/apis/dtos/Exporting-bill.m
 import {ImportingStatus} from "../../../../../core/constanst/ImportingStatus";
 import {ExportingbillService} from "../../../../../core/Services/agency/ExportingbillService";
 import {Router} from "@angular/router";
-
 
 interface SpecificationExporting {
     value: BillStatus;
@@ -38,26 +35,31 @@ interface ImportingStatusDisplay {
 })
 export class AppAddExportingComponent implements OnInit, AfterViewInit {
     sizeS: string[] = [];
+    colorS: string[] = [];
+
+    @Input() productFill: ProductModel[] = [];
     agencyCode: string = "AH-2041";
     agencyName: string = "TMA";
+
     showDropdown = false;
     searchTerm: string = '';
-    colorS: string[] = [];
     productQuantitiesMap: Map<string, number> = new Map(); // Map to store product quantities
-    productNames: string[] = [];
+
     public search: BaseSearchModel<ProductModel[]> = new BaseSearchModel<ProductModel[]>();
     isInsertChose: boolean = false;
-    customerInfor = new CustomerModel();
+    @Input() customerInfor = new CustomerModel();
     selected: string = '';
     sizeName = '';
+
     indexSizes!: number;
     optionSizes: OptionModel[] = [];
     sizes: SizesModel[] = [];
     colors: ColorsModel[] = [];
+
     optionColors: OptionModel[] = [];
     @Input() customerNames: string[] = [];
+
     productNameDisplay: string = "";
-    productFill: ProductModel[] = [];
     @Input() exporting: ExportingBillModel;
     @Input() products: ProductModel[] = [];
     @Input() exportingBillTransactions: ExportingBillTransactionModel [] = [];
@@ -67,10 +69,9 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
     @ViewChild("autoCompleteSizes") addSizes!: AutoCompleteComponent;
     @ViewChild("autoCompleteColos") addColors!: AutoCompleteComponent;
     @ViewChild("autoCompleteProduct") addProduct!: AutoCompleteComponent;
-    @Input() eportingFull!: ExportingBillFullModel[];
-    ExportingFull: ExportingBillFullModel;
+
+    exportingFull: ExportingBillFullModel;
     @Input() importingStatus!: string
-    myImportingStatus!: string
     @Input() btnName: ({ display: string; value: number })[] =
         [{display: '', value: 0}, {display: '', value: 1}];
     statust: string = '';
@@ -88,11 +89,11 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
 
 
     constructor(private customerService: CustomerService, private optionService: OptionService,
-                private productService: ProductService, private snackBar: MatSnackBar,
+                private snackBar: MatSnackBar,
                 private exportingService: ExportingbillService, private router: Router) {
         this.exportingTransaction = new ExportingBillTransactionModel();
         this.exporting = new ExportingBillModel();
-        this.ExportingFull = new ExportingBillFullModel();
+        this.exportingFull = new ExportingBillFullModel();
 
     }
 
@@ -115,37 +116,6 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-    }
-
-    getAllProduct() {
-        this.productService.getAllProduct().subscribe(res => {
-            this.productFill = res.result.result;
-            this.getAllProductComplete(res)
-            console.log(this.productFill + "hello");
-        });
-    }
-
-    getAllProductComplete(res: ResponseModel<BaseSearchModel<ProductModel[]>>) {
-        if (res.status !== 200) {
-            if (res.message) {
-                res.message.forEach(value => {
-                    var t: any;
-                    t.error.message(value);
-                });
-                return;
-            }
-        }
-        this.search = res.result;
-        this.getDataProduct();
-        console.log(this.search.result);
-    }
-
-    getDataProduct() {
-        for (let c of this.search.result) {
-            if (c.code) {
-                this.productNames.push(c.code);
-            }
-        }
     }
 
     getAllOptionSizes() {
@@ -175,8 +145,8 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.getAllOptionColor();
         this.getAllOptionSizes();
-        this.getAllProduct();
         this.getAmount();
+        if (this.exportingBillTransactions) this.showTableSize = true;
     }
 
     getAmount() {
@@ -204,20 +174,30 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
             //s this.exporting.status=this.importingStatus;
             this.exporting.status = this.getGenderValue(this.statust);
             this.exporting.total = this.getAmount();
-            this.exporting.customer=this.customerInfor;
-            this.ExportingFull.exportingBill = this.exporting;
-            this.ExportingFull.exportingBillTransactions = this.exportingBillTransactions;
-            console.log(this.ExportingFull + "ma no ngu ");
-            this.exportingService.createBill(this.ExportingFull).subscribe(res => {
+            this.exporting.customer = this.customerInfor;
+            this.exportingFull.exportingBill = this.exporting;
+            this.exportingFull.exportingBillTransactions = this.exportingBillTransactions;
+            console.log(this.exportingFull + "ma no ngu ");
+            this.exportingService.createBill(this.exportingFull).subscribe(res => {
                     this.openSnackBar("Thêm thành công phiếu nhâp hàng", "Đóng");
                     this.resetPage();
                 },
                 error => {
                     this.openSnackBar("Lỗi thêm phiếu nhâp hàng", "Đóng");
                 })
-
-
-        }
+        } else if (this.btnName[0].value == 1) {
+            this.exporting.status = this.getGenderValue(this.statust);
+            this.exporting.total = this.getAmount();
+            this.exportingFull.exportingBill = this.exporting;
+            this.exportingFull.exportingBillTransactions = this.exportingBillTransactions;
+            this.exportingService.updateExporting(this.exportingFull).subscribe(res => {
+                    this.openSnackBar("Cập nhật phiếu nhập hàng thành công", "Đóng");
+                    this.resetPage();
+                },
+                error => {
+                    this.openSnackBar("Lỗi cập nhật phiếu nhâp hàng", "Đóng");
+                })
+        } else return;
 
     }
 
@@ -332,7 +312,10 @@ export class AppAddExportingComponent implements OnInit, AfterViewInit {
     }
 
     addProductToTable() {
-        console.log(this.exportingBillTransactions + "ngu");
+        //Set total amount format
+        let totalFormat = this.exportingTransaction.amount?.toString();
+        this.exportingTransaction.amount = null;
+        this.exportingTransaction.amount = parseInt(totalFormat!.replaceAll(',', ''));
         if (this.exportingBillTransactions) {
             this.showTableSize = true;
         }
