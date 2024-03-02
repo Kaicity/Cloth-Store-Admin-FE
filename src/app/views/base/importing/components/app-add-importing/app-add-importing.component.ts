@@ -10,6 +10,11 @@ import {AgencyModel} from "../../../../../core/apis/dtos/Agency.model";
 import {FormControl} from "@angular/forms";
 import {ProductModel} from "../../../../../core/apis/dtos/Product.model";
 import {ImportingStatus} from "../../../../../core/constanst/ImportingStatus";
+import {ExportingReturnService} from "../../../../../core/Services/agency/ExportingReturnService";
+import {ExportingReturnFullModel} from "../../../../../core/apis/dtos/Exporting-return-full-model";
+import {ExportingReturnModel} from "../../../../../core/apis/dtos/Exporting-return-model";
+import {ExportingReturnTransactionBillModel} from "../../../../../core/apis/dtos/Exporting-return-transaction-model";
+import {forEach} from "lodash-es";
 
 interface ImportingStatusDisplay {
   value: ImportingStatus,
@@ -27,8 +32,11 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
   @Input() suppliers: SupplierModel[] = [];
   @Input() products: ProductModel[] = [];
 
-  @Input() btnName: ({ display: string; value: number } | { display: string; value: number })[] =
-    [{display: '', value: 0}, {display: '', value: 1}];
+  @Input() btnName: ({ display: string; value: number } | { display: string; value: number } | {
+    display: string;
+    value: number
+  })[] =
+    [{display: '', value: 0}, {display: '', value: 1}, {display: '', value: 2}];
 
   importingTransaction: ImportingTransactionModel;
 
@@ -45,6 +53,10 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
   @Input() importing: ImportingModel;
   @Input() importingTransactions: ImportingTransactionModel [] = [];
   importingFull: ImportingFullModel;
+
+  exportingReturnBillFull: ExportingReturnFullModel;
+  exportingReturnBill: ExportingReturnModel;
+  exportingReturnTransactionList: ExportingReturnTransactionBillModel[] = []
 
   displayImporting: ImportingStatusDisplay[] = [{value: ImportingStatus.COMPLETE, display: "Đã hoàn thành"},
     {value: ImportingStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
@@ -63,13 +75,17 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
 
   no: number = 0;
 
-  constructor(private importingService: ImportingService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private importingService: ImportingService, private router: Router, private snackBar: MatSnackBar, private exportingReturnService: ExportingReturnService) {
     this.importingFull = new ImportingFullModel();
     this.importing = new ImportingModel();
     this.importing.agency = new AgencyModel();
     this.importing.supplier = new SupplierModel();
     this.supplier = new SupplierModel();
     this.importingTransaction = new ImportingTransactionModel();
+
+    //Object return exporting return
+    this.exportingReturnBillFull = new ExportingReturnFullModel();
+    this.exportingReturnBill = new ExportingReturnModel();
   }
 
   //Lọc sản phẩm theo tên và code
@@ -134,6 +150,41 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
         },
         error => {
           this.openSnackBar("Lỗi cập nhật phiếu nhâp hàng", "Đóng");
+        })
+    }
+    //Xu ly tra hang cho nha cung cap
+    else if (this.btnName[0].value == 2) {
+      this.importing.status = this.importingStatus;
+      //Set total amount format
+      let totalFormat = this.importing.total?.toString();
+      this.importing.total = null;
+      this.importing.total = parseInt(totalFormat!.replaceAll(',', ''));
+      this.importingFull.importing = this.importing;
+      this.importingFull.importingTransactions = this.importingTransactions;
+
+      //Set alls data from importing to exporting return
+      let objectImporting: any = this.importing;
+      let objectImportingTransaction: any[] = this.importingTransactions;
+      let isImporting : ImportingModel = this.importingFull.importing;
+      let isSupplier : SupplierModel = this.importingFull.importing.supplier!;
+      this.exportingReturnBill.id = objectImporting.id;
+      this.exportingReturnBill.code = objectImporting.code;
+      this.exportingReturnBill.status = objectImporting.status;
+      this.exportingReturnBill.total = objectImporting.total;
+      this.exportingReturnBill.agency = objectImporting.agencyCode;
+      this.exportingReturnBill.dateUpdated = objectImporting.dateCreated;
+      this.exportingReturnBill.supplier= isSupplier;
+      this.exportingReturnTransactionList = objectImportingTransaction;
+      this.exportingReturnBill.importing = isImporting;
+      this.exportingReturnBillFull.exportingReturnBill = this.exportingReturnBill;
+      this.exportingReturnBillFull.exportingReturnTransactionList = this.exportingReturnTransactionList;
+
+      this.exportingReturnService.addExportingReturn(this.exportingReturnBillFull).subscribe(res => {
+          this.openSnackBar("Trả thành công phiếu nhâp hàng", "Đóng");
+          this.resetPage();
+        },
+        error => {
+          this.openSnackBar("Lỗi Trả phiếu nhâp hàng", "Đóng");
         })
     } else return;
   }

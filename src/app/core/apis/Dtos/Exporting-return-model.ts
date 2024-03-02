@@ -12,5 +12,4 @@ export class ExportingReturnModel {
   dateCreated!: Date | null;
   dateUpdated!: Date | null;
   importing!:ImportingModel | null;
-
 }

@@ -12,6 +12,8 @@ import {ExportingReturnFullModel} from "../../../../../core/apis/dtos/Exporting-
 import {ExportingReturnModel} from "../../../../../core/apis/dtos/Exporting-return-model";
 import {ExportingReturnTransactionBillModel} from "../../../../../core/apis/dtos/Exporting-return-transaction-model";
 import {ExportingReturnService} from "../../../../../core/Services/agency/ExportingReturnService";
+import {CustomerModel} from "../../../../../core/apis/dtos/Customer.model";
+import {ImportingModel} from "../../../../../core/apis/dtos/Importing.model";
 
 interface ExportingReturnStatusDisplay {
   value: ExportingReturnStatus,
@@ -37,13 +39,13 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
   supplier: SupplierModel;
   @Input() supplierNameDisplay!: string;
   indexSupplier!: number;
-
+  importing = new ImportingModel();
   productNameDisplay: string = "";
-
+  selected: string = '';
   isInsertChose: boolean = false;
   //Table size is show
   @Input({transform: booleanAttribute}) showTableSize = false;
-
+  @Input() customerNames: string[] = [];
   @Input() exportingReturn: ExportingReturnModel;
   @Input() ExportingReturnTransactions: ExportingReturnTransactionBillModel [] = [];
   exportingReturnFull: ExportingReturnFullModel;
@@ -64,7 +66,7 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
 
   no: number = 0;
 
-  constructor(private exportingReturnService: ExportingReturnService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private exportingReturnService: ExportingReturnService, private router: Router, private snackBar: MatSnackBar,private importingService: ImportingService) {
     this.exportingReturnFull = new ExportingReturnFullModel();
     this.exportingReturn = new ExportingReturnModel();
     this.exportingReturn.agency = new AgencyModel();
@@ -111,8 +113,8 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
       let totalFormat = this.exportingReturn.total?.toString();
       this.exportingReturn.total = null;
       this.exportingReturn.total = parseInt(totalFormat!.replaceAll(',', ''));
-      this.exportingReturnFull.exportingReturn = this.exportingReturn;
-      this.exportingReturnFull.exportingReturnTransactions = this.ExportingReturnTransactions;
+      this.exportingReturnFull.exportingReturnBill = this.exportingReturn;
+      this.exportingReturnFull.exportingReturnTransactionList = this.ExportingReturnTransactions;
       this.exportingReturnService.addExportingReturn(this.exportingReturnFull).subscribe(res => {
           this.openSnackBar("Thêm thành công phiếu nhâp hàng", "Đóng");
           this.resetPage();
@@ -127,8 +129,8 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
       let totalFormat = this.exportingReturn.total?.toString();
       this.exportingReturn.total = null;
       this.exportingReturn.total = parseInt(totalFormat!.replaceAll(',', ''));
-      this.exportingReturnFull.exportingReturn = this.exportingReturn;
-      this.exportingReturnFull.exportingReturnTransactions = this.ExportingReturnTransactions;
+      this.exportingReturnFull.exportingReturnBill = this.exportingReturn;
+      this.exportingReturnFull.exportingReturnTransactionList = this.ExportingReturnTransactions;
       this.exportingReturnService.updateExportingReturn(this.exportingReturnFull).subscribe(res => {
           this.openSnackBar("Cập nhật phiếu nhập hàng thành công", "Đóng");
           this.resetPage();
@@ -244,5 +246,16 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
 
   closeAddProduct() {
     this.showDropdown = false;
+  }
+
+  receiveSelectedOption($event: string) {
+      this.getImportingData(this.selected);
+  }
+  getImportingData(id: string) {
+    this.selected = id;
+    this.importingService.getImportingById(id).subscribe((res: any) => {
+      this.importing = res.result;
+      console.log("Customer : ", this.importing);
+    });
   }
 }

@@ -17,14 +17,6 @@
       <div class="container-title">
         <h1>Danh sách phiếu xuất trả</h1>
       </div>
-      <div class="col-auto" style="margin-left: 53vw;">
-        <button type="button" class="btn btn-primary  mr-2" style="height: 4vh; width: 4vw" (click)="showSeachForm()">
-          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
-        </button>
-        <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
-          Tạo phiếu xuất trả
-        </button>
-      </div>
     </div>
   </div>
 </ng-container>
@@ -37,7 +29,7 @@
         <input type="search" class="form-control search-icon" aria-label="Search content" (input)="filterExportingReturn()"
                [(ngModel)]="searchTermTable"
                [ngModelOptions]="{standalone: true}"
-               placeholder="Tìm kiếm phiếu theo mã phiếu, tên nhà cung cấp, giá" id="search" name="per">
+               placeholder="Tìm kiếm phiếu theo mã phiếu nhập, tên nhà cung cấp,mã phiếu xuất trả" id="search" name="per">
         <span class="input-group-text"><img src="assets/images/seach.png" class="icon-search"
                                             style="width: 1vw; height: 2vh"></span>
       </div>
@@ -71,35 +63,36 @@
     <table class="{{tableFormat}}">
       <thead>
       <tr>
-        <th>Ngày đặt hàng</th>
+        <th>Code phiếu nhập</th>
+        <th>Ngày trả hàng</th>
         <th>Code</th>
         <th>Tên nhà cung cấp</th>
         <th>Tình trạng</th>
-        <th>Ngày cập nhật</th>
+        <th>Ngày đặt hàng</th>
         <th>Tiền hàng</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let i of exportingReturnFill;">
-        <td>{{ i.exportingReturn!.dateCreated }}</td>
-        <td>{{ i.exportingReturn!.code }}</td>
-        <td>{{ i.exportingReturn!.supplier?.name }}</td>
+        <td>{{ i.exportingReturnBill!.importing?.code }}</td>
+        <td>{{ i.exportingReturnBill!.dateCreated }}</td>
+        <td>{{ i.exportingReturnBill!.code }}</td>
+        <td>{{ i.exportingReturnBill!.supplier?.name }}</td>
         <td>
-          <span *ngIf="i.exportingReturn?.status === 'COMPLETE'" class="dot-green"></span>
-          <span *ngIf="i.exportingReturn?.status === 'UNCOMPLETE'" class="dot-red"></span>
-          {{ getStatusOfExportingReturn(i.exportingReturn!.status!) }}
+          <span *ngIf="i.exportingReturnBill?.status === 'COMPLETE'" class="dot-green"></span>
+          <span *ngIf="i.exportingReturnBill?.status === 'UNCOMPLETE'" class="dot-red"></span>
+          {{ getStatusOfExportingReturn(i.exportingReturnBill!.status!) }}
         </td>
 
-
-        <td>{{ i.exportingReturn!.dateUpdated }}</td>
-        <td>{{ i.exportingReturn!.total | currency: 'VND' | slice:1 }}
+        <td>{{ i.exportingReturnBill!.dateUpdated }}</td>
+        <td>{{ i.exportingReturnBill!.total | currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
         </td>
         <td style="width: 4.5vw">
           <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"
-                  (click)="getExportingReturnData(i.exportingReturn?.id!, i)">
+                  (click)="getExportingReturnData(i.exportingReturnBill?.id!, i)">
             <mat-icon>more_vert</mat-icon>
           </button>
         </td>

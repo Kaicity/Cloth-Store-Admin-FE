@@ -124,8 +124,8 @@ export class ExportingReturnComponent implements OnInit {
     //Lấy importing theo id được chọn
     this.exportingReturnService.getExportingReturnById(this.exportingReturnId).subscribe(res => {
       this.exportingReturnFullInformation = res.result;
-      this.exportingReturnInformation = this.exportingReturnFullInformation.exportingReturn!;
-      this.exportingReturnTransactionInformation = this.exportingReturnFullInformation.exportingReturnTransactions!;
+      this.exportingReturnInformation = this.exportingReturnFullInformation.exportingReturnBill!;
+      this.exportingReturnTransactionInformation = this.exportingReturnFullInformation.exportingReturnTransactionList!;
       this.statusValue = res.result.status;
       this.exportingReturnInformation.dateCreated = this.datePick!;
     })
@@ -214,7 +214,7 @@ export class ExportingReturnComponent implements OnInit {
       return;
     }
     this.exportingReturnFill = this.exportingReturns.filter(exportingReturn =>
-      exportingReturn.exportingReturn?.status!.toLowerCase() === searchTermLC
+      exportingReturn.exportingReturnBill?.status!.toLowerCase() === searchTermLC
     );
   }
 
@@ -226,9 +226,9 @@ export class ExportingReturnComponent implements OnInit {
       return;
     }
     this.exportingReturnFill = this.exportingReturns.filter(exportingReturn =>
-      exportingReturn.exportingReturn?.code!.toLowerCase().includes(searchTermLC)
-      || exportingReturn.exportingReturn?.supplier?.name!.toLowerCase().includes(searchTermLC)
-      || exportingReturn.exportingReturn?.total?.toString()!.toLowerCase().includes(searchTermLC)
+      exportingReturn.exportingReturnBill?.code!.toLowerCase().includes(searchTermLC)
+      || exportingReturn.exportingReturnBill?.supplier?.name!.toLowerCase().includes(searchTermLC)
+      || exportingReturn.exportingReturnBill?.importing?.code?.toString()!.toLowerCase().includes(searchTermLC)
     );
   }
 }

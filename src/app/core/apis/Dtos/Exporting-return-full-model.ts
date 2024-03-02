@@ -3,6 +3,6 @@ import {ExportingReturnTransactionBillModel} from "./Exporting-return-transactio
 
 
 export class ExportingReturnFullModel {
-  exportingReturn! : ExportingReturnModel | null;
-  exportingReturnTransactions! : ExportingReturnTransactionBillModel[] | null;
+  exportingReturnBill! : ExportingReturnModel | null;
+  exportingReturnTransactionList! : ExportingReturnTransactionBillModel[] | null;
 }

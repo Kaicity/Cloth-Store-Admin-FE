@@ -78,6 +78,11 @@ const routes: Routes = [
         path: 'exporting-return',
         loadChildren: () =>
           import('./views/base/exporting-return/exporting-return.module').then((m) => m.ExportingReturnModule)
+      },
+      {
+        path: 'importing-return',
+        loadChildren: () =>
+          import('./views/base/importing-return/importing-return.module').then((m) => m.ImportingReturnModule)
       }
     ]
   },
