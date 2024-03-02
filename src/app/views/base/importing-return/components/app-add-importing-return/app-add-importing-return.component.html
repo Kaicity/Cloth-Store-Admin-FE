@@ -1,6 +1,6 @@
 <app-modal-wrapper #AddWrapper
                    [showModal]="isInsertChose"
-                   [modalTitle]="'Thêm phiếu xuất trả'"
+                   [modalTitle]="'Thêm phiếu nhập trả'"
                    [nameButton]="'Lưu '"
                    [size]="'width: 65%; max-width: 100%;'"
                    (closeModalEvent)="closeModal()" xmlns="http://www.w3.org/1999/html">
@@ -9,10 +9,10 @@
   <div class=".modal-lg">
     <form #myForm="ngForm" class="row g-3" (ngSubmit)="onSubmit()">
 
-      <div class="mb-3 col-md-4" style="width: 50%">
+      <div class="mb-3" style="width: 100%">
         <mat-form-field class="example-full-width">
           <mat-label>Chọn ngày đặt hàng</mat-label>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="exportingReturn.dateCreated"
+          <input matInput [matDatepicker]="picker" [(ngModel)]="importingReturn.dateCreated"
                  [ngModelOptions]="{standalone: true}">
           <mat-hint>Ngày/Tháng/Năm</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker">
@@ -21,13 +21,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="mb-3 col-md-4"  style="width: 50%">
-        <label class="col-form-label">Mã đơn hàng</label>
-        <div class="input-group">
-          <app-auto-complete #autoCompleteComponent [options]="customerNames"
-                             (selected)="receiveSelectedOption( $event)"></app-auto-complete>
-        </div>
-      </div>
+
       <div class="mb-3 col-md-4">
         <label for="CT" class="col-form-label">Mã CT</label>
         <div class="input-group">
@@ -46,8 +40,8 @@
         <label for="agencyID" class="col-form-label">Mã đại lý</label>
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="agencyID" name="per"
-                 [ngModel]="exportingReturn.agency?.code" [ngModelOptions]="{standalone: true}" [disabled]="true"
-                 [value]="exportingReturn.agency?.code" [placeholder]="agencyCode">
+                 [ngModel]="importingReturn.agency?.code" [ngModelOptions]="{standalone: true}" [disabled]="true"
+                 [value]="importingReturn.agency?.code" [placeholder]="agencyCode">
         </div>
       </div>
 
@@ -55,25 +49,25 @@
         <label for="agencyName" class="col-form-label">Tên đại lý</label>
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="agencyName" name="per"
-                 [ngModel]="exportingReturn.agency?.name" [disabled]="true" [ngModelOptions]="{standalone: true}"
-                 [value]="exportingReturn.agency?.name" [placeholder]="agencyName">
+                 [ngModel]="importingReturn.agency?.name" [disabled]="true" [ngModelOptions]="{standalone: true}"
+                 [value]="importingReturn.agency?.name" [placeholder]="agencyName">
         </div>
       </div>
 
       <div class="col-md-6 mb-3">
         <br>
-        <label>Nhà cung cấp</label>
+        <label>Người đặt hàng</label>
         <div class="dropdown">
           <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="SizeProduct"
                   data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false"
                   style="width: 100%; height: 4vh; display: flex; justify-content: space-between; align-items: center;">
-            <span class="caret">{{ this.supplierNameDisplay }}</span>
+            <span class="caret">{{ this.customerNameDisplay }}</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right w-100 overflow-scroll" style="cursor: pointer">
-            <ng-container *ngFor="let o of suppliers; let i = index">
-              <a class="dropdown-item" (click)="getOptionType(o.name!, i, o)">
-                {{ o.name }}
+            <ng-container *ngFor="let o of customers; let i = index">
+              <a class="dropdown-item" (click)="getOptionType(o.fullName!, i, o)">
+                {{ o.fullName }}
               </a>
             </ng-container>
           </div>
@@ -84,7 +78,7 @@
         <label for="price" class="col-form-label">Tổng cộng</label>
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="price" name="price"
-                 [(ngModel)]="exportingReturn.total" [ngModelOptions]="{standalone: true}" appThousandSeparator
+                 [(ngModel)]="importingReturn.total" [ngModelOptions]="{standalone: true}" appThousandSeparator
                  (keypress)="validateInput($event)"
                  #price="ngModel" required
                  (input)="formatCurrency()">
@@ -97,11 +91,11 @@
         <br><br>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="exampleRadios" id="status1"
-                 value="{{ displayExportingReturn[0].value }}"
-                 [checked]="exportingReturnStatus == ExportingReturnStatus.COMPLETE"
-                 (click)="getStatusOnline(displayExportingReturn[0].value)">
+                 value="{{ displayImportingReturn[0].value }}"
+                 [checked]="importingReturnStatus == ImportingReturnStatus.COMPLETE"
+                 (click)="getStatusOnline(displayImportingReturn[0].value)">
           <label class="form-check-label" for="status1">
-            {{ displayExportingReturn[0].display }}
+            {{ displayImportingReturn[0].display }}
           </label>
         </div>
       </div>
@@ -110,11 +104,11 @@
         <br><br>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="exampleRadios" id="status2"
-                 value="{{ displayExportingReturn[1].value }}"
-                 [checked]="exportingReturnStatus == ExportingReturnStatus.UNCOMPLETE"
-                 (click)="getStatusDemo(displayExportingReturn[1].value)">
+                 value="{{ displayImportingReturn[1].value }}"
+                 [checked]="importingReturnStatus == ImportingReturnStatus.UNCOMPLETE"
+                 (click)="getStatusDemo(displayImportingReturn[1].value)">
           <label class="form-check-label" for="status2">
-            {{ displayExportingReturn[1].display }}
+            {{ displayImportingReturn[1].display }}
           </label>
         </div>
       </div>
@@ -129,7 +123,8 @@
         <div class="dropdownProduct" [ngClass]="{'show': showDropdown}">
           <div class="float-none">
             <h2 style="display: inline;">Tổng sản phẩm hiển thị: {{ productFill.length }}</h2>
-            <a style="cursor: pointer; font-size: 25px; display: inline-block; margin-left: 20vw" (click)="closeAddProduct()">x</a>
+            <a style="cursor: pointer; font-size: 25px; display: inline-block; margin-left: 20vw"
+               (click)="closeAddProduct()">x</a>
           </div>
           <div *ngFor="let p of productFill">
             <div class="flex-row" (click)="selectOption(p)">
@@ -143,14 +138,14 @@
 
       <div class="col-md-4 mb-3">
         <label for="quantity">Số lượng</label>
-        <input type="text" class="form-control" id="quantity" required [(ngModel)]="exportingReturnTransaction.quantity"
+        <input type="text" class="form-control" id="quantity" required [(ngModel)]="importingReturnTransaction.quantity"
                [ngModelOptions]="{standalone: true}" #qty="ngModel" (keypress)="validateInput($event)">
       </div>
 
       <div class="col-md-4 mb-3">
         <label for="thisprice">Giá</label>
         <input type="text" class="form-control" id="thisprice" placeholder=".000 đ" required
-               [(ngModel)]="exportingReturnTransaction.price" appThousandSeparator
+               [(ngModel)]="importingReturnTransaction.amount" appThousandSeparator
                [ngModelOptions]="{standalone: true}" #price="ngModel"
                (keypress)="validateInput($event)"
         >
@@ -160,7 +155,7 @@
         <br>
         <button type="button" class="btn btn-primary"
                 (click)="addProductToTable()"
-                [disabled]="!exportingReturnTransaction.quantity || !exportingReturnTransaction.price || !productNameDisplay">
+                [disabled]="!importingReturnTransaction.quantity || !importingReturnTransaction.amount || !productNameDisplay">
           Thêm
         </button>
       </div>
@@ -179,9 +174,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let s of ExportingReturnTransactions; let i = index">
+            <tr *ngFor="let s of importingReturnTransactions; let i = index">
               <td>
-                <button class="btn btn-close" (click)="removeItemExportingReturnTransaction(i)"></button>
+                <button class="btn btn-close" (click)="removeItemImportingReturnTransaction(i)"></button>
               </td>
               <td>{{ no + i }}</td>
               <td>{{ s.product?.name }}</td>
@@ -193,7 +188,7 @@
                   <a (click)="incrementQuantity(i)">+</a>
                 </div>
               </td>
-              <td>{{ s.price | currency: 'VND' | slice:1 }}
+              <td>{{ s.amount | currency: 'VND' | slice:1 }}
                 <span class="symbol"
                       style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
               </td>
@@ -209,7 +204,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addExportingReturn()">{{ btnName[0].display }}
+        <button type="button" class="btn btn-primary" (click)="addImportingReturn()">{{ btnName[0].display }}
         </button>
       </div>
     </form>

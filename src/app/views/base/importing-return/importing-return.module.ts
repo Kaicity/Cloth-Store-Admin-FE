@@ -18,25 +18,24 @@ import {SpinnerComponent} from "../../../shared/components/spinner/spinner.compo
 import {CdkOption} from "@angular/cdk/listbox";
 import {DatePickerComponent} from "../../../shared/components/date-picker/date-picker.component";
 import {ThousandSeparatorDirective} from "../../../core/bussiness-logic/thousandSeparatorDirective";
-import {ExportingReturnComponent} from "./pages/exporting-return.component";
-import {AppAddExportingReturnComponent} from "./components/app-add-exporting-return/app-add-exporting-return.component";
 import {
-  AppSearchExportingReturnComponent
-} from "./components/app-search-exporting-return/app-search-exporting-return.component";
-import {AutoCompleteComponent} from "../../../shared/components/auto-complete/auto-complete.component";
+  AppSearchImportingReturnComponent
+} from "./components/app-search-importing-return/app-search-importing-return.component";
+import {ImportingReturnComponent} from "./pages/importing-return/importing-return.component";
+import {AppAddImportingReturnComponent} from "./components/app-add-importing-return/app-add-importing-return.component";
 
 export const routes: Routes = [
   {
     path: '',
-    component: ExportingReturnComponent,
+    component: ImportingReturnComponent,
   },
 ];
 
 @NgModule({
   declarations: [
-    ExportingReturnComponent,
-    AppAddExportingReturnComponent,
-    AppSearchExportingReturnComponent
+    ImportingReturnComponent,
+    AppAddImportingReturnComponent,
+    AppSearchImportingReturnComponent
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -62,10 +61,9 @@ export const routes: Routes = [
     DatePipe,
     NgClass,
     ThousandSeparatorDirective,
-    AutoCompleteComponent,
   ]
 })
 
-export class ExportingReturnModule {
+export class ImportingReturnModule {
 
 }

@@ -5,7 +5,7 @@
     <div class="col-auto d-flex">
       <c-breadcrumb>
         <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
-        <c-breadcrumb-item [active]="true">Phiếu Nhập hàng</c-breadcrumb-item>
+        <c-breadcrumb-item [active]="true">Phiếu nhập trả</c-breadcrumb-item>
       </c-breadcrumb>
     </div>
   </div>
@@ -15,14 +15,14 @@
   <div class="row" style="margin-left: 0.1vw">
     <div class="col-auto d-flex justify-content-between align-items-center">
       <div class="container-title">
-        <h1>Danh sách phiếu nhập hàng</h1>
+        <h1>Danh sách phiếu nhập trả</h1>
       </div>
       <div class="col-auto" style="margin-left: 53vw;">
         <button type="button" class="btn btn-primary  mr-2" style="height: 4vh; width: 4vw" (click)="showSeachForm()">
           <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
         </button>
         <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
-          Tạo phiếu nhập
+          Tạo phiếu nhập trả
         </button>
       </div>
     </div>
@@ -34,10 +34,10 @@
   <div class="row">
     <div class="col-md-4" style="margin-left: 0.5vw">
       <div class="input-group">
-        <input type="search" class="form-control search-icon" aria-label="Search content" (input)="filterImporting()"
+        <input type="search" class="form-control search-icon" aria-label="Search content" (input)="filterImportingReturn()"
                [(ngModel)]="searchTermTable"
                [ngModelOptions]="{standalone: true}"
-               placeholder="Tìm kiếm phiếu theo mã phiếu, tên nhà cung cấp, giá" id="search" name="per">
+               placeholder="Tìm kiếm phiếu theo mã phiếu, tên người đặt, giá" id="search" name="per">
         <span class="input-group-text"><img src="assets/images/seach.png" class="icon-search"
                                             style="width: 1vw; height: 2vh"></span>
       </div>
@@ -52,7 +52,7 @@
           <span class="caret">{{ isFillStatus }}</span>
         </button>
         <div class="dropdown-menu dropdown-menu-right w-100 overflow-scroll" style="cursor: pointer">
-          <ng-container *ngFor="let f of displayImportingFilter; let i = index">
+          <ng-container *ngFor="let f of displayImportingReturnFilter; let i = index">
             <a class="dropdown-item" (click)="getFilterStatus(f.value, f.display)">
               {{ f.display }}
             </a>
@@ -65,41 +65,41 @@
 </ng-container>
 
 
-<ng-container *ngIf="importings.length !== 0">
-  <app-data-table [columnNumber]="7" [tableFormatClass]="tableFormat" [search]="importingSeach"
-                  [data2Show]="importings">
+<ng-container *ngIf="importingReturns.length !== 0">
+  <app-data-table [columnNumber]="7" [tableFormatClass]="tableFormat" [search]="importingReturnSearch"
+                  [data2Show]="importingReturns">
     <table class="{{tableFormat}}">
       <thead>
       <tr>
         <th>Ngày đặt hàng</th>
         <th>Code</th>
-        <th>Tên nhà cung cấp</th>
+        <th>Tên người đặt</th>
         <th>Tình trạng</th>
-        <th>Ngày cập nhật</th>
+        <th>Ngày trả hàng</th>
         <th>Tiền hàng</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let i of importingFill;">
-        <td>{{ i.importing!.dateCreated }}</td>
-        <td>{{ i.importing!.code }}</td>
-        <td>{{ i.importing!.supplier?.name }}</td>
+      <tr *ngFor="let i of importingReturnFill;">
+        <td>{{ i.importingReturn!.dateCreated }}</td>
+        <td>{{ i.importingReturn!.code }}</td>
+        <td>{{ i.importingReturn!.customer?.fullName }}</td>
         <td>
-          <span *ngIf="i.importing?.status === 'COMPLETE'" class="dot-green"></span>
-          <span *ngIf="i.importing?.status === 'UNCOMPLETE'" class="dot-red"></span>
-          {{ getStatusOfImporting(i.importing!.status!) }}
+          <span *ngIf="i.importingReturn?.status === 'COMPLETE'" class="dot-green"></span>
+          <span *ngIf="i.importingReturn?.status === 'UNCOMPLETE'" class="dot-red"></span>
+          {{ getStatusOfImportingReturn(i.importingReturn!.status!) }}
         </td>
 
 
-        <td>{{ i.importing!.dateUpdated }}</td>
-        <td>{{ i.importing!.total | currency: 'VND' | slice:1 }}
+        <td>{{ i.importingReturn!.dateExport }}</td>
+        <td>{{ i.importingReturn!.total | currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
         </td>
         <td style="width: 4.5vw">
           <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"
-                  (click)="getImportingData(i.importing?.id!, i)">
+                  (click)="getImportingReturnData(i.importingReturn?.id!, i)">
             <mat-icon>more_vert</mat-icon>
           </button>
         </td>
@@ -108,12 +108,12 @@
     </table>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="updateImporting()">
+      <button mat-menu-item (click)="updateImportingReturn()">
         <mat-icon>edit</mat-icon>
         <span>Sửa</span>
       </button>
 
-      <button mat-menu-item (click)="deleteImporting()">
+      <button mat-menu-item (click)="deleteImportingReturn()">
         <mat-icon>delete</mat-icon>
         <span>Xóa</span>
       </button>
@@ -138,23 +138,23 @@
         <span>Lập P.Chi</span>
       </button>
 
-      <button mat-menu-item (click)="createExportingReturn()">
+      <button mat-menu-item >
         <mat-icon>money</mat-icon>
-        <span>Trả hàng</span>
+        <span>Tạo Từ Phiếu Này</span>
       </button>
     </mat-menu>
   </app-data-table>
 </ng-container>
 
-<app-add-importing #AddWrapper
-                   [suppliers]="supplierName"
-                   [btnName]="isBtnName"
-                   [importing]="importingInformation"
-                   [importingTransactions]="importingTransactionInformation"
-                   [importingStatus]="statusValue"
-                   [showTableSize]="importingTransactionInformation.length != 0"
-                   [supplierNameDisplay]="importingInformation.supplier?.name!"
-                   [products]="productsName"
-                   [productFill]="products"></app-add-importing>
+<app-add-importing-return #AddWrapper
+                          [customers]="customerName"
+                          [btnName]="isBtnName"
+                          [importingReturn]="importingReturnInformation"
+                          [importingReturnTransactions]="importingReturnTransactionInformation"
+                          [importingReturnStatus]="statusValue"
+                          [showTableSize]="importingReturnTransactionInformation.length != 0"
+                          [customerNameDisplay]="importingReturnInformation.customer?.fullName!"
+                          [products]="productsName"
+                          [productFill]="products"></app-add-importing-return>
 
-<app-search-importing #searchWrapper></app-search-importing>
+<app-search-importing-return #searchWrapper></app-search-importing-return>

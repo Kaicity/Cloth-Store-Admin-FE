@@ -15,6 +15,8 @@ import {SupplierModel} from "../../../../core/apis/dtos/Supplier.model";
 import {ProductService} from "../../../../core/Services/warehouse/ProductService";
 import {ProductModel} from "../../../../core/apis/dtos/Product.model";
 import {ImportingStatus} from "../../../../core/constanst/ImportingStatus";
+import {ExportingReturnService} from "../../../../core/Services/agency/ExportingReturnService";
+import {ProductSearchModel} from "../../../../core/apis/dtos/Product-search.model";
 
 interface ImportingStatusDisplay {
   value: ImportingStatus,
@@ -49,9 +51,12 @@ export class ImportingComponent implements OnInit {
   supplierName: any[] = []; //Lưu danh sách type có tên
   productsName: any[] = [];
 
-  isBtnName: ({ display: string; value: number } | { display: string; value: number })[] = [{
+  isBtnName: ({ display: string; value: number } | { display: string; value: number } | {
+    display: string;
+    value: number
+  })[] = [{
     display: '', value: 0
-  }, {display: '', value: 1}];
+  }, {display: '', value: 1}, {display: '', value: 2}];
 
   private importingId!: string;
 
@@ -73,7 +78,7 @@ export class ImportingComponent implements OnInit {
   importingFill: ImportingFullModel[] = this.importings;
 
   constructor(private importingService: ImportingService, private router: Router, private supplierService: SupplierService,
-              private snackBar: MatSnackBar, private productService: ProductService) {
+              private snackBar: MatSnackBar, private productService: ProductService, private exportingReturnService: ExportingReturnService) {
   }
 
   ngOnInit(): void {
@@ -218,5 +223,19 @@ export class ImportingComponent implements OnInit {
       importing.importing?.code!.toLowerCase().includes(searchTermLC) || importing.importing?.supplier?.name!.toLowerCase().includes(searchTermLC)
       || importing.importing?.total?.toString()!.toLowerCase().includes(searchTermLC)
     );
+  }
+
+  createExportingReturn() {
+    this.showInsertForm();
+    this.isBtnName[0].value = 2;
+    this.isBtnName[0].display = "Trả hàng";
+    //Lấy importing theo id được chọn
+    this.importingService.getImportingById(this.importingId).subscribe(res => {
+      this.importingFullInformation = res.result;
+      this.importingInformation = this.importingFullInformation.importing!;
+      this.importingTransactionInformation = this.importingFullInformation.importingTransactions!;
+      this.statusValue = res.result.status;
+      this.importingInformation.dateCreated = this.datePick!;
+    })
   }
 }
