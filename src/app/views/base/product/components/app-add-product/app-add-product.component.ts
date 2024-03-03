@@ -82,7 +82,12 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    if(this.sizes){
+      this.showTableSize = true;
+    }
+    if(this.colors){
+      this.showTableColor = true;
+    }
   }
 
   closeModal() {

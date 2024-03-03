@@ -1,1 +1,24 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-lg-4">
+      <app-widget-transaction [title]="'Đơn đặt hàng'" [value]="'20000.7'" [data]="dataNormal[0]"
+                              [options]="barOptions"></app-widget-transaction>
+    </div>
+    <div class="col-xs-12 col-lg-2">
+      <app-widget-transaction [title]="'Bán chạy'" [value]="'500000.8'" [data]="dataNormal[0]"
+                              [options]="barOptions"></app-widget-transaction>
+    </div>
+    <div class="col-xs-12 col-lg-3">
+      <app-widget-transaction [title]="'Bán chạy'" [value]="'47659.826'"></app-widget-transaction>
+    </div>
+    <div class="col-xs-12 col-lg-3">
+      <app-widget-transaction [title]="'Bán chạy'" [value]="'22328.53'"></app-widget-transaction>
+    </div>
+  </div>
+
+  <div class="container-polar">
+    <app-widget-polar [data]="dataPolar"></app-widget-polar>
+  </div>
+
+</div>
+

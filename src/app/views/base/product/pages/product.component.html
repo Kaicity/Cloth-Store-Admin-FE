@@ -1,120 +1,128 @@
 <app-spinner [isLoading]="isShowLoading"></app-spinner>
 <!-- Content Header (Page header) -->
-<ng-container class="container-header">
-  <div class="container-title" style="margin-left: 0.5vw">
-    <h1 i18n="@@employees-title">Sản Phẩm</h1>
-  </div>
-</ng-container>
-
-<ng-container class="container-header">
-  <div class="row"  style="margin-left: 71vw;">
-    <div class="col-auto">
-      <c-breadcrumb>
-        <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
-        <c-breadcrumb-item [active]="true">Sản phẩm</c-breadcrumb-item>
-      </c-breadcrumb>
-    </div>
-  </div>
-</ng-container>
-
-<ng-container class="container-header">
-  <div class="row" style="margin-left: 69.5vw">
-    <div class="col-auto d-flex justify-content-between">
-      <div class="col-auto">
-        <button type="button" class="btn btn-info" style="height: 4vh; width: 2.5vw"
-                (click)="showSeachForm()">
-          <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
-        </button>
-          <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
-            Thêm Sản phẩm
-          </button>
+<div class="container-fluid">
+  <div class="row">
+    <ng-container class="container-header">
+      <div class="container-title" style="margin-left: 0.5vw">
+        <h1 i18n="@@employees-title">Sản Phẩm</h1>
       </div>
-    </div>
+    </ng-container>
+
+    <ng-container class="container-header">
+      <div class="row" style="margin-left: 71vw;">
+        <div class="col-auto">
+          <c-breadcrumb>
+            <c-breadcrumb-item url="#">Trang chủ</c-breadcrumb-item>
+            <c-breadcrumb-item [active]="true">Sản phẩm</c-breadcrumb-item>
+          </c-breadcrumb>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container class="container-header">
+      <div class="container-fluid">
+        <div class="row" style="margin-left: 69.5vw">
+          <div class="col-auto d-flex justify-content-between">
+            <div class="col-auto">
+              <button type="button" class="btn btn-info" style="height: 4vh; width: 2.5vw"
+                      (click)="showSeachForm()">
+                <img src="assets/images/seach.png" class="icon-search" style="width: 1vw; height: 2vh">
+              </button>
+              <button class="btn bg-warning" (click)="showInsertForm()" style="margin-left: 0.4vw">
+                Thêm Sản phẩm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="productList.length !== 0">
+      <div class="container-fluid">
+        <br>
+        <app-data-table [columnNumber]="7" [tableFormatClass]="tableFormat" [search]="search"
+                        [data2Show]="productList">
+          <table class="{{tableFormat}}">
+            <thead>
+            <tr>
+              <th>Hình ảnh</th>
+              <th>Code</th>
+              <th>Tên sản phẩm</th>
+              <th>Giá</th>
+              <th>Tình trạng</th>
+              <th>Mô tả</th>
+              <th>Mặt hàng</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let p of productList;">
+              <ng-container *ngIf="p.image !== undefined ">
+                <td><a class="product-image"> <img
+                  [src]=[p.image] alt="product images" style="width: auto; height: 5vh; cursor: pointer;"></a></td>
+              </ng-container>
+
+              <td>{{ p.code }}</td>
+              <td>{{ p.name }}</td>
+              <td>{{ p.price| currency: 'VND' | slice:1 }}
+                <span class="symbol"
+                      style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
+              </td>
+              <td>{{ p.status }}</td>
+              <td>{{ p.description }}</td>
+              <td>{{ p.specification }}</td>
+              <td style="width: 4.5vw">
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"
+                        (click)="getProductData(p.id!, p)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="updateProduct()">
+              <mat-icon>edit</mat-icon>
+              <span>Sửa</span>
+            </button>
+
+            <button mat-menu-item (click)="deleteProduct()">
+              <mat-icon>delete</mat-icon>
+              <span>Xóa</span>
+            </button>
+
+            <button mat-menu-item>
+              <mat-icon>list</mat-icon>
+              <span>D.Sách HH - VT</span>
+            </button>
+
+            <button mat-menu-item>
+              <mat-icon>print</mat-icon>
+              <span>In</span>
+            </button>
+
+            <button mat-menu-item>
+              <mat-icon>Excel</mat-icon>
+              <span>Xuất File Excel</span>
+            </button>
+
+            <button mat-menu-item>
+              <mat-icon>money</mat-icon>
+              <span>Lập P.Chi</span>
+            </button>
+
+            <button mat-menu-item>
+              <mat-icon>money</mat-icon>
+              <span>Tạo Từ Phiếu Này</span>
+            </button>
+
+          </mat-menu>
+        </app-data-table>
+      </div>
+    </ng-container>
   </div>
-</ng-container>
-<br>
-
-<ng-container *ngIf="productList.length !== 0">
-  <app-data-table [columnNumber]="7" [tableFormatClass]="tableFormat" [search]="search"
-                  [data2Show]="productList">
-    <table class="{{tableFormat}}">
-      <thead>
-      <tr>
-        <th>Hình ảnh</th>
-        <th>Code</th>
-        <th>Tên sản phẩm</th>
-        <th>Giá</th>
-        <th>Tình trạng</th>
-        <th>Mô tả</th>
-        <th>Mặt hàng</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let p of productList;">
-        <ng-container *ngIf="p.image !== undefined ">
-          <td><a class="product-image"> <img
-            [src]=[p.image] alt="product images" style="width: auto; height: 5vh; cursor: pointer;"></a></td>
-        </ng-container>
-
-        <td>{{ p.code }}</td>
-        <td>{{ p.name }}</td>
-        <td>{{ p.price| currency: 'VND' | slice:1 }}
-          <span class="symbol"
-                style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
-        </td>
-        <td>{{ p.status }}</td>
-        <td>{{ p.description }}</td>
-        <td>{{ p.specification }}</td>
-        <td style="width: 4.5vw">
-          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown" (click)="getProductData(p.id!, p)">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="updateProduct()">
-        <mat-icon>edit</mat-icon>
-        <span>Sửa</span>
-      </button>
-
-      <button mat-menu-item (click)="deleteProduct()">
-        <mat-icon>delete</mat-icon>
-        <span>Xóa</span>
-      </button>
-
-      <button mat-menu-item>
-        <mat-icon>list</mat-icon>
-        <span>D.Sách HH - VT</span>
-      </button>
-
-      <button mat-menu-item>
-        <mat-icon>print</mat-icon>
-        <span>In</span>
-      </button>
-
-      <button mat-menu-item>
-        <mat-icon>Excel</mat-icon>
-        <span>Xuất File Excel</span>
-      </button>
-
-      <button mat-menu-item>
-        <mat-icon>money</mat-icon>
-        <span>Lập P.Chi</span>
-      </button>
-
-      <button mat-menu-item>
-        <mat-icon>money</mat-icon>
-        <span>Tạo Từ Phiếu Này</span>
-      </button>
-
-    </mat-menu>
-
-  </app-data-table>
-</ng-container>
+</div>
 
 <app-alert></app-alert>
 
@@ -122,7 +130,10 @@
 <app-app-seach-product #searchWrapper (dataProductIsSeach)="receiveDataFromChildSeach($event)"></app-app-seach-product>
 <app-add-product #AddWrapper [optionSizes]="sizesName" [optionColors]="colorsName"
                  [product]="productInformation" [specName]="productInformation.specification!"
-                 [btnName]="isBtnName"></app-add-product>
+                 [btnName]="isBtnName"
+                 [colors]="colorInfo"
+                 [sizes]="sizeInfo">
+</app-add-product>
 
 
 

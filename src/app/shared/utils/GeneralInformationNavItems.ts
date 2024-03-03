@@ -2,7 +2,7 @@ import {INavData} from "@coreui/angular";
 
 export const GeneralInformationNavItems: INavData[] = [
   {
-    name: 'THÔNG TIN CHUNG',
+    name: 'Thông Tin Chung',
     url: '/dashboard',
     children: []
   },

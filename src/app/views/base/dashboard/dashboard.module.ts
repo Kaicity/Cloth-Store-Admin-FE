@@ -13,6 +13,9 @@ import {DatePickerComponent} from "../../../shared/components/date-picker/date-p
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ControlMaterial} from "../../../ui-component/ControlMaterial";
 import {DashboardComponent} from "./pages/dashboard.component";
+import {WidgetSalesComponent} from "../../../shared/components/widget-sales/widget-sales.component";
+import {WidgetTransactionComponent} from "../../../shared/components/widget-transaction/widget-transaction.component";
+import {WidgetPolarComponent} from "../../../shared/components/widget-polar/widget-polar.component";
 
 export const routes: Routes = [
   {
@@ -26,27 +29,30 @@ export const routes: Routes = [
   declarations: [
     DashboardComponent
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    FormsModule,
-    MatTableModule,
-    ControlMaterial,
-    DataTableComponent,
-    NgForOf,
-    ModalWrapperComponent,
-    ReactiveFormsModule,
-    AlertComponent,
-    CurrencyPipe,
-    NgIf,
-    BreadcrumbComponent,
-    BreadcrumbItemComponent,
-    SlicePipe,
-    SpinnerComponent,
-    NgClass,
-    MatDatepickerModule,
-    DatePickerComponent,
-    MatFormFieldModule
-  ]
+    imports: [
+        RouterModule.forChild(routes),
+        FormsModule,
+        MatTableModule,
+        ControlMaterial,
+        DataTableComponent,
+        NgForOf,
+        ModalWrapperComponent,
+        ReactiveFormsModule,
+        AlertComponent,
+        CurrencyPipe,
+        NgIf,
+        BreadcrumbComponent,
+        BreadcrumbItemComponent,
+        SlicePipe,
+        SpinnerComponent,
+        NgClass,
+        MatDatepickerModule,
+        DatePickerComponent,
+        MatFormFieldModule,
+        WidgetSalesComponent,
+        WidgetTransactionComponent,
+        WidgetPolarComponent
+    ]
 })
 
 export class DashboardModule{

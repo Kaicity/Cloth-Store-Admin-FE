@@ -6,15 +6,6 @@ body {
 #row1, #row2, #row3 {
   margin-bottom: 20px;
 }
-
-div[style*="border"] {
-  border: 1px solid #007bff;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-  font-weight: bold;
-}
-
 button {
   background-color: #007bff; /* Blue for consistency */
   color: #fff; /* White text for contrast */
@@ -24,6 +15,7 @@ button {
   font-size: 16px; /* Comfortable text size */
   cursor: pointer; /* Visual cue for interactivity */
   transition: background-color 0.2s ease-in-out; /* Smooth button hover effect */
+  width: 15vw;
 }
 
 button:hover {

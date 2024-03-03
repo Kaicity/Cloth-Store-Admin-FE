@@ -13,11 +13,21 @@ const routes: Routes = [
   },
   {
     path: '',
+    redirectTo: 'dashboard', // Điều hướng mặc định đến dashboard
+    pathMatch: 'full' // Chỉ áp dụng nếu URL là ''
+  },
+  {
+    path: '',
     component: DefaultLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Home',
     },
     children: [
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./views/base/dashboard/dashboard.module').then((m) => m.DashboardModule)
+      },
       {
         path: 'base',
         loadChildren: () =>
@@ -54,11 +64,6 @@ const routes: Routes = [
           import('./views/base/customer/customer.module').then((m) => m.CustomerModule)
       },
       {
-        path: 'dashboard',
-        loadChildren: () =>
-          import('./views/base/dashboard/dashboard.module').then((m) => m.DashboardModule)
-      },
-      {
         path: 'supplier',
         loadChildren: () =>
           import('./views/base/supplier/supplier.module').then((m) => m.SupplierModule)
@@ -87,7 +92,7 @@ const routes: Routes = [
     ]
   },
 
-  {path: '**', redirectTo: 'dashboard'}
+  {path: '*', redirectTo: 'dashboard',}
 ];
 
 @NgModule({

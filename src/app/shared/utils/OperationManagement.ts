@@ -2,7 +2,7 @@ import {INavData} from "@coreui/angular";
 
 export const OperationManagement: INavData[] = [
   {
-    name: 'QUẢN LÝ HOẠT ĐỘNG',
+    name: 'Quản lý hoạt động',
     url: '/base',
     iconComponent: {name: 'cilList'},
     children: [

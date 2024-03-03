@@ -5,6 +5,7 @@
   background-color: #fff;
   margin-left: 0.5vw;
   border-collapse: collapse;
+
 }
 
 :host ::ng-deep thead {
@@ -12,7 +13,6 @@
   font-weight: normal;
   text-align: left;
 }
-
 
 :host ::ng-deep td {
   width: auto;

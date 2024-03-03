@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("previousSigninName", JSON.stringify(this.signIn.email));
         localStorage.setItem("previousSigninPassword", JSON.stringify(this.signIn.password));
       }
-      this.router.navigate(['product']);
+      this.router.navigate(['dashboard']);
     })
   }
 
