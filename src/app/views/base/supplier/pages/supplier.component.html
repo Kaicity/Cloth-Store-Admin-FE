@@ -56,8 +56,8 @@
         <td>{{ p.phone }}</td>
         <td>{{ p.address }}</td>
         <td>{{ getStatusOfSupplier(p?.status!) }}</td>
-        <td>{{ p.dateCreate }}</td>
-        <td>{{ p.dateUpdate }}</td>
+        <td>{{ p.dateCreate | date : 'dd/MM/YYYY, h:mm a'}}</td>
+        <td>{{ p.dateUpdate | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td style="width: 4.5vw">
           <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"(click)="getSupplierData(p.id!,p)" >
             <mat-icon>more_vert</mat-icon>

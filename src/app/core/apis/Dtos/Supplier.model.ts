@@ -8,7 +8,7 @@ export class SupplierModel{
   phone! : string | null;
   address! : string | null;
   status!: string | null;
-  dateCreate! : DatePipe | null;
-  dateUpdate! : DatePipe | null;
+  dateCreate! : Date | null;
+  dateUpdate! : Date | null;
 }
 

@@ -13,35 +13,6 @@ const routes: Routes = [
       title: 'Base',
     },
     children: [
-      {
-        path: '/statistic',
-        component: StatisticsComponent
-        ,
-        data: {
-          title: 'statistic',
-        },
-      },
-      {
-        path: '/product',
-        component: ProductComponent,
-        data: {
-          title: 'product',
-        },
-      },
-      {
-        path: '/customer',
-        component: CustomerComponent,
-        data: {
-          title: 'customer',
-        },
-      },
-      {
-        path: '/bill-real-time',
-        component: BillRealTimeComponent,
-        data: {
-          title: 'bill-real-time',
-        },
-      }
     ],
   },
 ];

@@ -82,7 +82,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let i of importingReturnFill;">
-        <td>{{ i.importingReturn!.dateCreated }}</td>
+        <td>{{ i.importingReturn!.dateCreated | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td>{{ i.importingReturn!.code }}</td>
         <td>{{ i.importingReturn!.customer?.fullName }}</td>
         <td>
@@ -92,7 +92,7 @@
         </td>
 
 
-        <td>{{ i.importingReturn!.dateExport }}</td>
+        <td>{{ i.importingReturn!.dateExport | date : 'dd/MM/YYYY, h:mm a' }}</td>
         <td>{{ i.importingReturn!.total | currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>

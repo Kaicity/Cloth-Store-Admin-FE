@@ -13,7 +13,9 @@
       <br>
       <br>
       <button (click)="test2(bill)">{{ 'Đơn hàng mã số: ' + bill.exportingBill?.code }}
-        <br> {{ 'Tổng giá tiền:' + bill.exportingBill?.total }}
+        <br> Tổng giá tiền: {{ bill.exportingBill?.total | currency: 'VND' | slice:1 }}
+        <span class="symbol"
+              style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
       </button>
     </div>
   </div>

@@ -61,8 +61,8 @@
                         <span class="symbol"
                               style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
                     </td>
-                    <td>{{e.exportingBill?.dateCreated}}</td>
-                    <td>{{ e.exportingBill?.dateExport }}</td>
+                    <td>{{e.exportingBill?.dateCreated | date : 'dd/MM/YYYY, h:mm a'}}</td>
+                    <td>{{ e.exportingBill?.dateExport | date : 'dd/MM/YYYY, h:mm a'}}</td>
 
                     <td style="width: 4.5vw">
                         <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-dropdown"

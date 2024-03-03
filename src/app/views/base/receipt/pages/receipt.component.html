@@ -55,8 +55,8 @@
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
         </td>
-        <td>{{ r.receipt!.dateCreated }}</td>
-        <td>{{ r.receipt!.dateUpdated }}</td>
+        <td>{{ r.receipt!.dateCreated | date : 'dd/MM/YYYY, h:mm a'}}</td>
+        <td>{{ r.receipt!.dateUpdated | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td>{{ r.receipt!.status }}</td>
         <td>{{ r.receipt!.note }}</td>
         <td style="width: 4.5vw">

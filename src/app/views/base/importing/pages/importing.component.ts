@@ -238,4 +238,8 @@ export class ImportingComponent implements OnInit {
       this.importingInformation.dateCreated = this.datePick!;
     })
   }
+
+  exportDataToExcels() {
+
+  }
 }

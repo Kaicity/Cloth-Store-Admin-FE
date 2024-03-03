@@ -10,7 +10,7 @@ export class CustomerModel {
   password!: string | null;
   birthday!: Date;
   gender!: string | null;
-  dateCreate!: DatePipe | null;
-  dateUpdate!: DatePipe | null;
+  dateCreated!: Date | null;
+  dateUpdated!: Date | null;
   ranking!: string | null;
 }

@@ -7,7 +7,7 @@ import {ControlMaterial} from "../../../ui-component/ControlMaterial";
 import {BillRealTimeComponent} from "./pages/bill-real-time.component";
 import {AppShowDetailBill} from "./components/app-show-detail-bill/app-show-detail-bill.component";
 import {ModalWrapperComponent} from "../../../shared/components/modal-wrapper/modal-wrapper.component";
-import {CurrencyPipe, NgForOf} from "@angular/common";
+import {CurrencyPipe, NgForOf, SlicePipe} from "@angular/common";
 import {WidgetStatEComponent} from "@coreui/angular";
 
 export const routes: Routes = [{
@@ -20,7 +20,7 @@ export const routes: Routes = [{
 
   ],
   exports: [AppShowDetailBill],
-    imports: [RouterModule.forChild(routes), FormsModule, MatTableModule, ControlMaterial, ModalWrapperComponent, NgForOf, CurrencyPipe, WidgetStatEComponent]
+  imports: [RouterModule.forChild(routes), FormsModule, MatTableModule, ControlMaterial, ModalWrapperComponent, NgForOf, CurrencyPipe, WidgetStatEComponent, SlicePipe]
 })
 
 export class BillRealTimeModule {

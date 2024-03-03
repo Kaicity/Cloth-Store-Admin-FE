@@ -60,29 +60,21 @@
       </div>
 
       <div class="mb-3 col-md-4">
+        <label for="password" class="col-form-label">Mật khẩu</label>
         <div class="input-group">
-          <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" aria-label="Dollar amount"
-                 id="password" name="price"
+          <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="password" name="price"
                  [(ngModel)]="customer.password" [ngModelOptions]="{standalone: true}" #img="ngModel" required>
-          <div class="input-group-append">
-            <button mat-icon-button type="button" (click)="togglePasswordVisibility()">
-              <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-          </div>
+
+          <button (click)="togglePasswordVisibility()" style="border: none">
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
         <button type="button" class="btn btn-primary" (click)="addOrUpdateFunc()">{{ btnName[0].display }}</button>
       </div>
-      <br>
-      <br>
-      <br> <br> <br> <br> <br> <br>
-      <br> <br>
-      <br> <br>
-
-      <!-------------------------------    Dòng 2        --------------->
     </form>
   </div>
-
 </app-modal-wrapper>

@@ -12,6 +12,7 @@ interface SpecificationProduct {
 }
 
 @Component({
+  styleUrl: './app-add-product.component.scss',
   selector: 'app-add-product',
   templateUrl: './app-add-product.component.html',
 })
@@ -65,8 +66,7 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
   displayProductStatus: string[] = ["Đang hoạt động", "Sắp hoạt động"];
   productStatus: string = this.displayProductStatus[0]; // Mặc định là đang hoạt dộng
 
-  //Trạng thái thêm
-  isAddProductSuccess: boolean = false;
+  isQuantityTable = 1;
 
   constructor(private productService: ProductService, private router: Router) {
     this.itemSize = new SizesModel();

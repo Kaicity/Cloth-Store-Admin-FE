@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="col-md-1" style="width: 10vw; max-width: 100%">
+    <div class="col-md-4" style="width: 10vw; max-width: 100%">
       <div class="dropdown">
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filterStatus"
                 data-toggle="dropdown"
@@ -60,6 +60,13 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-4">
+      <button class="btn btn-outline btn-custom-exl" (click)="exportDataToExcels()">
+        Xuất File Excel
+      </button>
+    </div>
+
   </div>
   <p></p>
 </ng-container>
@@ -82,7 +89,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let i of importingFill;">
-        <td>{{ i.importing!.dateCreated }}</td>
+        <td>{{ i.importing!.dateCreated | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td>{{ i.importing!.code }}</td>
         <td>{{ i.importing!.supplier?.name }}</td>
         <td>
@@ -92,7 +99,7 @@
         </td>
 
 
-        <td>{{ i.importing!.dateUpdated }}</td>
+        <td>{{ i.importing!.dateUpdated | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td>{{ i.importing!.total | currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
@@ -131,11 +138,6 @@
       <button mat-menu-item>
         <mat-icon>Excel</mat-icon>
         <span>Xuất File Excel</span>
-      </button>
-
-      <button mat-menu-item>
-        <mat-icon>money</mat-icon>
-        <span>Lập P.Chi</span>
       </button>
 
       <button mat-menu-item (click)="createExportingReturn()">

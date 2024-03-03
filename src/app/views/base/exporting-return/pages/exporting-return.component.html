@@ -76,7 +76,7 @@
       <tbody>
       <tr *ngFor="let i of exportingReturnFill;">
         <td>{{ i.exportingReturnBill!.importing?.code }}</td>
-        <td>{{ i.exportingReturnBill!.dateCreated }}</td>
+        <td>{{ i.exportingReturnBill!.dateCreated | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td>{{ i.exportingReturnBill!.code }}</td>
         <td>{{ i.exportingReturnBill!.supplier?.name }}</td>
         <td>
@@ -85,7 +85,7 @@
           {{ getStatusOfExportingReturn(i.exportingReturnBill!.status!) }}
         </td>
 
-        <td>{{ i.exportingReturnBill!.dateUpdated }}</td>
+        <td>{{ i.exportingReturnBill!.dateUpdated | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td>{{ i.exportingReturnBill!.total | currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>

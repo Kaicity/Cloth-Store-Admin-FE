@@ -5,13 +5,17 @@
   background-color: #fff;
   margin-left: 0.5vw;
   border-collapse: collapse;
-
 }
 
 :host ::ng-deep thead {
-  background-color: lightgrey;
   font-weight: normal;
   text-align: left;
+}
+:host ::ng-deep th {
+  border-right: 1px solid #fff;
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 :host ::ng-deep td {
