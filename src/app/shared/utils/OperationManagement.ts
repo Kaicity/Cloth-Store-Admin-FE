@@ -2,7 +2,7 @@ import {INavData} from "@coreui/angular";
 
 export const OperationManagement: INavData[] = [
   {
-    name: 'QUẢN LÝ HOẠT ĐỘNG',
+    name: 'Quản lý hoạt động',
     url: '/base',
     iconComponent: {name: 'cilList'},
     children: [
@@ -12,11 +12,11 @@ export const OperationManagement: INavData[] = [
         children: [
           {
             name: 'Nhập mua hàng hóa - sản phẩm',
-            url: '/base/cards'
+            url: '/importing'
           },
           {
             name: 'Xuất trả hàng hóa',
-            url: '/base/breadcrumbs'
+            url: 'exporting-return'
           },
           {
             name: 'Quản lý bảng giá nhập',
@@ -34,15 +34,11 @@ export const OperationManagement: INavData[] = [
           },
           {
             name: 'Xuất bán hàng hóa - sản phẩm',
-            url: '/base/breadcrumbs'
+            url: 'exporting'
           },
           {
-            name: 'Xuất khác',
-            url: '/base/breadcrumbs'
-          },
-          {
-            name: 'Nhập hàng bị trả',
-            url: '/base/breadcrumbs'
+            name: 'Nhập trả hàng hóa',
+            url: 'importing-return'
           },
           {
             name: 'Quản lý bảng giá',
@@ -69,9 +65,11 @@ export const OperationManagement: INavData[] = [
         iconComponent: {name: 'cilLockLocked'},
         url: '/base/breadcrumbs'
       },
-
-
+      {
+        name: 'Quản lý nhà cung cấp',
+        iconComponent: {name: 'cilLockLocked'},
+        url: '/supplier'
+      },
     ]
   },
-
 ];

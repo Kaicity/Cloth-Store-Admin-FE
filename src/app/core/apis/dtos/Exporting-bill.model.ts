@@ -6,8 +6,8 @@ import {AgencyModel} from "./Agency.model";
 export class ExportingBillModel {
   id!: string | null;
   code!: string | null;
-  dateExport!: DatePipe | null;
-  dateCreated!: DatePipe | null;
+  dateExport!: Date | null;
+  dateCreated!: Date | null;
   total!: number | null;
   status!: BillStatus | null;
   customer!: CustomerModel | null;

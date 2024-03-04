@@ -2,7 +2,7 @@ import {INavData} from "@coreui/angular";
 
 export const EmployeeManagement: INavData[] = [
   {
-    name: 'NHÂN VIÊN / CTV',
+    name: 'Nhân viên - CTV',
     url: '/base',
     iconComponent: {name: 'cilTags'},
     children: [

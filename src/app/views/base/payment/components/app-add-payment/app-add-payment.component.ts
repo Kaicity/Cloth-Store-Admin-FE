@@ -142,5 +142,4 @@ export class AppAddPaymentComponent implements OnInit, AfterViewInit {
   }
 
   protected readonly DatePipe = DatePipe;
-  isCheckStatus = true;
 }

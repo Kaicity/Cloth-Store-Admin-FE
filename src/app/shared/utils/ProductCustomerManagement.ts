@@ -2,7 +2,7 @@ import {INavData} from "@coreui/angular";
 
 export const ProductCustomerManagement: INavData[] = [
   {
-    name: 'SẢN PHẨM / KHÁCH',
+    name: 'Sản phẩm - Khách hàng',
     url: '/base',
     iconComponent: {name: 'cilNotes'},
     children: [
@@ -15,11 +15,11 @@ export const ProductCustomerManagement: INavData[] = [
             url: '/product'
           },
           {
-            name: 'sản phẩm nhập',
+            name: 'Sản phẩm nhập',
             url: '/cards'
           },
           {
-            name: 'sản phẩm bán',
+            name: 'Sản phẩm bán',
             url: '/cards'
           },
           {

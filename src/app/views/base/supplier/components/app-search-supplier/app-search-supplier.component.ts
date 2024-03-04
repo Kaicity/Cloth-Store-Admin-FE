@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
-import {SupplierModel} from "../../../../../core/apis/Dtos/Supplier.model";
+import {SupplierModel} from "../../../../../core/apis/dtos/Supplier.model";
 import {SupplierService} from "../../../../../core/Services/warehouse/SupplierService";
-import {SupplierSearchModel} from "../../../../../core/apis/Dtos/Supplier-search.model";
+import {SupplierSearchModel} from "../../../../../core/apis/dtos/Supplier-search.model";
 
 @Component({
   selector: 'app-search-supplier',

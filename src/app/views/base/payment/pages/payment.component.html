@@ -57,8 +57,8 @@
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
         </td>
         <td>{{ p.payment!.beneficiary }}</td>
-        <td>{{ p.payment!.dateCreated }}</td>
-        <td>{{ p.payment!.dateUpdated }}</td>
+        <td>{{ p.payment!.dateCreated | date : 'dd/MM/YYYY, h:mm a'}}</td>
+        <td>{{ p.payment!.dateUpdated | date : 'dd/MM/YYYY, h:mm a'}}</td>
         <td>{{ p.payment!.status }}</td>
         <td>{{ p.payment!.note }}</td>
         <td style="width: 4.5vw">

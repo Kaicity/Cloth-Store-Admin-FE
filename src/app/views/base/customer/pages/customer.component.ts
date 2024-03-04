@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from "@angular/core";
-import {BaseSearchModel} from "../../../../core/apis/Dtos/base-search-model";
+import {BaseSearchModel} from "../../../../core/apis/dtos/base-search-model";
 import {AppAddCustomerComponent} from "../components/app-add-customer/app-add-customer.component";
-import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
+import {ResponseModel} from "../../../../core/apis/dtos/ResponseModel";
 import {Router} from "@angular/router";
 import {Sex} from "../../../../core/constanst/Sex";
 import {CustomerModel} from "../../../../core/apis/dtos/Customer.model";

@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {DataTableComponent} from "../../../shared/components/data-table/data-table.component";
-import {CurrencyPipe, NgClass, NgForOf, NgIf, SlicePipe} from "@angular/common";
+import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf, SlicePipe} from "@angular/common";
 import {ModalWrapperComponent} from "../../../shared/components/modal-wrapper/modal-wrapper.component";
 import {AlertComponent} from "../../../shared/components/alert/alert.component";
 import {BreadcrumbComponent, BreadcrumbItemComponent} from "@coreui/angular";
@@ -50,7 +50,8 @@ export const routes: Routes = [
         NgClass,
         MatDatepickerModule,
         DatePickerComponent,
-        MatFormFieldModule
+        MatFormFieldModule,
+        DatePipe
 
     ]
 })

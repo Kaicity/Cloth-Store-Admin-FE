@@ -5,6 +5,6 @@ export class ExportingBillTransactionModel {
   id!: string | null;
   bill!: ExportingBillModel | null;
   product!: ProductModel | null;
-  quantity: number = 1;
+  quantity!: number | null;
   amount!: number | null;
 }

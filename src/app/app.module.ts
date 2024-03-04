@@ -39,6 +39,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {AngularFireModule} from "@angular/fire/compat";
 import {firebaseConfig} from "./core/environment/environnemtFireBase";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {ThousandSeparatorDirective} from "./core/bussiness-logic/thousandSeparatorDirective";
 
 const APP_CONTAINERS = [DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent];
 
@@ -77,6 +78,7 @@ const APP_CONTAINERS = [DefaultFooterComponent, DefaultHeaderComponent, DefaultL
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireModule,
     MatDatepickerModule,
+    ThousandSeparatorDirective,
 
   ],
   providers: [

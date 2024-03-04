@@ -2,7 +2,7 @@ import {INavData} from "@coreui/angular";
 
 export const ReportNavItems: INavData[] = [
   {
-    name: 'HỆ THỐNG BÁO CÁO',
+    name: 'Hệ thống báo cáo',
     url: '/base',
     iconComponent: {name: 'cilSettings'},
 

@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {AppAddSupplierComponent} from "../components/app-add-supplier/app-add-supplier.component";
-import {SupplierModel} from "../../../../core/apis/Dtos/Supplier.model";
-import {BaseSearchModel} from "../../../../core/apis/Dtos/base-search-model";
-import {ResponseModel} from "../../../../core/apis/Dtos/ResponseModel";
+import {SupplierModel} from "../../../../core/apis/dtos/Supplier.model";
+import {BaseSearchModel} from "../../../../core/apis/dtos/base-search-model";
+import {ResponseModel} from "../../../../core/apis/dtos/ResponseModel";
 import {SupplierService} from "../../../../core/Services/warehouse/SupplierService";
 import {AppSearchSupplierComponent} from "../components/app-search-supplier/app-search-supplier.component";
 import {SupplierStatus} from "../../../../core/constanst/SupplierStatus";
@@ -34,8 +34,8 @@ export class SupplierComponent implements OnInit, AfterViewInit {
   supplierId: string = '';
 
   specificationStatuses: SpecificationStatus[] = [
-    {value: SupplierStatus.IsWorking, display: 'đang cung cấp'},
-    {value: SupplierStatus.Stop, display: 'Ngừng cung cấp'},
+    {value: SupplierStatus.ISWORKING, display: 'đang cung cấp'},
+    {value: SupplierStatus.STOP, display: 'Ngừng cung cấp'},
   ];
   statusValue = this.specificationStatuses[0]!.display;
 

@@ -2,7 +2,6 @@ import {NgModule, OnInit} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {DefaultLayoutComponent} from './containers';
-import {DashboardComponent} from "./views/base/dashboard/pages/dashboard.component";
 import {LoginComponent} from "./modules/login-page/login.component";
 
 
@@ -14,11 +13,21 @@ const routes: Routes = [
   },
   {
     path: '',
+    redirectTo: 'dashboard', // Điều hướng mặc định đến dashboard
+    pathMatch: 'full' // Chỉ áp dụng nếu URL là ''
+  },
+  {
+    path: '',
     component: DefaultLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Home',
     },
     children: [
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./views/base/dashboard/dashboard.module').then((m) => m.DashboardModule)
+      },
       {
         path: 'base',
         loadChildren: () =>
@@ -52,22 +61,38 @@ const routes: Routes = [
       {
         path: 'customer',
         loadChildren: () =>
-            import('./views/base/customer/customer.module').then((m) => m.CustomerModule)
-      },
-      {
-        path: 'dashboard',
-        loadChildren: () =>
-          import('./views/base/dashboard/dashboard.module').then((m) => m.DashboardModule)
+          import('./views/base/customer/customer.module').then((m) => m.CustomerModule)
       },
       {
         path: 'supplier',
         loadChildren: () =>
           import('./views/base/supplier/supplier.module').then((m) => m.SupplierModule)
       },
+      {
+        path: 'importing',
+        loadChildren: () =>
+          import('./views/base/importing/importing.module').then((m) => m.ImportingModule)
+      },
+      {
+
+        path: 'exporting',
+        loadChildren: () =>
+          import('./views/base/exportingbill/Exporting.module').then((m) => m.ExportingModule)
+      },
+      {
+        path: 'exporting-return',
+        loadChildren: () =>
+          import('./views/base/exporting-return/exporting-return.module').then((m) => m.ExportingReturnModule)
+      },
+      {
+        path: 'importing-return',
+        loadChildren: () =>
+          import('./views/base/importing-return/importing-return.module').then((m) => m.ImportingReturnModule)
+      }
     ]
   },
 
-  {path: '**', redirectTo: 'dashboard'}
+  {path: '*', redirectTo: 'dashboard',}
 ];
 
 @NgModule({
@@ -80,7 +105,7 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule implements OnInit{
+export class AppRoutingModule implements OnInit {
   ngOnInit(): void {
     alert("Hello");
   }

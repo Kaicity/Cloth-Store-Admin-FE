@@ -10,6 +10,9 @@ import {Router} from "@angular/router";
 import {firebaseConfig} from "../../../../core/environment/environnemtFireBase";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {OptionModel} from "../../../../core/apis/dtos/Option.model";
+import {SizesModel} from "../../../../core/apis/dtos/Sizes.model";
+import {ColorModel} from "chart.js/helpers";
+import {ColorsModel} from "../../../../core/apis/dtos/Colors.model";
 
 interface btnFunction {
   value: number;
@@ -54,6 +57,9 @@ export class ProductComponent implements OnInit, AfterViewInit {
   ImageInFirebase: IMageInFirebase[] = [
     {pathInDB: 'assets/food_default.jpg', PathInFirebase: 'assets/food_default.jpg'},
   ];
+
+  sizeInfo : SizesModel[] = [];
+  colorInfo : ColorsModel[] = [];
 
   constructor(private productService: ProductService, private optionService: OptionService,
               private router: Router, private firebaseStorage: AngularFireStorage) {
@@ -191,6 +197,8 @@ export class ProductComponent implements OnInit, AfterViewInit {
       this.productInformation.colors = [];
       this.productInformation.sizes = [];
       this.productInformation = res.result;
+      this.sizeInfo = this.productInformation.sizes!;
+      this.colorInfo = this.productInformation.colors!;
     })
   }
 

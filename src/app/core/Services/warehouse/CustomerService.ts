@@ -21,6 +21,11 @@ export class CustomerService extends WarehouseBaseService{
     const body = {id};
     return this.post("/api/v1/Customer/getCustomerById", body)
   }
+  public getCustomerBycode(eid: string): Observable<any> {
+    const body = {eid};
+    return this.post("/api/v1/Customer/getCustomerBycode", body)
+  }
+
   public getAllCustomer(): Observable<any> {
     return this.post("/api/v1/Customer/getAllCustomer", {});
   }
