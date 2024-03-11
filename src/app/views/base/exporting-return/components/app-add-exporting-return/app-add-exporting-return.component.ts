@@ -12,7 +12,6 @@ import {ExportingReturnFullModel} from "../../../../../core/apis/dtos/Exporting-
 import {ExportingReturnModel} from "../../../../../core/apis/dtos/Exporting-return-model";
 import {ExportingReturnTransactionBillModel} from "../../../../../core/apis/dtos/Exporting-return-transaction-model";
 import {ExportingReturnService} from "../../../../../core/Services/agency/ExportingReturnService";
-import {CustomerModel} from "../../../../../core/apis/dtos/Customer.model";
 import {ImportingModel} from "../../../../../core/apis/dtos/Importing.model";
 
 interface ExportingReturnStatusDisplay {
@@ -50,11 +49,14 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
   @Input() ExportingReturnTransactions: ExportingReturnTransactionBillModel [] = [];
   exportingReturnFull: ExportingReturnFullModel;
 
-  displayExportingReturn: ExportingReturnStatusDisplay[] = [{value: ExportingReturnStatus.COMPLETE, display: "Đã hoàn thành"},
+  displayExportingReturn: ExportingReturnStatusDisplay[] = [{
+    value: ExportingReturnStatus.COMPLETE,
+    display: "Đã hoàn thành"
+  },
     {value: ExportingReturnStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
 
 
-  @Input() exportingReturnStatus!: string
+  @Input() exportingReturnStatus: string = '';
 
   myControl = new FormControl();
   showDropdown = false;
@@ -66,7 +68,7 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
 
   no: number = 0;
 
-  constructor(private exportingReturnService: ExportingReturnService, private router: Router, private snackBar: MatSnackBar,private importingService: ImportingService) {
+  constructor(private exportingReturnService: ExportingReturnService, private router: Router, private snackBar: MatSnackBar, private importingService: ImportingService) {
     this.exportingReturnFull = new ExportingReturnFullModel();
     this.exportingReturn = new ExportingReturnModel();
     this.exportingReturn.agency = new AgencyModel();
@@ -123,7 +125,6 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
           this.openSnackBar("Lỗi thêm phiếu nhâp hàng", "Đóng");
         })
     } else if (this.btnName[0].value == 1) {
-      alert(this.exportingReturnStatus)
       this.exportingReturn.status = this.exportingReturnStatus;
       //Set total amount format
       let totalFormat = this.exportingReturn.total?.toString();
@@ -249,8 +250,9 @@ export class AppAddExportingReturnComponent implements OnInit, AfterViewInit {
   }
 
   receiveSelectedOption($event: string) {
-      this.getImportingData(this.selected);
+    this.getImportingData(this.selected);
   }
+
   getImportingData(id: string) {
     this.selected = id;
     this.importingService.getImportingById(id).subscribe((res: any) => {

@@ -17,8 +17,8 @@ export class DashboardComponent implements OnInit {
       {
         label: 'Chỉ số lượng khác mua hàng',
         backgroundColor: 'rgba(220, 220, 220, 0.2)',
-        borderColor: 'rgb(204,190,43, 1)',
-        pointBackgroundColor: 'rgba(204,190,43, 1)',
+        borderColor: 'rgb(215,102,44)',
+        pointBackgroundColor: 'rgb(215,102,44)',
         pointBorderColor: '#fff',
         data: [40, 20, 12, 39, 10, 80, 40]
       },

@@ -19,6 +19,8 @@ import {ImportingReturnTransactionModel} from "../../../../../core/apis/dtos/Imp
 import {ImportingReturnService} from "../../../../../core/Services/agency/ImportingReturnService";
 import {CustomerModel} from "../../../../../core/apis/dtos/Customer.model";
 import {CustomerService} from "../../../../../core/Services/warehouse/CustomerService";
+import {BillStatus} from "../../../../../core/constanst/BillStatus";
+import {ExcelService} from "../../../../../core/bussiness-logic/excelService";
 
 interface ImportingReturnStatusDisplay {
   value: ImportingReturnStatus,
@@ -62,11 +64,13 @@ export class ImportingReturnComponent implements OnInit {
   importingReturnInformation: ImportingReturnBillModel = new ImportingReturnBillModel();
   importingReturnTransactionInformation: ImportingReturnTransactionModel[] = [];
 
-  displayImportingReturn: ImportingReturnStatusDisplay[] = [{
-    value: ImportingReturnStatus.COMPLETE,
-    display: "Đã hoàn thành"
-  },
-    {value: ImportingReturnStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
+  displayImportingReturn: ({ value: BillStatus, display: string; })[] = [
+    {value: BillStatus.COMPELETED, display: "Đã hoàn thành"},
+    {value: BillStatus.CHECKED, display: "Đã kiểm tra"},
+    {value: BillStatus.BOOKING, display: "Đang đặt hàng"},
+    {value: BillStatus.CANCELLED, display: "Đã hủy"},
+    {value: BillStatus.SHIPPING, display: "Đang giao hàng"},
+  ];
 
   displayImportingReturnFilter: ImportingReturnStatusFilter[] = [{value: '', display: "Tất cả"},
     {value: ImportingReturnStatus.COMPLETE, display: "Đã hoàn thành"},
@@ -79,7 +83,7 @@ export class ImportingReturnComponent implements OnInit {
   importingReturnFill: ImportingReturnFullModel[] = this.importingReturns;
 
   constructor(private importingReturnService: ImportingReturnService, private router: Router, private customerService: CustomerService,
-              private snackBar: MatSnackBar, private productService: ProductService) {
+              private snackBar: MatSnackBar, private productService: ProductService, private excelService: ExcelService) {
   }
 
   ngOnInit(): void {
@@ -147,7 +151,7 @@ export class ImportingReturnComponent implements OnInit {
 
   private getAllImportingReturn() {
     this.isShowLoading = true;
-    this.importingReturnService.getAllImportingReturn().subscribe(res => {
+    this.importingReturnService.seachAllImportingReturn().subscribe(res => {
       this.getAllImportingReturnComplete(res)
       console.log(res);
     });
@@ -191,8 +195,15 @@ export class ImportingReturnComponent implements OnInit {
   getStatusOfImportingReturn(status: string) {
     if (status === this.displayImportingReturn[0].value)
       return this.displayImportingReturn[0].display;
-    else
+    else if (status === this.displayImportingReturn[1].value)
       return this.displayImportingReturn[1].display;
+    else if (status === this.displayImportingReturn[2].value)
+      return this.displayImportingReturn[2].display;
+    else if (status === this.displayImportingReturn[3].value)
+      return this.displayImportingReturn[3].display;
+    else if (status === this.displayImportingReturn[4].value)
+      return this.displayImportingReturn[4].display;
+    return;
   }
 
   removeItemFromImportingReturnTransactions(index: number) {
@@ -225,5 +236,14 @@ export class ImportingReturnComponent implements OnInit {
       || importingReturn.importingReturn?.customer?.fullName!.toLowerCase().includes(searchTermLC)
       || importingReturn.importingReturn?.total?.toString()!.toLowerCase().includes(searchTermLC)
     );
+  }
+
+  exportDataToExcels() {
+    let dataImporting: any[] = [];
+    this.importingReturns.forEach(value => {
+      value.importingReturn!.id = "#"
+      dataImporting.push(value.importingReturn);
+    })
+    this.excelService.exportToExcel(dataImporting, 'exported_data');
   }
 }

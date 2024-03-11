@@ -12,6 +12,7 @@ import {TypePaymentReceiptModel} from "../../../../core/apis/dtos/TypePaymentRec
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PaymentModel} from "../../../../core/apis/dtos/Payment.model";
 import {PaymentTransactionModel} from "../../../../core/apis/dtos/Payment-transaction.model";
+import {ExcelService} from "../../../../core/bussiness-logic/excelService";
 
 @Component({
   selector: 'app-payment',
@@ -45,7 +46,7 @@ export class PaymentComponent implements OnInit {
   payStatus: string = "";
 
   constructor(private paymentService: PaymentService, private router: Router, private typePaymentService: TypePaymentService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,private excelService: ExcelService) {
   }
 
   openSnackBar(message: string, action: string) {
@@ -143,5 +144,14 @@ export class PaymentComponent implements OnInit {
       this.optionPayments = res.result;
       this.typeName = this.optionPayments;
     });
+  }
+
+  exportDataToExcels() {
+    let dataImporting: any[] = [];
+    this.payments.forEach(value => {
+      value.payment!.id = "#"
+      dataImporting.push(value.payment);
+    })
+    this.excelService.exportToExcel(dataImporting, 'exported_data');
   }
 }

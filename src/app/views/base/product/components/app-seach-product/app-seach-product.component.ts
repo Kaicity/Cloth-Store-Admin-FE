@@ -72,7 +72,6 @@ export class AppSeachProductComponent implements OnInit, AfterViewInit {
     this.productService.advanceSearch(this.seach).subscribe(
       (res) => {
         products = res.result.result;
-        console.log(products);
         //Vì tính liên tục của angular nên phải gán products liên tục chỗ này
         this.dataProductIsSeach.emit(products);
       }

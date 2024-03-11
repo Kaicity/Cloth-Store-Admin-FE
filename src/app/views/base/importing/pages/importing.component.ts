@@ -16,7 +16,7 @@ import {ProductService} from "../../../../core/Services/warehouse/ProductService
 import {ProductModel} from "../../../../core/apis/dtos/Product.model";
 import {ImportingStatus} from "../../../../core/constanst/ImportingStatus";
 import {ExportingReturnService} from "../../../../core/Services/agency/ExportingReturnService";
-import {ProductSearchModel} from "../../../../core/apis/dtos/Product-search.model";
+import {ExcelService} from "../../../../core/bussiness-logic/excelService";
 
 interface ImportingStatusDisplay {
   value: ImportingStatus,
@@ -77,8 +77,12 @@ export class ImportingComponent implements OnInit {
   searchTermTable: string = '';
   importingFill: ImportingFullModel[] = this.importings;
 
+  //Check bill là trả hàng
+  isCrementQuatity: boolean = false;
+
   constructor(private importingService: ImportingService, private router: Router, private supplierService: SupplierService,
-              private snackBar: MatSnackBar, private productService: ProductService, private exportingReturnService: ExportingReturnService) {
+              private snackBar: MatSnackBar, private productService: ProductService, private exportingReturnService: ExportingReturnService,
+              private excelService: ExcelService) {
   }
 
   ngOnInit(): void {
@@ -100,6 +104,7 @@ export class ImportingComponent implements OnInit {
   showInsertForm() {
     this.isBtnName[0].value = 0;
     this.isBtnName[0].display = "Lưu";
+    this.isCrementQuatity = true;
     this.addWrapper.isInsertChose = true;
     this.importingInformation = new ImportingModel();
     this.importingTransactionInformation = [];
@@ -115,6 +120,7 @@ export class ImportingComponent implements OnInit {
     this.showInsertForm();
     this.isBtnName[0].value = 1;
     this.isBtnName[0].display = "Cập nhật";
+    this.isCrementQuatity = true;
     //Lấy importing theo id được chọn
     this.importingService.getImportingById(this.importingId).subscribe(res => {
       this.importingFullInformation = res.result;
@@ -229,6 +235,7 @@ export class ImportingComponent implements OnInit {
     this.showInsertForm();
     this.isBtnName[0].value = 2;
     this.isBtnName[0].display = "Trả hàng";
+    this.isCrementQuatity = false;
     //Lấy importing theo id được chọn
     this.importingService.getImportingById(this.importingId).subscribe(res => {
       this.importingFullInformation = res.result;
@@ -240,6 +247,11 @@ export class ImportingComponent implements OnInit {
   }
 
   exportDataToExcels() {
-
+    let dataImporting: any[] = [];
+    this.importings.forEach(value => {
+      value.importing!.id = "#"
+      dataImporting.push(value.importing);
+    })
+    this.excelService.exportToExcel(dataImporting, 'exported_data');
   }
 }

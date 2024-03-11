@@ -1,8 +1,8 @@
-import {DatePipe} from "@angular/common";
 import {CustomerModel} from "./Customer.model";
 import {AgencyModel} from "./Agency.model";
 import {ExportingBillModel} from "./Exporting-bill.model";
-import {ImportingReturnStatus} from "../../constanst/ImportingReturnStatus";
+import {CustomerInfoModel} from "./Customer-Info.model";
+import {BillStatus} from "../../constanst/BillStatus";
 
 export class ImportingReturnBillModel {
   id!: string | null;
@@ -14,4 +14,5 @@ export class ImportingReturnBillModel {
   customer!: CustomerModel | null;
   agency!: AgencyModel | null;
   exporting!: ExportingBillModel | null;
+  customerNotLogin!: CustomerInfoModel | null;
 }

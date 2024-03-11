@@ -30,10 +30,6 @@ export const OperationManagement: INavData[] = [
         children: [
           {
             name: 'Phiếu đặt hàng',
-            url: '/base/cards'
-          },
-          {
-            name: 'Xuất bán hàng hóa - sản phẩm',
             url: 'exporting'
           },
           {

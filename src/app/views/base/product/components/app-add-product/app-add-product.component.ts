@@ -5,9 +5,16 @@ import {Router} from "@angular/router";
 import {OptionModel} from "../../../../../core/apis/dtos/Option.model";
 import {SizesModel} from "../../../../../core/apis/dtos/Sizes.model";
 import {ColorsModel} from "../../../../../core/apis/dtos/Colors.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ProductStatus} from "../../../../../core/constanst/ProductStatus";
 
 interface SpecificationProduct {
   value: number;
+  display: string;
+}
+
+interface DisplayProductStatus {
+  value: ProductStatus;
   display: string;
 }
 
@@ -63,12 +70,14 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
   companyName: string = "CÔNG TY THREE T";
   @Input() product!: ProductModel
 
-  displayProductStatus: string[] = ["Đang hoạt động", "Sắp hoạt động"];
-  productStatus: string = this.displayProductStatus[0]; // Mặc định là đang hoạt dộng
+  displayProductStatus: DisplayProductStatus[] = [{value: ProductStatus.ACTIVE, display: "Đang hoạt động"},
+    {value: ProductStatus.COMINGSOON, display: "Sắp hoạt động"}];
+
+  productStatus: string = this.displayProductStatus[0].value; // Mặc định là đang hoạt dộng
 
   isQuantityTable = 1;
 
-  constructor(private productService: ProductService, private router: Router) {
+  constructor(private productService: ProductService, private router: Router, private snackBar: MatSnackBar) {
     this.itemSize = new SizesModel();
     this.itemColor = new ColorsModel();
     this.product = new ProductModel();
@@ -113,8 +122,11 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
   isLoading: boolean = false;
 
   addSizeToTable() {
+    let totalFormat = this.itemSize.addition?.toString();
+    this.itemSize.addition = null;
+    this.itemSize.addition = parseInt(totalFormat!.replaceAll(',', ''));
+
     this.sizes.push(this.itemSize);
-    console.log(this.sizes);
     if (this.itemSize) this.showTableSize = true;
     this.optionSizes.splice(this.indexSizes!, 1);
     this.itemSize = new SizesModel();
@@ -122,13 +134,14 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
   }
 
   addColorToTable() {
-    this.colors.push(this.itemColor);
-    console.log(this.colors)
-    if (this.itemColor) this.showTableColor = true;
+    let totalFormat = this.itemColor.addition?.toString();
+    this.itemColor.addition = null;
+    this.itemColor.addition = parseInt(totalFormat!.replaceAll(',', ''));
 
+    this.colors.push(this.itemColor);
+    if (this.itemColor) this.showTableColor = true;
     //Add item to table and remove this item
     this.optionColors.splice(this.indexColors!, 1);
-
     //Reset binding two way data
     this.itemColor = new ColorsModel();
     this.colorName = "";
@@ -160,11 +173,11 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
     this.indexColors = index;
   }
 
-  getStatusOnline(status: string) {
+  getStatusActive(status: string) {
     this.productStatus = status;
   }
 
-  getStatusDemo(status: string) {
+  getStatusComingSoon(status: string) {
     this.productStatus = status;
   }
 
@@ -177,25 +190,34 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
       this.product.sizes = [];
       this.product.colors = this.colors;
       this.product.sizes = this.sizes;
+      let totalFormat = this.product.price?.toString();
+      this.product.price = null;
+      this.product.price = parseInt(totalFormat!.replaceAll(',', ''));
 
-      console.log("OBJECT: ")
-      console.log(this.product);
-      console.log("JSON")
-      console.log(JSON.stringify(this.product));
       this.productService.addProduct(this.product).subscribe(
         (res: any) => {
-          console.log(res);
-          alert("Sản phẩm đã được thêm");
+          this.openSnackBar("Thêm sản phẩm thành công", "Đóng");
           this.resetPage();
         },
         error => {
-          alert("Sản phẩm đã được thêm");
+          this.openSnackBar("Lỗi khi thêm sản phẩm", "Đóng");
         }
       )
     } else if (this.btnName[0].value == 1) {
+      this.product.status = this.productStatus;
+      this.product.sizes = [];
+      this.product.sizes = this.sizes;
+      this.product.colors = [];
+      this.product.colors = this.colors;
+      let totalFormat = this.product.price?.toString();
+      this.product.price = null;
+      this.product.price = parseInt(totalFormat!.replaceAll(',', ''));
       this.productService.updateProduct(this.product).subscribe(res => {
-        alert("Sản phẩm đã được cập nhật");
+        this.openSnackBar("Sản phẩm đã được cập nhật", "Đóng");
         this.resetPage();
+      },
+      error => {
+        this.openSnackBar("Lỗi khi cập nhật sản phẩm", "Đóng");
       })
     } else return;
   }
@@ -217,5 +239,12 @@ export class AppAddProductComponent implements OnInit, AfterViewInit {
       isCheck = false;
     }
     return isCheck;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      horizontalPosition: "center",
+    });
   }
 }

@@ -11,8 +11,11 @@ import {firebaseConfig} from "../../../../core/environment/environnemtFireBase";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {OptionModel} from "../../../../core/apis/dtos/Option.model";
 import {SizesModel} from "../../../../core/apis/dtos/Sizes.model";
-import {ColorModel} from "chart.js/helpers";
 import {ColorsModel} from "../../../../core/apis/dtos/Colors.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ProductStatus} from "../../../../core/constanst/ProductStatus";
+import {MatDialog} from "@angular/material/dialog";
+import {ModalConfirmComponent} from "../../../../shared/components/modal-confirm/modal-confirm.component";
 
 interface btnFunction {
   value: number;
@@ -22,6 +25,11 @@ interface btnFunction {
 interface IMageInFirebase {
   pathInDB: string;
   PathInFirebase: string;
+}
+
+interface ProductDisplayStatus {
+  value: ProductStatus,
+  display: string
 }
 
 @Component({
@@ -52,17 +60,26 @@ export class ProductComponent implements OnInit, AfterViewInit {
     display: '', value: 0
   }, {display: '', value: 1}];
 
+  displayProduct: ProductDisplayStatus[] = [{value: ProductStatus.ACTIVE, display: "Đang hoạt động"},
+    {value: ProductStatus.COMINGSOON, display: "Sắp hoạt động"}];
+
   // pathInDB sẽ là image trong csdl , PathInFirebase là image trên firebase
 
   ImageInFirebase: IMageInFirebase[] = [
     {pathInDB: 'assets/food_default.jpg', PathInFirebase: 'assets/food_default.jpg'},
   ];
 
-  sizeInfo : SizesModel[] = [];
-  colorInfo : ColorsModel[] = [];
+  sizeInfo: SizesModel[] = [];
+  colorInfo: ColorsModel[] = [];
+
+  searchTermTable: string = '';
+  productFill: ProductModel[] = this.productList;
+
+  no: number = 1;
 
   constructor(private productService: ProductService, private optionService: OptionService,
-              private router: Router, private firebaseStorage: AngularFireStorage) {
+              private router: Router, private firebaseStorage: AngularFireStorage, private snackBar: MatSnackBar,
+              private dialog: MatDialog) {
   }
 
   showInsertForm() {
@@ -70,6 +87,8 @@ export class ProductComponent implements OnInit, AfterViewInit {
     this.isBtnName[0].display = "Thêm";
     this.addWrapper.isInsertChose = true;
     this.productInformation = new ProductModel();
+    this.sizeInfo = [];
+    this.colorInfo = [];
   }
 
   showSeachForm() {
@@ -178,14 +197,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   deleteProduct() {
-    if (this.productId) {
-      this.productService.deleteProduct(this.productId).subscribe((res) => {
-        alert("Đã xóa sản phẩm");
-        this.resetPage();
-      }, error => {
-        alert("Lỗi khi xóa sản phẩm này");
-      })
-    }
+    this.openDialog();
   }
 
   updateProduct() {
@@ -205,10 +217,9 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   receiveDataFromChildSeach(products: ProductModel[]) {
     if (products) {
-      console.log(products + "fis");
       this.productList = [];
       this.productList = products;
-      console.log(this.productList + "after");
+      this.productFill = this.productList;
     } else {
       this.getAllProduct();
     }
@@ -238,5 +249,61 @@ export class ProductComponent implements OnInit, AfterViewInit {
       }
     });
     await Promise.all(promises);
+  }
+
+  //Lọc sản phẩm theo từng thuộc tính của sản phẩm
+  filterImporting(): void {
+    const searchTermLC = this.searchTermTable.toLowerCase().trim();
+    if (searchTermLC === '') {
+      this.productFill = this.productList;
+      return;
+    }
+    this.productFill = this.productList.filter(product =>
+      product?.code!.toLowerCase().includes(searchTermLC) || product.name!.toLowerCase().includes(searchTermLC)
+      || product.price?.toString()!.toLowerCase().includes(searchTermLC)
+    );
+  }
+
+  exportDataToExcels() {
+
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      horizontalPosition: "center",
+    });
+  }
+
+  getStatusOfProduct(status: string) {
+    if (status) {
+      if (status === this.displayProduct[0].value)
+        return this.displayProduct[0].display;
+      else
+        return this.displayProduct[1].display;
+    }
+    return;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalConfirmComponent, {
+      width: '300px',
+      data: {message: 'Bạn có chắc chắn xóa sản phẩm này ?'}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.productId) {
+          this.productService.deleteProduct(this.productId).subscribe((res) => {
+            this.openSnackBar("Đã xóa sản phẩm", "Đóng");
+            this.resetPage();
+          }, error => {
+            this.openSnackBar("Lỗi khi xóa sản phẩm này", "Đóng");
+          })
+        }
+      } else {
+        return;
+      }
+    });
   }
 }
