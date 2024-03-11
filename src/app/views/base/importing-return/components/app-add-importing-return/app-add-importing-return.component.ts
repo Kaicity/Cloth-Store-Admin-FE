@@ -11,6 +11,7 @@ import {ImportingReturnBillModel} from "../../../../../core/apis/dtos/Importing-
 import {ImportingReturnFullModel} from "../../../../../core/apis/dtos/Importing-return-full.model";
 import {ImportingReturnTransactionModel} from "../../../../../core/apis/dtos/Importing-return-transaction.model";
 import {CustomerModel} from "../../../../../core/apis/dtos/Customer.model";
+import {BillStatus} from "../../../../../core/constanst/BillStatus";
 
 interface ImportingReturnStatusDisplay {
   value: ImportingReturnStatus,
@@ -36,7 +37,7 @@ export class AppAddImportingReturnComponent implements OnInit, AfterViewInit {
   customer: CustomerModel;
   @Input() customerNameDisplay!: string;
   indexCustomer!: number;
-
+  status!: string;
   productNameDisplay: string = "";
 
   isInsertChose: boolean = false;
@@ -47,14 +48,18 @@ export class AppAddImportingReturnComponent implements OnInit, AfterViewInit {
   @Input() importingReturnTransactions: ImportingReturnTransactionModel [] = [];
   importingReturnFull: ImportingReturnFullModel;
 
-  displayImportingReturn: ImportingReturnStatusDisplay[] = [{
-    value: ImportingReturnStatus.COMPLETE,
-    display: "Đã hoàn thành"
-  },
-    {value: ImportingReturnStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
+  displayImportingReturn: ({ value: BillStatus, display: string })[] = [
+    {value: BillStatus.COMPELETED, display: "Đã hoàn thành"},
+    {value: BillStatus.CHECKED, display: "Đã kiểm tra"},
+    {value: BillStatus.BOOKING, display: "Đang đặt hàng"},
+    {value: BillStatus.CANCELLED, display: "Đã hủy"},
+    {value: BillStatus.SHIPPING, display: "Đang giao hàng"},
+  ];
+
+  displayImportingTitle!: string;
 
 
-  @Input() importingReturnStatus!: string
+  @Input() importingReturnStatus: string = '';
 
   myControl = new FormControl();
   showDropdown = false;
@@ -108,14 +113,14 @@ export class AppAddImportingReturnComponent implements OnInit, AfterViewInit {
   addImportingReturn() {
     //2 option them sua dua vao value[0,1]
     if (this.btnName[0].value == 0) {
-      this.importingReturn.status = this.importingReturnStatus;
+      this.importingReturn.status = this.status;
       //Set total amount format
       let totalFormat = this.importingReturn.total?.toString();
       this.importingReturn.total = null;
       this.importingReturn.total = parseInt(totalFormat!.replaceAll(',', ''));
       this.importingReturnFull.importingReturn = this.importingReturn;
       this.importingReturnFull.importingReturnTransactionModels = this.importingReturnTransactions;
-      this.importingReturnService.addImportingReturn(this.importingReturnFull).subscribe(res => {
+      this.importingReturnService.createReturnBill(this.importingReturnFull).subscribe(res => {
           this.openSnackBar("Thêm thành công phiếu nhâp hàng", "Đóng");
           this.resetPage();
         },
@@ -123,8 +128,7 @@ export class AppAddImportingReturnComponent implements OnInit, AfterViewInit {
           this.openSnackBar("Lỗi thêm phiếu nhâp hàng", "Đóng");
         })
     } else if (this.btnName[0].value == 1) {
-      alert(this.importingReturnStatus)
-      this.importingReturn.status = this.importingReturnStatus;
+      this.importingReturn.status = this.status;
       //Set total amount format
       let totalFormat = this.importingReturn.total?.toString();
       this.importingReturn.total = null;
@@ -152,11 +156,16 @@ export class AppAddImportingReturnComponent implements OnInit, AfterViewInit {
   formatCurrency() {
   }
 
-  getStatusOnline(display: string) {
+  optionSpecChose(value: string, index: number) {
+    this.status = value;
+    this.displayImportingTitle = this.displayImportingReturn[index].display;
+  }
+
+  getStatusOnline(display: BillStatus) {
     this.importingReturnStatus = display;
   }
 
-  getStatusDemo(display: string) {
+  getStatusDemo(display: BillStatus) {
     this.importingReturnStatus = display;
   }
 

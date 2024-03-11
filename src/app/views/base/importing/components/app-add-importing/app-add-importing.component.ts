@@ -14,11 +14,17 @@ import {ExportingReturnService} from "../../../../../core/Services/agency/Export
 import {ExportingReturnFullModel} from "../../../../../core/apis/dtos/Exporting-return-full-model";
 import {ExportingReturnModel} from "../../../../../core/apis/dtos/Exporting-return-model";
 import {ExportingReturnTransactionBillModel} from "../../../../../core/apis/dtos/Exporting-return-transaction-model";
-import {forEach} from "lodash-es";
+import value from "*.json";
+
 
 interface ImportingStatusDisplay {
   value: ImportingStatus,
   display: string
+}
+
+interface IndexPos {
+  index : number,
+  value : number
 }
 
 @Component({
@@ -62,7 +68,7 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
     {value: ImportingStatus.UNCOMPLETE, display: "Chưa hoàn thành"}];
 
 
-  @Input() importingStatus!: string
+  @Input() importingStatus: string = '';
   myImportingStatus!: string
 
   myControl = new FormControl();
@@ -75,7 +81,11 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
 
   no: number = 0;
 
-  constructor(private importingService: ImportingService, private router: Router, private snackBar: MatSnackBar, private exportingReturnService: ExportingReturnService) {
+  //Không cho phép tăng số lượng item khi trả hàng
+  @Input() isCrementQuatityReturnBill: boolean = false;
+
+  constructor(private importingService: ImportingService, private router: Router, private snackBar: MatSnackBar,
+              private exportingReturnService: ExportingReturnService) {
     this.importingFull = new ImportingFullModel();
     this.importing = new ImportingModel();
     this.importing.agency = new AgencyModel();
@@ -86,6 +96,7 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
     //Object return exporting return
     this.exportingReturnBillFull = new ExportingReturnFullModel();
     this.exportingReturnBill = new ExportingReturnModel();
+
   }
 
   //Lọc sản phẩm theo tên và code
@@ -108,7 +119,7 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000,
-      horizontalPosition: "center"
+      horizontalPosition: "center",
     });
   }
 
@@ -136,7 +147,6 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
           this.openSnackBar("Lỗi thêm phiếu nhâp hàng", "Đóng");
         })
     } else if (this.btnName[0].value == 1) {
-      alert(this.importingStatus)
       this.importing.status = this.importingStatus;
       //Set total amount format
       let totalFormat = this.importing.total?.toString();
@@ -165,20 +175,21 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
       //Set alls data from importing to exporting return
       let objectImporting: any = this.importing;
       let objectImportingTransaction: any[] = this.importingTransactions;
-      let isImporting : ImportingModel = this.importingFull.importing;
-      let isSupplier : SupplierModel = this.importingFull.importing.supplier!;
+      let isImporting: ImportingModel = this.importingFull.importing;
+      let isSupplier: SupplierModel = this.importingFull.importing.supplier!;
+
       this.exportingReturnBill.id = objectImporting.id;
-      this.exportingReturnBill.code = objectImporting.code;
       this.exportingReturnBill.status = objectImporting.status;
       this.exportingReturnBill.total = objectImporting.total;
       this.exportingReturnBill.agency = objectImporting.agencyCode;
       this.exportingReturnBill.dateUpdated = objectImporting.dateCreated;
-      this.exportingReturnBill.supplier= isSupplier;
+      this.exportingReturnBill.supplier = isSupplier;
       this.exportingReturnTransactionList = objectImportingTransaction;
       this.exportingReturnBill.importing = isImporting;
+      this.exportingReturnBill.importing.code = objectImporting.code;
       this.exportingReturnBillFull.exportingReturnBill = this.exportingReturnBill;
       this.exportingReturnBillFull.exportingReturnTransactionList = this.exportingReturnTransactionList;
-
+      console.log(JSON.stringify(this.exportingReturnBillFull));
       this.exportingReturnService.addExportingReturn(this.exportingReturnBillFull).subscribe(res => {
           this.openSnackBar("Trả thành công phiếu nhâp hàng", "Đóng");
           this.resetPage();
@@ -278,20 +289,35 @@ export class AppAddImportingComponent implements OnInit, AfterViewInit {
     this.isInsertChose = false;
   }
 
+  //positionIndex : IndexPos[] = [{index : Number, value : Number}];
   decrementQuantity(index: number) {
     if (this.importingTransactions[index].quantity! > 1) {
       this.importingTransactions[index].quantity!--;
       this.importingTransactions[index].amount = this.importingTransactions[index].quantity! * this.importingTransactions[index].price!
+      this.valueOld++;
     }
   }
 
+  //giá trị cũ increment
+  valueOld = 0;
+
   incrementQuantity(index: number) {
-    this.importingTransactions[index].quantity!++;
-    this.importingTransactions[index].amount = this.importingTransactions[index].quantity! * this.importingTransactions[index].price!
+    if (this.isCrementQuatityReturnBill) {
+      this.importingTransactions[index].quantity!++;
+      this.importingTransactions[index].amount = this.importingTransactions[index].quantity! * this.importingTransactions[index].price!
+    } else {
+      if (this.importingTransactions[index].quantity! >= 1) {
+        this.importingTransactions[index].quantity! += this.valueOld;
+        if (this.importingTransactions[index].quantity! === this.importingTransactions[index].quantity!) {
+          this.valueOld = 0;
+          return;
+        }
+      }
+      this.openSnackBar("Không thể thêm số lượng khi trả hàng", "close");
+    }
   }
 
   protected readonly ImportingStatus = ImportingStatus;
-
   closeAddProduct() {
     this.showDropdown = false;
   }

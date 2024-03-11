@@ -6,23 +6,23 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class ImportingReturnService extends AgencyBaseService {
-  public getAllImportingReturn(): Observable<any> {
-    return this.post("", {});
+  public seachAllImportingReturn(): Observable<any> {
+    return this.post("/api/v1/Importingbillreturnbill/findimportingReturnAll", {});
   }
 
   public getImportingReturnById(id: string): Observable<any> {
-    return this.get("", id);
+    return this.get("/api/v1/Importingbillreturnbill", id);
   }
 
   public deleteImportingReturn(id: string): Observable<any> {
-    return this.delete("", id);
+    return this.delete("/api/v1/Importingbillreturnbill", id);
   }
 
-  public addImportingReturn(exportingReturnFull: any): Observable<any> {
-    return this.post("", exportingReturnFull);
+  public createReturnBill(importingReturnBIll: any): Observable<any> {
+    return this.post("/api/v1/Importingbillreturnbill/create", importingReturnBIll);
   }
 
-  public updateImportingReturn(exportingReturnFull: any): Observable<any> {
-    return this.post("", exportingReturnFull);
+  public updateImportingReturn(ImportingReturnBillFull: any): Observable<any> {
+    return this.post("/api/v1/Importingbillreturnbill/updateExporting", ImportingReturnBillFull);
   }
 }

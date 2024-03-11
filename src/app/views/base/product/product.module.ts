@@ -19,6 +19,7 @@ import {
 } from "@coreui/angular";
 import {SpinnerComponent} from "../../../shared/components/spinner/spinner.component";
 import {CdkOption} from "@angular/cdk/listbox";
+import {ThousandSeparatorDirective} from "../../../core/bussiness-logic/thousandSeparatorDirective";
 
 export const routes: Routes = [
   {
@@ -34,27 +35,28 @@ export const routes: Routes = [
     AppSeachProductComponent,
 
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    FormsModule,
-    MatTableModule,
-    ControlMaterial,
-    DataTableComponent,
-    NgForOf,
-    ModalWrapperComponent,
-    ReactiveFormsModule,
-    AlertComponent,
-    CurrencyPipe,
-    NgIf,
-    BreadcrumbComponent,
-    BreadcrumbItemComponent,
-    SlicePipe,
-    SpinnerComponent,
-    DropdownComponent,
-    CdkOption,
-    DropdownItemDirective,
-    DropdownMenuDirective,
-  ]
+    imports: [
+        RouterModule.forChild(routes),
+        FormsModule,
+        MatTableModule,
+        ControlMaterial,
+        DataTableComponent,
+        NgForOf,
+        ModalWrapperComponent,
+        ReactiveFormsModule,
+        AlertComponent,
+        CurrencyPipe,
+        NgIf,
+        BreadcrumbComponent,
+        BreadcrumbItemComponent,
+        SlicePipe,
+        SpinnerComponent,
+        DropdownComponent,
+        CdkOption,
+        DropdownItemDirective,
+        DropdownMenuDirective,
+        ThousandSeparatorDirective,
+    ]
 })
 
 export class ProductModule {

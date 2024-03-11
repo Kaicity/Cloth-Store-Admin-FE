@@ -10,29 +10,22 @@
     <form #myForm="ngForm" class="row g-3" (ngSubmit)="onSubmit()">
 
       <div class="mb-3" style="width: 100%">
-        <mat-form-field class="example-full-width">
-          <mat-label>Chọn ngày đặt hàng</mat-label>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="importing.dateCreated"
-                 [ngModelOptions]="{standalone: true}">
-          <mat-hint>Ngày/Tháng/Năm</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker">
-            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+        <input type="datetime-local" class="form-control" [(ngModel)]="importing.dateCreated"
+               [ngModelOptions]="{standalone: true}" >
+
       </div>
 
       <div class="mb-3 col-md-4">
         <label for="CT" class="col-form-label">Mã CT</label>
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="Dollar amount" id="CT" name="per">
+          <input type="text" class="form-control" aria-label="Dollar amount" id="CT" name="per" readonly="true">
         </div>
       </div>
 
       <div class="mb-3 col-md-4">
         <label for="SCT" class="col-form-label">Số CT</label>
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="Dollar amount" id="SCT" name="per">
+          <input type="text" class="form-control" aria-label="Dollar amount" id="SCT" name="per" readonly="true" >
         </div>
       </div>
 
@@ -165,7 +158,7 @@
             <thead>
             <tr>
               <th style="width: 4vw"></th>
-              <th scope="col">STT</th>
+              <th scope="col">#</th>
               <th scope="col">Tên sản phẩm</th>
               <th scope="col">Số lượng</th>
               <th scope="col">Đơn giá</th>

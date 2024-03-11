@@ -19,6 +19,7 @@
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Dollar amount" id="price" name="price"
                  [(ngModel)]="product.price" [ngModelOptions]="{standalone: true}" (keypress)="validateInput($event)"
+                 appThousandSeparator
                  #price="ngModel" required
                  (input)="formatCurrency()">
           <span class="input-group-text">đ</span>
@@ -83,9 +84,9 @@
         <br><br>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="exampleRadios" id="status1" value="option1" checked
-                 (click)="getStatusOnline(displayProductStatus[0])">
+                 (click)="getStatusActive(displayProductStatus[0].value)">
           <label class="form-check-label" for="status1">
-            {{ displayProductStatus[0] }}
+            {{ displayProductStatus[0].display }}
           </label>
         </div>
       </div>
@@ -94,9 +95,9 @@
         <br><br>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="exampleRadios" id="status2" value="option2"
-                 (click)="getStatusDemo(displayProductStatus[1])">
+                 (click)="getStatusComingSoon(displayProductStatus[1].value)">
           <label class="form-check-label" for="status2">
-            {{ displayProductStatus[1] }}
+            {{ displayProductStatus[1].display }}
           </label>
         </div>
       </div>
@@ -135,6 +136,7 @@
         <label for="validationCustom02">Giá phụ thu</label>
         <input type="text" class="form-control" id="validationCustom02" placeholder=".000 đ" required
                [(ngModel)]="itemSize.addition" [ngModelOptions]="{standalone: true}"
+               appThousandSeparator
                (keypress)="validateInput($event)">
       </div>
 
@@ -153,7 +155,7 @@
             <thead>
             <tr>
               <th style="width: 4vw"></th>
-              <th scope="col">STT</th>
+              <th scope="col">#</th>
               <th scope="col">Tên Size</th>
               <th scope="col">Giá phụ thu</th>
             </tr>
@@ -204,6 +206,7 @@
         <label for="feePriceColor">Giá phụ thu</label>
         <input type="text" class="form-control" id="feePriceColor" placeholder=".000 đ" required
                [(ngModel)]="itemColor.addition"
+               appThousandSeparator
                (keypress)="validateInput($event)" [ngModelOptions]="{standalone: true}">
         <div class="valid-feedback">
           Looks good!
@@ -230,7 +233,7 @@
             <thead>
             <tr>
               <th style="width: 4vw"></th>
-              <th scope="col">STT</th>
+              <th scope="col">#</th>
               <th scope="col">Tên Size</th>
               <th scope="col">Giá phụ thu</th>
               <th scope="col">Hình ảnh</th>
@@ -268,8 +271,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addProduct()"
-                [disabled]="checkAddProductEnter()">{{ btnName[0].display }}
+        <button type="button" class="btn btn-primary" (click)="addProduct()">{{ btnName[0].display }}
         </button>
       </div>
     </form>

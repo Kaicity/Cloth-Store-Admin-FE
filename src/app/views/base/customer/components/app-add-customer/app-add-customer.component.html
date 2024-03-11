@@ -2,7 +2,7 @@
                    [showModal]="isInsertChose"
                    [modalTitle]="'Thêm Khách Hàng'"
                    [nameButton]="'Thêm'"
-                   [size]="'width: 65%; max-width: 100%;'"
+                   [size]="'width: 63%; max-width: 100%;'"
                    (closeModalEvent)="closeModal()" xmlns="http://www.w3.org/1999/html">
 
   <!-- Your modal content goes here -->
@@ -31,7 +31,7 @@
       </div>
 
       <div class="mb-4 col-md-2">
-        <label for="address" class="col-form-label">ngày Sinh</label>
+        <label for="address" class="col-form-label">Ngày sinh</label>
         <app-date-picker #AddDatePicker [birthDay]="CustomerBirthDay"></app-date-picker>
       </div>
 

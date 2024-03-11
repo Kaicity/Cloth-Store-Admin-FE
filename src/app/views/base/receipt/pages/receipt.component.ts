@@ -12,6 +12,7 @@ import {ReceiptModel} from "../../../../core/apis/dtos/Receipt.model";
 import {ReceiptTransactionModel} from "../../../../core/apis/dtos/Receipt-transaction.model";
 import {AppSearchReceiptComponent} from "../components/app-search-receipt/app-search-receipt.component";
 import {AppAddReceiptComponent} from "../components/app-add-receipt/app-add-receipt.component";
+import {ExcelService} from "../../../../core/bussiness-logic/excelService";
 
 @Component({
   selector: 'app-receipt',
@@ -46,7 +47,7 @@ export class ReceiptComponent implements OnInit {
   reiStatus: string = "";
 
   constructor(private receiptService: ReceiptService, private router: Router, private typeReceiptService: TypePaymentService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,private excelService: ExcelService) {
   }
 
   ngOnInit(): void {
@@ -145,5 +146,13 @@ export class ReceiptComponent implements OnInit {
       this.optionReceipt = res.result;
       this.typeName = this.optionReceipt;
     });
+  }
+  exportDataToExcels() {
+    let dataImporting: any[] = [];
+    this.receipts.forEach(value => {
+      value.receipt!.id = "#"
+      dataImporting.push(value.receipt);
+    })
+    this.excelService.exportToExcel(dataImporting, 'exported_data');
   }
 }

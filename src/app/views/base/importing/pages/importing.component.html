@@ -89,7 +89,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let i of importingFill;">
-        <td>{{ i.importing!.dateCreated | date : 'dd/MM/YYYY, h:mm a'}}</td>
+        <td>{{ i.importing!.dateCreated | date : 'dd/MM/yyyy' }}</td>
         <td>{{ i.importing!.code }}</td>
         <td>{{ i.importing!.supplier?.name }}</td>
         <td>
@@ -99,7 +99,7 @@
         </td>
 
 
-        <td>{{ i.importing!.dateUpdated | date : 'dd/MM/YYYY, h:mm a'}}</td>
+        <td>{{ i.importing!.dateUpdated | date : 'dd/MM/YYYY, h:mm a' }}</td>
         <td>{{ i.importing!.total | currency: 'VND' | slice:1 }}
           <span class="symbol"
                 style="font-size: 1rem; line-height: 1rem; letter-spacing: 0.1rem; text-decoration: underline">đ</span>
@@ -157,6 +157,7 @@
                    [showTableSize]="importingTransactionInformation.length != 0"
                    [supplierNameDisplay]="importingInformation.supplier?.name!"
                    [products]="productsName"
-                   [productFill]="products"></app-add-importing>
+                   [productFill]="products"
+                   [isCrementQuatityReturnBill]="isCrementQuatity"></app-add-importing>
 
 <app-search-importing #searchWrapper></app-search-importing>

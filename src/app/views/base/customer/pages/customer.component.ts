@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 import {BaseSearchModel} from "../../../../core/apis/dtos/base-search-model";
 import {AppAddCustomerComponent} from "../components/app-add-customer/app-add-customer.component";
 import {ResponseModel} from "../../../../core/apis/dtos/ResponseModel";
@@ -25,17 +25,27 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   customers: CustomerModel[] = []; // Tao danh sach cac khach hang
   isShowLoading: boolean = false;
   CustomerId: string = '';
-  specificationCustomer: SpecificationCustomer[] = [
+
+  genderCustomer: SpecificationCustomer[] = [
     {value: Sex.MALE, display: 'Nam'},
     {value: Sex.FEMALE, display: 'Nữ'},
     {value: Sex.ORTHER, display: 'Khác'}
   ];
-  genderValue = this.specificationCustomer[0]!.display;
+  genderValue = this.genderCustomer[0]!.display;
+
+  isFillGender: string = this.genderCustomer[0].value;
+
+  searchTermTable: string = '';
+
+  customerFill: CustomerModel[] = this.customers;
+
   constructor(private customerService: CustomerService, private router: Router) {
   }
+
   resetChildData() {
     this.addWrapper.resetData();
   }
+
   ngAfterViewInit(): void {
   }
 
@@ -47,7 +57,6 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     display: '', value: 0
   }, {display: '', value: 1}];
   customerInformation: CustomerModel = new CustomerModel();
-
 
 
   showSeachForm() {
@@ -72,8 +81,8 @@ export class CustomerComponent implements OnInit, AfterViewInit {
       res => {
         console.log(res.result);
         this.customerInformation = res.result;
-        if(this.customerInformation.gender){
-          const maleItem = this.specificationCustomer.find(item => item.value === res.result.gender);
+        if (this.customerInformation.gender) {
+          const maleItem = this.genderCustomer.find(item => item.value === res.result.gender);
           console.log(maleItem);
           this.genderValue = maleItem?.display ?? 'Giá trị mặc định nếu maleItem không tồn tại hoặc không có thuộc tính display';
           console.log(this.genderValue);
@@ -92,7 +101,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   }
 
   deteleCustomer() {
-    console.log("helo",this.CustomerId);
+    console.log("helo", this.CustomerId);
     if (this.CustomerId) {
       this.customerService.deleteCustomer(this.CustomerId).subscribe((res) => {
         alert("Đã xóa sản phẩm");
@@ -139,6 +148,35 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     }
     setTimeout(() => {
       this.isShowLoading = false;
-    },1500)
+    }, 1500)
+  }
+
+  filterCustomer() {
+    const searchTermLC = this.searchTermTable.toLowerCase().trim();
+    if (searchTermLC === '') {
+      this.customerFill = this.customers;
+      return;
+    }
+    this.customerFill = this.customers.filter(customer =>
+      customer.fullName!.toLowerCase().includes(searchTermLC) || customer.phone!.toLowerCase().includes(searchTermLC)
+      || customer.address!.toString()!.toLowerCase().includes(searchTermLC)
+      || customer.eid!.toString()!.toLowerCase().includes(searchTermLC)
+    );
+  }
+
+  getFilterStatus(value: string, display: string) {
+    this.isFillGender = display;
+    const searchTermLC = value.toLowerCase().trim();
+    if (searchTermLC === '') {
+      this.customerFill = this.customers;
+      return;
+    }
+    this.customerFill = this.customers.filter(customer =>
+      customer.gender!.toLowerCase() === searchTermLC
+    );
+  }
+
+  exportDataToExcels() {
+
   }
 }

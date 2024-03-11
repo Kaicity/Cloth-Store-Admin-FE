@@ -26,6 +26,7 @@ import {ExportingReturnFullModel} from "../../../../core/apis/dtos/Exporting-ret
 import {ExportingReturnModel} from "../../../../core/apis/dtos/Exporting-return-model";
 import {ExportingReturnTransactionBillModel} from "../../../../core/apis/dtos/Exporting-return-transaction-model";
 import {ExportingReturnService} from "../../../../core/Services/agency/ExportingReturnService";
+import {ExcelService} from "../../../../core/bussiness-logic/excelService";
 
 interface ExportingReturnStatusDisplay {
   value: ExportingReturnStatus,
@@ -84,7 +85,7 @@ export class ExportingReturnComponent implements OnInit {
   exportingReturnFill: ExportingReturnFullModel[] = this.exportingReturns;
 
   constructor(private exportingReturnService: ExportingReturnService, private router: Router, private supplierService: SupplierService,
-              private snackBar: MatSnackBar, private productService: ProductService) {
+              private snackBar: MatSnackBar, private productService: ProductService,private excelService: ExcelService) {
   }
 
   ngOnInit(): void {
@@ -230,5 +231,14 @@ export class ExportingReturnComponent implements OnInit {
       || exportingReturn.exportingReturnBill?.supplier?.name!.toLowerCase().includes(searchTermLC)
       || exportingReturn.exportingReturnBill?.importing?.code?.toString()!.toLowerCase().includes(searchTermLC)
     );
+  }
+
+  exportDataToExcels() {
+    let dataImporting: any[] = [];
+    this.exportingReturns.forEach(value => {
+      value.exportingReturnBill!.id = "#"
+      dataImporting.push(value.exportingReturnBill);
+    })
+    this.excelService.exportToExcel(dataImporting, 'exported_data');
   }
 }
