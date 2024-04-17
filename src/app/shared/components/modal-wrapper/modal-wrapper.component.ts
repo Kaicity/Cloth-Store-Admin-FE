@@ -28,7 +28,7 @@ export class ModalWrapperComponent{
     this.closeModalEvent.emit();
   }
 
-  run():void{
+  run(): void {
     if (this.runFunction) {
       this.runFunction();
       console.log("Thực hiện chức năng là: ");

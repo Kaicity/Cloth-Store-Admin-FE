@@ -1,6 +1,4 @@
 import {Observable} from "rxjs";
-import {HttpClient} from '@angular/common/http';
-import {environment} from "../../environment/Environment";
 import {Injectable} from "@angular/core";
 import {AgencyBaseService} from "../generic/agency-base-service";
 
