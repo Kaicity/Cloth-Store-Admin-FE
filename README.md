@@ -24,11 +24,11 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4202/`. The appli
 Example: `import {environment} from "../../../Environment/Environment";` if path error you can edit it `import {environment} from "../../../environment/environment`
 
 ## Images demo our websites
-  - Login page
+  - Product mananagement
     ![product-list](src/assets/images/Screenshot%202024-05-20%20002025.png)
 
     ##
-  - Product management
+  - Bill status
     ![product-list](src/assets/images/Screenshot%202024-05-20%20002322.png)
 
     ##
