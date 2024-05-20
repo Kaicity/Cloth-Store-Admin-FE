@@ -9,9 +9,11 @@ Link download: https://nodejs.org/en/download/package-manager/current
 Run `npm install -g @angular/cli`
 
 ## Deloyment Docker
-...
-...
-...
+This is an instructional clip: https://youtu.be/GE7tn2l9B1E
+
+Build image for this : " docker build -t ctadfe . "
+
+Create Container from image : " docker run -p 4202:4202 --name ctad ctadfe "
 
 ## Start run project
 
